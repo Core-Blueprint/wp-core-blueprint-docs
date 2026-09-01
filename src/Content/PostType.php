@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace CB\Docs\Content;
 
+use CB\Docs\Settings;
+
 defined( 'ABSPATH' ) || exit;
 
 final class PostType {
@@ -58,7 +60,7 @@ final class PostType {
 				'menu_position'       => 26.4,
 				'menu_icon'           => 'dashicons-media-document',
 				'rewrite'             => [
-					'slug'       => 'docs',
+					'slug'       => Settings::rewrite_base(),
 					'with_front' => false,
 				],
 				'supports' => [

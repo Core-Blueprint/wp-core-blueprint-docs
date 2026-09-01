@@ -12,12 +12,13 @@ use CB\Docs\Content\Taxonomies;
 defined( 'ABSPATH' ) || exit;
 
 final class Events {
-	public const CREATED   = 'docs.document.created';
-	public const PUBLISHED = 'docs.document.published';
-	public const UPDATED   = 'docs.document.updated';
-	public const TRASHED   = 'docs.document.trashed';
-	public const RESTORED  = 'docs.document.restored';
-	public const DELETED   = 'docs.document.deleted';
+	public const CREATED          = 'docs.document.created';
+	public const PUBLISHED        = 'docs.document.published';
+	public const UPDATED          = 'docs.document.updated';
+	public const TRASHED          = 'docs.document.trashed';
+	public const RESTORED         = 'docs.document.restored';
+	public const DELETED          = 'docs.document.deleted';
+	public const SETTINGS_UPDATED = 'docs.settings.updated';
 
 	/** @var array<int,array{created:bool,fields:array<string,bool>}> */
 	private static array $changes = [];
@@ -46,6 +47,24 @@ final class Events {
 		EventRegistry::register( [ 'id' => self::TRASHED, 'label' => __( 'Docs document trashed', 'core-blueprint-docs' ), 'retention_category' => 'general' ] );
 		EventRegistry::register( [ 'id' => self::RESTORED, 'label' => __( 'Docs document restored', 'core-blueprint-docs' ), 'retention_category' => 'general' ] );
 		EventRegistry::register( [ 'id' => self::DELETED, 'label' => __( 'Docs document permanently deleted', 'core-blueprint-docs' ), 'retention_category' => 'general' ] );
+		EventRegistry::register( [ 'id' => self::SETTINGS_UPDATED, 'label' => __( 'Docs settings updated', 'core-blueprint-docs' ), 'retention_category' => 'settings' ] );
+	}
+
+	public static function record_settings_updated( string $setting, string $before, string $after ): bool {
+		$setting = sanitize_key( $setting );
+		if ( '' === $setting || $before === $after ) {
+			return false;
+		}
+
+		return Audit::record(
+			self::SETTINGS_UPDATED,
+			'notice',
+			[
+				'setting' => $setting,
+				'before'  => sanitize_text_field( $before ),
+				'after'   => sanitize_text_field( $after ),
+			]
+		);
 	}
 
 	public static function capture_post_update( int $post_id, \WP_Post $post_after, \WP_Post $post_before ): void {
@@ -58,15 +77,15 @@ final class Events {
 		}
 
 		$fields = [
-			'post_title'   => 'title',
-			'post_content' => 'content',
-			'post_excerpt'       => 'excerpt',
-			'post_author'        => 'author',
-			'post_name'          => 'slug',
-			'post_date'          => 'publish_date',
-			'post_password'      => 'password',
-			'comment_status'     => 'comments',
-			'menu_order'         => 'order',
+			'post_title'        => 'title',
+			'post_content'      => 'content',
+			'post_excerpt'      => 'excerpt',
+			'post_author'       => 'author',
+			'post_name'         => 'slug',
+			'post_date'         => 'publish_date',
+			'post_password'     => 'password',
+			'comment_status'    => 'comments',
+			'menu_order'        => 'order',
 		];
 		foreach ( $fields as $property => $field ) {
 			if ( $post_before->{$property} !== $post_after->{$property} ) {

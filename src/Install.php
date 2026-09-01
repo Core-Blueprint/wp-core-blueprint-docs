@@ -15,6 +15,7 @@ final class Install {
 		Taxonomies::register();
 		Meta::register();
 		flush_rewrite_rules();
+		delete_option( Settings::REWRITE_DIRTY_OPTION );
 	}
 
 	public static function deactivate(): void {

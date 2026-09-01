@@ -3,7 +3,7 @@ Contributors: coreblueprint
 Tags: documentation, knowledge base, docs, gutenberg, builder
 Requires at least: 7.0
 Requires PHP: 8.4
-Stable tag: 0.1.0-rc1
+Stable tag: 0.1.0-rc1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ Core Blueprint Docs provides a ready-made native WordPress documentation model s
 
 Docs are normal WordPress content and can be edited in Gutenberg or consumed by builders such as Bricks without a builder-specific storage layer.
 
+The Docs URL base is configurable under Core Blueprint > Docs. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported.
+
 Core Blueprint Base with Core API 1.0 is required.
 
 == Installation ==
@@ -23,6 +25,7 @@ Core Blueprint Base with Core API 1.0 is required.
 2. Upload the canonical `core-blueprint-docs` plugin folder or release ZIP.
 3. Activate Core Blueprint Docs.
 4. Open Docs in WordPress admin and start authoring.
+5. Optionally open Core Blueprint > Docs to change the public URL base.
 
 == Shortcodes ==
 
@@ -33,6 +36,10 @@ Core Blueprint Base with Core API 1.0 is required.
 * `[cb_docs_meta]`
 
 == Changelog ==
+
+= 0.1.0-rc1.1 =
+* Added configurable Docs URL base and Core Admin settings page.
+* Added safe deferred rewrite flushing and settings governance auditing.
 
 = 0.1.0-rc1 =
 * Initial release candidate.
