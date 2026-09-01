@@ -27,10 +27,12 @@ $expected = [
 	'core-blueprint-docs.php',
 	'src/Plugin.php',
 	'src/Install.php',
+	'src/Settings.php',
 	'src/Content/PostType.php',
 	'src/Content/Taxonomies.php',
 	'src/Content/Meta.php',
 	'src/Admin/DocDetails.php',
+	'src/Admin/SettingsPage.php',
 	'src/Frontend/Queries.php',
 	'src/Frontend/Shortcodes.php',
 	'src/Governance/Events.php',
@@ -64,14 +66,28 @@ foreach ( $php_files as $file ) {
 }
 
 $post_type = (string) file_get_contents( $root . '/src/Content/PostType.php' );
-foreach ( [ "'custom-fields'", "'comments'", "'revisions'", "'page-attributes'", "'show_in_rest'" ] as $required ) {
+foreach ( [ "'custom-fields'", "'comments'", "'revisions'", "'page-attributes'", "'show_in_rest'", 'Settings::rewrite_base()' ] as $required ) {
 	if ( ! str_contains( $post_type, $required ) ) {
 		$failures[] = 'Post type contract is missing ' . $required . '.';
 	}
 }
 
+$settings = (string) file_get_contents( $root . '/src/Settings.php' );
+foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated' ] as $required ) {
+	if ( ! str_contains( $settings, $required ) ) {
+		$failures[] = 'Settings contract is missing ' . $required . '.';
+	}
+}
+
+$settings_page = (string) file_get_contents( $root . '/src/Admin/SettingsPage.php' );
+foreach ( [ 'PageRegistry::register', "'form-controls'", 'cb_docs_save_settings' ] as $required ) {
+	if ( ! str_contains( $settings_page, $required ) ) {
+		$failures[] = 'Settings page contract is missing ' . $required . '.';
+	}
+}
+
 $events = (string) file_get_contents( $root . '/src/Governance/Events.php' );
-foreach ( [ 'EventRegistry::register', 'Audit::record' ] as $required ) {
+foreach ( [ 'EventRegistry::register', 'Audit::record', 'docs.settings.updated' ] as $required ) {
 	if ( ! str_contains( $events, $required ) ) {
 		$failures[] = 'Governance contract is missing ' . $required . '.';
 	}

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-rc1.1
+
+- Added a Core Admin Docs settings page.
+- Added configurable Docs URL base with `docs` as the safe default.
+- Added support for nested rewrite bases such as `knowledge/docs`.
+- Added deferred one-time rewrite flushing only when the URL base actually changes.
+- Added `docs.settings.updated` Governance auditing for URL-base changes.
+- Extended source conformance checks for settings and Core Admin contracts.
+
 ## 0.1.0-rc1
 
 - Initial Core Blueprint Docs release candidate.

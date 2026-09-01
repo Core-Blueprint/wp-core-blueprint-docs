@@ -4,9 +4,11 @@ Core Blueprint Docs is a lightweight, builder-agnostic documentation extension f
 
 It exists to remove setup work: activate the plugin and immediately get a native WordPress documentation content model that can be edited with Gutenberg and queried or templated by Bricks, another builder, a theme, REST consumers or normal WordPress code.
 
-## v0.1.0-rc1 scope
+## v0.1.0-rc1.1 scope
 
-- Native public `cb_doc` post type with `/docs/` archive and single URLs.
+- Native public `cb_doc` post type.
+- Configurable Docs URL base with `docs` as the default.
+- Core Admin settings page for the URL base.
 - Gutenberg and standard WordPress support for title, content, excerpt, author, featured image, revisions, custom fields, comments and menu order.
 - Hierarchical `cb_doc_category` taxonomy.
 - Non-hierarchical `cb_doc_tag` taxonomy.
@@ -24,6 +26,23 @@ It exists to remove setup work: activate the plugin and immediately get a native
 - No direct Core Blueprint Access dependency.
 - No Bricks-specific runtime integration.
 - No custom database tables or proprietary field storage.
+
+## Permalinks
+
+The default archive is `/docs/` and individual documents use `/docs/{doc-slug}/`.
+
+Under **Core Blueprint → Docs**, administrators can change the URL base to values such as:
+
+- `documentation`
+- `handleiding`
+- `knowledge-base`
+- `knowledge/docs`
+
+The value is normalized into safe WordPress slug segments. Empty or invalid input falls back to `docs`.
+
+Changing the URL base marks rewrite rules dirty. Docs waits until the next `init`, after `cb_doc` has been registered with the new base, flushes rewrite rules once and removes the dirty marker. Rewrite rules are never flushed on every request.
+
+Changing the URL base changes public archive and single URLs. Existing external links may therefore need redirects.
 
 ## Builder workflow
 
@@ -62,8 +81,9 @@ See [`docs/SHORTCODES.md`](docs/SHORTCODES.md).
 - `docs.document.trashed`
 - `docs.document.restored`
 - `docs.document.deleted`
+- `docs.settings.updated`
 
-Autosaves, revisions and auto-drafts are excluded. Multiple field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list.
+Autosaves, revisions and auto-drafts are excluded. Multiple document-field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list. URL-base changes are recorded as settings governance events.
 
 ## Requirements
 

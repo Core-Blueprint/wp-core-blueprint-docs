@@ -3,7 +3,7 @@
  * Plugin Name:       Core Blueprint Docs
  * Plugin URI:        https://coreblueprint.io
  * Description:       Lightweight builder-agnostic documentation with native WordPress content, taxonomies and metadata.
- * Version:           0.1.0-rc1
+ * Version:           0.1.0-rc1.1
  * Author:            Core Blueprint
  * Author URI:        https://coreblueprint.io
  * License:           GPL-2.0+
@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CB_DOCS_VERSION',      '0.1.0-rc1' );
+define( 'CB_DOCS_VERSION',      '0.1.0-rc1.1' );
 define( 'CB_DOCS_REQUIRED_API', '1.0' );
 define( 'CB_DOCS_FILE',         __FILE__ );
 define( 'CB_DOCS_DIR',          plugin_dir_path( __FILE__ ) );
@@ -52,10 +52,10 @@ add_action( 'init', static function (): void {
 }, 1 );
 
 function cb_docs_api_compatible( string $available, string $required ): bool {
-	if ( 1 !== preg_match( '/^(\\d+)\\.(\\d+)$/', $available, $available_match ) ) {
+	if ( 1 !== preg_match( '/^(\d+)\.(\d+)$/', $available, $available_match ) ) {
 		return false;
 	}
-	if ( 1 !== preg_match( '/^(\\d+)\\.(\\d+)$/', $required, $required_match ) ) {
+	if ( 1 !== preg_match( '/^(\d+)\.(\d+)$/', $required, $required_match ) ) {
 		return false;
 	}
 
@@ -72,6 +72,8 @@ function cb_docs_base_ready(): bool {
 	}
 
 	return class_exists( '\\CB\\Core\\ExtensionRegistry' )
+		&& class_exists( '\\CB\\Core\\Admin\\PageRegistry' )
+		&& interface_exists( '\\CB\\Core\\Admin\\Page' )
 		&& class_exists( '\\CB\\Core\\Governance\\EventRegistry' )
 		&& class_exists( '\\CB\\Core\\Governance\\Audit' );
 }
