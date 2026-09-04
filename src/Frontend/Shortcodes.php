@@ -10,6 +10,10 @@ use CB\Docs\Content\Taxonomies;
 defined( 'ABSPATH' ) || exit;
 
 final class Shortcodes {
+	private const NAVIGATION_MAX_TERMS = 250;
+	private const NAVIGATION_MAX_DOCS  = 500;
+	private const NAVIGATION_MAX_DEPTH = 20;
+
 	public static function init(): void {
 		add_shortcode( 'cb_docs_list', [ __CLASS__, 'list_shortcode' ] );
 		add_shortcode( 'cb_docs_navigation', [ __CLASS__, 'navigation_shortcode' ] );
@@ -68,7 +72,15 @@ final class Shortcodes {
 			$parent = (int) $term->term_id;
 		}
 
-		$content = self::render_category_level( $parent );
+		$snapshot = self::navigation_snapshot( $parent );
+		$visited  = [];
+		$content  = self::render_category_level(
+			$parent,
+			$snapshot['terms_by_parent'],
+			$snapshot['docs_by_term'],
+			$visited
+		);
+
 		return '' !== $content
 			? '<nav class="cb-docs-navigation" aria-label="' . esc_attr__( 'Documentation navigation', 'core-blueprint-docs' ) . '">' . $content . '</nav>'
 			: self::state( 'empty', __( 'No documentation navigation is available.', 'core-blueprint-docs' ) );
@@ -198,54 +210,166 @@ final class Shortcodes {
 		return $html . '</dl>';
 	}
 
-	private static function render_category_level( int $parent ): string {
-		$terms = get_terms( [
+	/**
+	 * Build one bounded snapshot for the navigation tree.
+	 *
+	 * @return array{
+	 *     terms_by_parent:array<int,array<int,\WP_Term>>,
+	 *     docs_by_term:array<int,array<int,\WP_Post>>
+	 * }
+	 */
+	private static function navigation_snapshot( int $parent ): array {
+		$term_args = [
 			'taxonomy'   => Taxonomies::CATEGORY,
-			'hide_empty' => true,
-			'parent'     => $parent,
+			'hide_empty' => false,
+			'number'     => self::NAVIGATION_MAX_TERMS,
 			'orderby'    => 'name',
 			'order'      => 'ASC',
-		] );
-		if ( is_wp_error( $terms ) || empty( $terms ) ) {
-			return '';
+		];
+		if ( $parent > 0 ) {
+			$term_args['child_of'] = $parent;
 		}
 
-		$html = '<ul class="cb-docs-navigation__categories">';
+		$terms = get_terms( $term_args );
+		if ( is_wp_error( $terms ) || empty( $terms ) ) {
+			return [ 'terms_by_parent' => [], 'docs_by_term' => [] ];
+		}
+
+		$terms_by_parent = [];
+		$term_ids        = [];
+		$allowed_terms   = [];
 		foreach ( $terms as $term ) {
 			if ( ! $term instanceof \WP_Term ) {
 				continue;
 			}
-			$html .= '<li class="cb-docs-navigation__category">';
+			$term_id = (int) $term->term_id;
+			if ( $term_id <= 0 ) {
+				continue;
+			}
+			$term_ids[] = $term_id;
+			$allowed_terms[ $term_id ] = true;
+			$terms_by_parent[ (int) $term->parent ][] = $term;
+		}
+
+		if ( empty( $term_ids ) ) {
+			return [ 'terms_by_parent' => $terms_by_parent, 'docs_by_term' => [] ];
+		}
+
+		$query = Queries::docs( [
+			'posts_per_page' => self::NAVIGATION_MAX_DOCS,
+			'no_found_rows'  => true,
+			'tax_query'      => [
+				[
+					'taxonomy'         => Taxonomies::CATEGORY,
+					'field'            => 'term_id',
+					'terms'            => $term_ids,
+					'operator'         => 'IN',
+					'include_children' => false,
+				],
+			],
+		] );
+
+		$doc_ids = [];
+		foreach ( $query->posts as $doc ) {
+			if ( $doc instanceof \WP_Post ) {
+				$doc_ids[] = (int) $doc->ID;
+			}
+		}
+		if ( empty( $doc_ids ) ) {
+			wp_reset_postdata();
+			return [ 'terms_by_parent' => $terms_by_parent, 'docs_by_term' => [] ];
+		}
+
+		$relations = wp_get_object_terms(
+			$doc_ids,
+			Taxonomies::CATEGORY,
+			[ 'fields' => 'all_with_object_id' ]
+		);
+		$doc_terms = [];
+		if ( ! is_wp_error( $relations ) ) {
+			foreach ( $relations as $relation ) {
+				if ( ! $relation instanceof \WP_Term || ! isset( $relation->object_id ) ) {
+					continue;
+				}
+				$term_id = (int) $relation->term_id;
+				$doc_id  = (int) $relation->object_id;
+				if ( $doc_id > 0 && isset( $allowed_terms[ $term_id ] ) ) {
+					$doc_terms[ $doc_id ][] = $term_id;
+				}
+			}
+		}
+
+		$docs_by_term = [];
+		foreach ( $query->posts as $doc ) {
+			if ( ! $doc instanceof \WP_Post ) {
+				continue;
+			}
+			foreach ( array_unique( $doc_terms[ (int) $doc->ID ] ?? [] ) as $term_id ) {
+				$docs_by_term[ $term_id ][] = $doc;
+			}
+		}
+		wp_reset_postdata();
+
+		return [
+			'terms_by_parent' => $terms_by_parent,
+			'docs_by_term'    => $docs_by_term,
+		];
+	}
+
+	/**
+	 * @param array<int,array<int,\WP_Term>> $terms_by_parent
+	 * @param array<int,array<int,\WP_Post>> $docs_by_term
+	 * @param array<int,bool> $visited
+	 */
+	private static function render_category_level(
+		int $parent,
+		array $terms_by_parent,
+		array $docs_by_term,
+		array &$visited,
+		int $depth = 0
+	): string {
+		if ( $depth >= self::NAVIGATION_MAX_DEPTH || empty( $terms_by_parent[ $parent ] ) ) {
+			return '';
+		}
+
+		$items = '';
+		foreach ( $terms_by_parent[ $parent ] as $term ) {
+			$term_id = (int) $term->term_id;
+			if ( $term_id <= 0 || isset( $visited[ $term_id ] ) ) {
+				continue;
+			}
+			$visited[ $term_id ] = true;
+
+			$docs_html = '';
+			foreach ( $docs_by_term[ $term_id ] ?? [] as $doc ) {
+				if ( $doc instanceof \WP_Post ) {
+					$docs_html .= '<li><a href="' . esc_url( get_permalink( $doc ) ) . '">' . esc_html( get_the_title( $doc ) ) . '</a></li>';
+				}
+			}
+			if ( '' !== $docs_html ) {
+				$docs_html = '<ul class="cb-docs-navigation__docs">' . $docs_html . '</ul>';
+			}
+
+			$children_html = self::render_category_level(
+				$term_id,
+				$terms_by_parent,
+				$docs_by_term,
+				$visited,
+				$depth + 1
+			);
+			if ( '' === $docs_html && '' === $children_html ) {
+				continue;
+			}
+
 			$term_link = get_term_link( $term );
-			$html .= is_wp_error( $term_link )
+			$label = is_wp_error( $term_link )
 				? '<span>' . esc_html( $term->name ) . '</span>'
 				: '<a href="' . esc_url( $term_link ) . '">' . esc_html( $term->name ) . '</a>';
 
-			$query = Queries::docs( [
-				'posts_per_page' => -1,
-				'tax_query'      => [
-					[
-						'taxonomy'         => Taxonomies::CATEGORY,
-						'field'            => 'term_id',
-						'terms'            => [ $term->term_id ],
-						'include_children' => false,
-					],
-				],
-			] );
-			if ( $query->have_posts() ) {
-				$html .= '<ul class="cb-docs-navigation__docs">';
-				foreach ( $query->posts as $doc ) {
-					if ( $doc instanceof \WP_Post ) {
-						$html .= '<li><a href="' . esc_url( get_permalink( $doc ) ) . '">' . esc_html( get_the_title( $doc ) ) . '</a></li>';
-					}
-				}
-				$html .= '</ul>';
-			}
-			wp_reset_postdata();
-			$html .= self::render_category_level( (int) $term->term_id );
-			$html .= '</li>';
+			$items .= '<li class="cb-docs-navigation__category">' . $label . $docs_html . $children_html . '</li>';
 		}
-		return $html . '</ul>';
+
+		return '' !== $items ? '<ul class="cb-docs-navigation__categories">' . $items . '</ul>' : '';
 	}
 
 	/** @return array<int,array{label:string,url:string}> */
