@@ -5,6 +5,7 @@ namespace CB\Docs\Admin;
 
 use CB\Core\Admin\Page as PageContract;
 use CB\Core\Admin\PageRegistry;
+use CB\Core\UI\Card;
 use CB\Core\UI\Notice;
 use CB\Docs\Settings;
 
@@ -15,18 +16,36 @@ final class SettingsPage implements PageContract {
 
 	public static function init(): void {
 		add_action( 'cb_core_register_pages', [ __CLASS__, 'register' ] );
+		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_assets' ] );
 	}
 
 	public static function register(): void {
 		PageRegistry::register(
 			new self(),
 			[
+				'foundations' => [
+					'clipboard',
+				],
 				'components' => [
 					'panels',
 					'notices',
 					'form-controls',
+					'cards',
 				],
 			]
+		);
+	}
+
+	public static function enqueue_assets( string $hook_suffix ): void {
+		if ( $hook_suffix !== PageRegistry::hook_suffix( self::SLUG ) ) {
+			return;
+		}
+
+		wp_enqueue_script_module(
+			'@cb-docs/admin-shortcodes',
+			CB_DOCS_URL . 'assets/js/admin-shortcodes.js',
+			[ '@cb-core/clipboard' ],
+			CB_DOCS_VERSION
 		);
 	}
 
@@ -108,7 +127,65 @@ final class SettingsPage implements PageContract {
 					<?php submit_button( __( 'Save URL base', 'core-blueprint-docs' ) ); ?>
 				</form>
 			</section>
+
+			<?php echo self::render_shortcodes_card(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- method escapes all consumer-owned content before passing HTML to Base Card. ?>
 		</div>
 		<?php
+	}
+
+	private static function render_shortcodes_card(): string {
+		$rows = '';
+		foreach ( self::shortcodes() as $shortcode ) {
+			$rows .= '<tr>';
+			$rows .= '<td><code>' . esc_html( $shortcode['code'] ) . '</code></td>';
+			$rows .= '<td>' . esc_html( $shortcode['description'] ) . '</td>';
+			$rows .= '<td>' . ( '' !== $shortcode['attributes'] ? '<code>' . esc_html( $shortcode['attributes'] ) . '</code>' : '<span aria-hidden="true">—</span>' ) . '</td>';
+			$rows .= '<td><button type="button" class="button cb-core-button cb-core-button--secondary cb-core-button--compact" data-cb-docs-shortcode-copy="' . esc_attr( $shortcode['code'] ) . '"><span class="cb-core-button__label">' . esc_html__( 'Copy', 'core-blueprint-docs' ) . '</span></button></td>';
+			$rows .= '</tr>';
+		}
+
+		$body  = '<p class="cb-core-card__lead">' . esc_html__( 'Use these built-in shortcodes to place Docs content in WordPress content areas. Copy a shortcode and add optional attributes where needed.', 'core-blueprint-docs' ) . '</p>';
+		$body .= '<table class="widefat"><thead><tr>';
+		$body .= '<th scope="col">' . esc_html__( 'Shortcode', 'core-blueprint-docs' ) . '</th>';
+		$body .= '<th scope="col">' . esc_html__( 'Purpose', 'core-blueprint-docs' ) . '</th>';
+		$body .= '<th scope="col">' . esc_html__( 'Optional attributes', 'core-blueprint-docs' ) . '</th>';
+		$body .= '<th scope="col">' . esc_html__( 'Action', 'core-blueprint-docs' ) . '</th>';
+		$body .= '</tr></thead><tbody>' . $rows . '</tbody></table>';
+
+		return Card::render( [
+			'title' => __( 'Shortcodes', 'core-blueprint-docs' ),
+			'body'  => $body,
+		] );
+	}
+
+	/** @return array<int,array{code:string,description:string,attributes:string}> */
+	private static function shortcodes(): array {
+		return [
+			[
+				'code'        => '[cb_docs_list]',
+				'description' => __( 'Lists published Docs ordered by menu order and title.', 'core-blueprint-docs' ),
+				'attributes'  => 'category="slug" tag="slug" limit="20" excerpt="true"',
+			],
+			[
+				'code'        => '[cb_docs_navigation]',
+				'description' => __( 'Renders the hierarchical Doc Category tree with its published Docs.', 'core-blueprint-docs' ),
+				'attributes'  => 'category="slug"',
+			],
+			[
+				'code'        => '[cb_docs_search]',
+				'description' => __( 'Renders a documentation search form with scoped Docs results.', 'core-blueprint-docs' ),
+				'attributes'  => 'placeholder="…" limit="20"',
+			],
+			[
+				'code'        => '[cb_docs_breadcrumbs]',
+				'description' => __( 'Renders archive, category and single-document breadcrumbs in Docs contexts.', 'core-blueprint-docs' ),
+				'attributes'  => '',
+			],
+			[
+				'code'        => '[cb_docs_meta]',
+				'description' => __( 'Renders documentation metadata for the current Doc or a specific Doc ID.', 'core-blueprint-docs' ),
+				'attributes'  => 'id="123"',
+			],
+		];
 	}
 }

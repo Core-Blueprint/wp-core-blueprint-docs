@@ -43,6 +43,7 @@ $expected = [
 	'src/Governance/Events.php',
 	'src/Integration/Suite.php',
 	'docs/INTEGRATION-API.md',
+	'assets/js/admin-shortcodes.js',
 ];
 foreach ( $expected as $path ) {
 	if ( ! is_file( $root . '/' . $path ) ) {
@@ -86,9 +87,34 @@ foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules
 }
 
 $settings_page = (string) file_get_contents( $root . '/src/Admin/SettingsPage.php' );
-foreach ( [ 'PageRegistry::register', "'form-controls'", 'cb_docs_save_settings' ] as $required ) {
+foreach ( [
+	'PageRegistry::register',
+	"'form-controls'",
+	"'cards'",
+	"'clipboard'",
+	'Card::render',
+	'cb_docs_save_settings',
+	'data-cb-docs-shortcode-copy',
+	'[cb_docs_list]',
+	'[cb_docs_navigation]',
+	'[cb_docs_search]',
+	'[cb_docs_breadcrumbs]',
+	'[cb_docs_meta]',
+] as $required ) {
 	if ( ! str_contains( $settings_page, $required ) ) {
 		$failures[] = 'Settings page contract is missing ' . $required . '.';
+	}
+}
+
+$shortcode_adapter = (string) file_get_contents( $root . '/assets/js/admin-shortcodes.js' );
+foreach ( [ "from '@cb-core/clipboard'", 'clipboard.enhance', 'data-cb-docs-shortcode-copy' ] as $required ) {
+	if ( ! str_contains( $shortcode_adapter, $required ) ) {
+		$failures[] = 'Shortcode clipboard adapter is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'navigator.clipboard', 'execCommand', 'document.createElement( \'textarea\'' ] as $forbidden_clipboard_logic ) {
+	if ( str_contains( $shortcode_adapter, $forbidden_clipboard_logic ) ) {
+		$failures[] = 'Docs must not implement clipboard mechanics itself: ' . $forbidden_clipboard_logic . '.';
 	}
 }
 
