@@ -103,8 +103,8 @@ function cb_docs_activate(): void {
 
 		deactivate_plugins( CB_DOCS_BASENAME );
 		wp_die(
-			esc_html( 'Core Blueprint Docs requires an active, Core API 1.x compatible Core Blueprint Base installation.' ),
-			esc_html( 'Core Blueprint dependency required' ),
+			esc_html__( 'Core Blueprint Docs requires an active, Core API 1.x compatible Core Blueprint Base installation.', 'core-blueprint-docs' ),
+			esc_html__( 'Core Blueprint dependency required', 'core-blueprint-docs' ),
 			[ 'back_link' => true ]
 		);
 	}
