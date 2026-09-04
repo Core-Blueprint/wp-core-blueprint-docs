@@ -42,7 +42,15 @@ $expected = [
 	'src/Frontend/Conditions/Documents.php',
 	'src/Governance/Events.php',
 	'src/Integration/Suite.php',
+	'src/Integration/Builders/Bootstrap.php',
+	'src/Integration/Builders/Bricks/Bootstrap.php',
+	'src/Integration/Builders/Bricks/DocumentContext.php',
+	'src/Integration/Builders/Bricks/DynamicData.php',
+	'src/Integration/Builders/Bricks/Queries.php',
+	'src/Integration/Builders/Bricks/Conditions.php',
+	'src/Integration/Builders/Bricks/GroupOrder.php',
 	'docs/INTEGRATION-API.md',
+	'docs/BRICKS.md',
 	'assets/js/admin-shortcodes.js',
 ];
 foreach ( $expected as $path ) {
@@ -150,6 +158,76 @@ $public_conditions = (string) file_get_contents( $root . '/src/Frontend/Conditio
 foreach ( [ 'is_current', 'in_category', 'has_tag', 'user_can_read', 'DocumentAccess::can_read' ] as $required ) {
 	if ( ! str_contains( $public_conditions, $required ) ) {
 		$failures[] = 'Public Docs conditions contract is missing ' . $required . '.';
+	}
+}
+
+$plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()' ] as $required ) {
+	if ( ! str_contains( $plugin, $required ) ) {
+		$failures[] = 'Plugin builder bootstrap contract is missing ' . $required . '.';
+	}
+}
+
+$builder_bootstrap = (string) file_get_contents( $root . '/src/Integration/Builders/Bootstrap.php' );
+foreach ( [ "defined( 'BRICKS_VERSION' )", "class_exists( '\\\\Bricks\\\\Query' )", 'Integration\\Builders\\Bricks\\Bootstrap::init()' ] as $required ) {
+	if ( ! str_contains( $builder_bootstrap, $required ) ) {
+		$failures[] = 'Optional builder bootstrap is missing ' . $required . '.';
+	}
+}
+
+$bricks_bootstrap = (string) file_get_contents( $root . '/src/Integration/Builders/Bricks/Bootstrap.php' );
+foreach ( [ 'DynamicData::init()', 'GroupOrder::init()', 'Queries::init()', 'Conditions::init()' ] as $required ) {
+	if ( ! str_contains( $bricks_bootstrap, $required ) ) {
+		$failures[] = 'Bricks bootstrap is missing ' . $required . '.';
+	}
+}
+
+$dynamic_data = (string) file_get_contents( $root . '/src/Integration/Builders/Bricks/DynamicData.php' );
+foreach ( [ 'bricks/dynamic_tags_list', 'bricks/dynamic_data/render_tag', 'bricks/dynamic_data/render_content', 'bricks/frontend/render_data', 'DocumentContext::value', 'Core Blueprint Docs' ] as $required ) {
+	if ( ! str_contains( $dynamic_data, $required ) ) {
+		$failures[] = 'Bricks Dynamic Data adapter is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'get_post_meta(', 'new \\WP_Query' ] as $forbidden_dynamic_logic ) {
+	if ( str_contains( $dynamic_data, $forbidden_dynamic_logic ) ) {
+		$failures[] = 'Bricks Dynamic Data must consume public Docs contracts, not domain/storage logic: ' . $forbidden_dynamic_logic . '.';
+	}
+}
+
+$bricks_queries = (string) file_get_contents( $root . '/src/Integration/Builders/Bricks/Queries.php' );
+foreach ( [ 'bricks/setup/control_options', 'bricks/query/run', 'Documents::query', 'Search::documents', 'cb_docs_documents', 'cb_docs_search_results' ] as $required ) {
+	if ( ! str_contains( $bricks_queries, $required ) ) {
+		$failures[] = 'Bricks query adapter is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'new \\WP_Query', 'get_posts(' ] as $forbidden_query_logic ) {
+	if ( str_contains( $bricks_queries, $forbidden_query_logic ) ) {
+		$failures[] = 'Bricks query adapter must delegate to public Docs providers: ' . $forbidden_query_logic . '.';
+	}
+}
+
+$bricks_conditions = (string) file_get_contents( $root . '/src/Integration/Builders/Bricks/Conditions.php' );
+foreach ( [ 'bricks/conditions/groups', 'bricks/conditions/options', 'bricks/conditions/result', 'Documents::user_can_read', 'Documents::in_category', 'Documents::has_tag' ] as $required ) {
+	if ( ! str_contains( $bricks_conditions, $required ) ) {
+		$failures[] = 'Bricks conditions adapter is missing ' . $required . '.';
+	}
+}
+
+$group_order = (string) file_get_contents( $root . '/src/Integration/Builders/Bricks/GroupOrder.php' );
+foreach ( [ "GROUP_PREFIX = 'Core Blueprint '", 'PRIORITY     = 9999', 'array_splice' ] as $required ) {
+	if ( ! str_contains( $group_order, $required ) ) {
+		$failures[] = 'Core Blueprint Bricks group-order contract is missing ' . $required . '.';
+	}
+}
+
+foreach ( cb_docs_files_with_extension( $root . '/src', 'php' ) as $file ) {
+	$relative = str_replace( $root . '/', '', $file );
+	if ( str_starts_with( $relative, 'src/Integration/Builders/' ) ) {
+		continue;
+	}
+	$content = (string) file_get_contents( $file );
+	if ( str_contains( $content, 'bricks/' ) || str_contains( $content, '\\Bricks\\' ) || str_contains( $content, 'BRICKS_VERSION' ) ) {
+		$failures[] = $relative . ' contains a Bricks reference outside the builder adapter/bootstrap boundary.';
 	}
 }
 

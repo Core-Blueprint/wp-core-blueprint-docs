@@ -10,6 +10,7 @@ use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
 use CB\Docs\Frontend\Shortcodes;
 use CB\Docs\Governance\Events;
+use CB\Docs\Integration\Builders\Bootstrap as BuildersBootstrap;
 use CB\Docs\Integration\Suite;
 
 defined( 'ABSPATH' ) || exit;
@@ -26,6 +27,7 @@ final class Plugin {
 		Suite::init();
 		Events::init();
 		Settings::init();
+		BuildersBootstrap::init();
 
 		add_action( 'init', [ PostType::class, 'register' ], 5 );
 		add_action( 'init', [ Taxonomies::class, 'register' ], 6 );
