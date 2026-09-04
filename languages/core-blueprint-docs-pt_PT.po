@@ -1,0 +1,423 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Core Blueprint Docs 0.1.0-rc1.1\\n"
+"PO-Revision-Date: 2026-09-04 12:00+0000\\n"
+"Last-Translator: Core Blueprint\\n"
+"Language-Team: pt_PT\\n"
+"Language: pt_PT\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+
+msgid "%1$d published · %2$d drafts"
+msgstr "%1$d publicados · %2$d rascunhos"
+
+msgid "Action"
+msgstr "Ação"
+
+msgid "Add New"
+msgstr "Adicionar novo"
+
+msgid "Add New Doc"
+msgstr "Adicionar novo Doc"
+
+msgid "Add New Doc Category"
+msgstr "Adicionar nova categoria de Doc"
+
+msgid "Add New Doc Tag"
+msgstr "Adicionar nova etiqueta de Doc"
+
+msgid "Add or remove doc tags"
+msgstr "Adicionar ou remover etiquetas de Docs"
+
+msgid "All Doc Categories"
+msgstr "Todas as categorias de Docs"
+
+msgid "All Doc Tags"
+msgstr "Todas as etiquetas de Docs"
+
+msgid "All Docs"
+msgstr "Todos os Docs"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Breadcrumbs"
+msgstr "Breadcrumbs"
+
+msgid "Categories"
+msgstr "Categorias"
+
+msgid "Category slug or ID"
+msgstr "Slug ou ID da categoria"
+
+msgid "Choose from the most used doc tags"
+msgstr "Escolher entre as etiquetas de Docs mais usadas"
+
+msgid "Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects."
+msgstr "Escolha a base de URL usada pelo arquivo Docs e por cada Doc individual. Alterá-la mais tarde modifica os URL públicos, pelo que ligações externas existentes podem precisar de redirecionamentos."
+
+msgid "Configure the small set of site-wide Docs settings. Documentation content and presentation remain native WordPress and builder-agnostic."
+msgstr "Configure o pequeno conjunto de definições Docs para todo o site. O conteúdo e a apresentação da documentação permanecem nativos do WordPress e independentes do builder."
+
+msgid "Copy"
+msgstr "Copiar"
+
+msgid "Core Blueprint dependency required"
+msgstr "Dependência Core Blueprint necessária"
+
+msgid "Core Blueprint Docs"
+msgstr "Core Blueprint Docs"
+
+msgid "Core Blueprint Docs cannot access the required public Base contracts."
+msgstr "Core Blueprint Docs não consegue aceder aos contratos públicos Base necessários."
+
+msgid "Core Blueprint Docs requires an active Core Blueprint Base plugin."
+msgstr "Core Blueprint Docs requer um plugin Core Blueprint Base ativo."
+
+msgid "Core Blueprint Docs requires an active, Core API 1.x compatible Core Blueprint Base installation."
+msgstr "Core Blueprint Docs requer uma instalação Core Blueprint Base ativa e compatível com Core API 1.x."
+
+msgid "Core Blueprint Docs requires Core API %1$s or a newer compatible minor version. This site provides %2$s."
+msgstr "Core Blueprint Docs requer Core API %1$s ou uma versão minor compatível mais recente. Este site disponibiliza %2$s."
+
+msgid "Core Blueprint Docs:"
+msgstr "Core Blueprint Docs:"
+
+msgid "Current"
+msgstr "Atual"
+
+msgid "Current item is a Doc"
+msgstr "O item atual é um Doc"
+
+msgid "Deprecated"
+msgstr "Obsoleto"
+
+msgid "Doc"
+msgstr "Doc"
+
+msgid "Doc Attributes"
+msgstr "Atributos do Doc"
+
+msgid "Doc Categories"
+msgstr "Categorias de Docs"
+
+msgid "Doc categories"
+msgstr "Categorias do Doc"
+
+msgid "Doc Category"
+msgstr "Categoria de Doc"
+
+msgid "Doc category"
+msgstr "Categoria de Doc"
+
+msgid "Doc content"
+msgstr "Conteúdo do Doc"
+
+msgid "Doc Details"
+msgstr "Detalhes do Doc"
+
+msgid "Doc excerpt"
+msgstr "Excerto do Doc"
+
+msgid "Doc ID"
+msgstr "ID do Doc"
+
+msgid "Doc published privately."
+msgstr "Doc publicado de forma privada."
+
+msgid "Doc published."
+msgstr "Doc publicado."
+
+msgid "Doc reverted to draft."
+msgstr "Doc revertido para rascunho."
+
+msgid "Doc scheduled."
+msgstr "Doc agendado."
+
+msgid "Doc subtitle"
+msgstr "Subtítulo do Doc"
+
+msgid "Doc Tag"
+msgstr "Etiqueta de Doc"
+
+msgid "Doc tag"
+msgstr "Etiqueta de Doc"
+
+msgid "Doc Tags"
+msgstr "Etiquetas de Docs"
+
+msgid "Doc tags"
+msgstr "Etiquetas do Doc"
+
+msgid "Doc title"
+msgstr "Título do Doc"
+
+msgid "Doc updated."
+msgstr "Doc atualizado."
+
+msgid "Doc URL"
+msgstr "URL do Doc"
+
+msgid "Doc version"
+msgstr "Versão do Doc"
+
+msgid "Docs"
+msgstr "Docs"
+
+msgid "Docs Archives"
+msgstr "Arquivos Docs"
+
+msgid "Docs document created"
+msgstr "Documento Docs criado"
+
+msgid "Docs document permanently deleted"
+msgstr "Documento Docs eliminado permanentemente"
+
+msgid "Docs document published"
+msgstr "Documento Docs publicado"
+
+msgid "Docs document restored"
+msgstr "Documento Docs restaurado"
+
+msgid "Docs document trashed"
+msgstr "Documento Docs movido para o lixo"
+
+msgid "Docs document updated"
+msgstr "Documento Docs atualizado"
+
+msgid "Docs list"
+msgstr "Lista de Docs"
+
+msgid "Docs list navigation"
+msgstr "Navegação da lista de Docs"
+
+msgid "Docs Settings"
+msgstr "Definições de Docs"
+
+msgid "Docs settings updated"
+msgstr "Definições de Docs atualizadas"
+
+msgid "Docs URL base"
+msgstr "Base de URL de Docs"
+
+msgid "Docs: Documents"
+msgstr "Docs: Documentos"
+
+msgid "Docs: Search Results"
+msgstr "Docs: Resultados da pesquisa"
+
+msgid "Documentation articles managed by Core Blueprint Docs."
+msgstr "Artigos de documentação geridos pelo Core Blueprint Docs."
+
+msgid "Documentation category not found."
+msgstr "Categoria de documentação não encontrada."
+
+msgid "Documentation navigation"
+msgstr "Navegação da documentação"
+
+msgid "Documentation status"
+msgstr "Estado da documentação"
+
+msgid "Edit Doc"
+msgstr "Editar Doc"
+
+msgid "Edit Doc Category"
+msgstr "Editar categoria de Doc"
+
+msgid "Edit Doc Tag"
+msgstr "Editar etiqueta de Doc"
+
+msgid "Example:"
+msgstr "Exemplo:"
+
+msgid "Featured doc"
+msgstr "Doc em destaque"
+
+msgid "Featured Doc"
+msgstr "Doc em destaque"
+
+msgid "Featured image"
+msgstr "Imagem de destaque"
+
+msgid "Filter docs list"
+msgstr "Filtrar lista de Docs"
+
+msgid "is"
+msgstr "é"
+
+msgid "is not"
+msgstr "não é"
+
+msgid "Last reviewed"
+msgstr "Última revisão"
+
+msgid "Lists published Docs ordered by menu order and title."
+msgstr "Lista os Docs publicados ordenados pela ordem do menu e pelo título."
+
+msgid "New Doc"
+msgstr "Novo Doc"
+
+msgid "New Doc Category Name"
+msgstr "Nome da nova categoria de Doc"
+
+msgid "New Doc Tag Name"
+msgstr "Nome da nova etiqueta de Doc"
+
+msgid "No changes needed"
+msgstr "Não são necessárias alterações"
+
+msgid "No docs found in Trash."
+msgstr "Nenhum Doc encontrado no lixo."
+
+msgid "No docs found."
+msgstr "Nenhum Doc encontrado."
+
+msgid "No documentation found."
+msgstr "Nenhuma documentação encontrada."
+
+msgid "No documentation navigation is available."
+msgstr "Não está disponível qualquer navegação da documentação."
+
+msgid "No matching documentation found."
+msgstr "Nenhuma documentação correspondente encontrada."
+
+msgid "Optional attributes"
+msgstr "Atributos opcionais"
+
+msgid "Optional product or documentation version."
+msgstr "Versão opcional do produto ou da documentação."
+
+msgid "Parent Doc Category"
+msgstr "Categoria de Doc superior"
+
+msgid "Parent Doc Category:"
+msgstr "Categoria de Doc superior:"
+
+msgid "Parent Doc:"
+msgstr "Doc superior:"
+
+msgid "Permalinks"
+msgstr "Ligações permanentes"
+
+msgid "Popular Doc Tags"
+msgstr "Etiquetas de Docs populares"
+
+msgid "Published"
+msgstr "Publicado"
+
+msgid "Purpose"
+msgstr "Objetivo"
+
+msgid "Remove featured image"
+msgstr "Remover imagem de destaque"
+
+msgid "Renders a documentation search form with scoped Docs results."
+msgstr "Apresenta um formulário de pesquisa de documentação com resultados limitados a Docs."
+
+msgid "Renders archive, category and single-document breadcrumbs in Docs contexts."
+msgstr "Apresenta breadcrumbs de arquivo, categoria e documento individual em contextos Docs."
+
+msgid "Renders documentation metadata for the current Doc or a specific Doc ID."
+msgstr "Apresenta metadados de documentação para o Doc atual ou para um ID de Doc específico."
+
+msgid "Renders the hierarchical Doc Category tree with its published Docs."
+msgstr "Apresenta a árvore hierárquica de categorias de Docs com os respetivos Docs publicados."
+
+msgid "Save URL base"
+msgstr "Guardar base de URL"
+
+msgid "Search"
+msgstr "Pesquisar"
+
+msgid "Search Doc Categories"
+msgstr "Pesquisar categorias de Docs"
+
+msgid "Search Doc Tags"
+msgstr "Pesquisar etiquetas de Docs"
+
+msgid "Search Docs"
+msgstr "Pesquisar Docs"
+
+msgid "Search documentation"
+msgstr "Pesquisar documentação"
+
+msgid "Search documentation…"
+msgstr "Pesquisar documentação…"
+
+msgid "Separate doc tags with commas"
+msgstr "Separe as etiquetas de Docs com vírgulas"
+
+msgid "Set featured image"
+msgstr "Definir imagem de destaque"
+
+msgid "Settings"
+msgstr "Definições"
+
+msgid "Shortcode"
+msgstr "Shortcode"
+
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Subtitle"
+msgstr "Subtítulo"
+
+msgid "Tag slug or ID"
+msgstr "Slug ou ID da etiqueta"
+
+msgid "Tags"
+msgstr "Etiquetas"
+
+msgid "The Docs URL base already had this value, so no rewrite refresh was necessary."
+msgstr "A base de URL de Docs já tinha este valor, pelo que não foi necessário atualizar as regras de reescrita."
+
+msgid "The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered."
+msgstr "A nova base de URL de Docs está ativa. As regras de reescrita do WordPress foram atualizadas uma vez após o registo da nova rota."
+
+msgid "These values are native WordPress post meta and can be used by builders, queries and the REST API."
+msgstr "Estes valores são metadados nativos de artigos do WordPress e podem ser usados por builders, consultas e pela API REST."
+
+msgid "Update Doc Category"
+msgstr "Atualizar categoria de Doc"
+
+msgid "Update Doc Tag"
+msgstr "Atualizar etiqueta de Doc"
+
+msgid "Updated"
+msgstr "Atualizado"
+
+msgid "URL base updated"
+msgstr "Base de URL atualizada"
+
+msgid "Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs."
+msgstr "Use um slug como docs, documentacao ou guia. Também são suportados caminhos aninhados como knowledge/docs. Uma entrada vazia ou inválida volta a docs."
+
+msgid "Use as featured image"
+msgstr "Usar como imagem de destaque"
+
+msgid "Use these built-in shortcodes to place Docs content in WordPress content areas. Copy a shortcode and add optional attributes where needed."
+msgstr "Use estes shortcodes incorporados para colocar conteúdo Docs em áreas de conteúdo do WordPress. Copie um shortcode e adicione atributos opcionais quando necessário."
+
+msgid "User can read current Doc"
+msgstr "O utilizador pode ler o Doc atual"
+
+msgid "Version"
+msgstr "Versão"
+
+msgid "View Doc"
+msgstr "Ver Doc"
+
+msgid "View Docs"
+msgstr "Ver Docs"
+
+msgid "You do not have permission to access this page."
+msgstr "Não tem permissão para aceder a esta página."
+
+msgid "You do not have permission to change Docs settings."
+msgstr "Não tem permissão para alterar as definições de Docs."
