@@ -41,7 +41,11 @@ final class Queries {
 			$search = isset( $_GET['cb_docs_q'] )
 				? sanitize_text_field( (string) wp_unslash( $_GET['cb_docs_q'] ) )
 				: ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only public search input.
-			$query = Search::documents( $search, min( 50, self::limit( $query_obj, 20 ) ) );
+			$query = Search::documents(
+				$search,
+				min( 50, self::limit( $query_obj, 20 ) ),
+				[ 'page' => self::page( $query_obj ) ]
+			);
 			return $query['items'];
 		}
 
