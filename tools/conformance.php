@@ -35,8 +35,14 @@ $expected = [
 	'src/Admin/SettingsPage.php',
 	'src/Frontend/Queries.php',
 	'src/Frontend/Shortcodes.php',
+	'src/Frontend/DocumentAccess.php',
+	'src/Frontend/Data/Document.php',
+	'src/Frontend/Queries/Documents.php',
+	'src/Frontend/Search.php',
+	'src/Frontend/Conditions/Documents.php',
 	'src/Governance/Events.php',
 	'src/Integration/Suite.php',
+	'docs/INTEGRATION-API.md',
 ];
 foreach ( $expected as $path ) {
 	if ( ! is_file( $root . '/' . $path ) ) {
@@ -90,6 +96,34 @@ $events = (string) file_get_contents( $root . '/src/Governance/Events.php' );
 foreach ( [ 'EventRegistry::register', 'Audit::record', 'docs.settings.updated' ] as $required ) {
 	if ( ! str_contains( $events, $required ) ) {
 		$failures[] = 'Governance contract is missing ' . $required . '.';
+	}
+}
+
+$public_query = (string) file_get_contents( $root . '/src/Frontend/Queries/Documents.php' );
+foreach ( [ "'post_status'         => 'publish'", "'perm'                => 'readable'", "'suppress_filters'    => false", 'MAX_PER_PAGE', "'include_ids'", "'category'", "'tag'", "'search'" ] as $required ) {
+	if ( ! str_contains( $public_query, $required ) ) {
+		$failures[] = 'Public Docs query contract is missing ' . $required . '.';
+	}
+}
+
+$public_data = (string) file_get_contents( $root . '/src/Frontend/Data/Document.php' );
+foreach ( [ 'DocumentAccess::can_read', "'content'", "'categories'", "'tags'", "'documentation_status'", "'last_reviewed'" ] as $required ) {
+	if ( ! str_contains( $public_data, $required ) ) {
+		$failures[] = 'Public Docs data contract is missing ' . $required . '.';
+	}
+}
+
+$public_search = (string) file_get_contents( $root . '/src/Frontend/Search.php' );
+foreach ( [ 'MAX_LIMIT', 'Documents::query', "'' === \$search" ] as $required ) {
+	if ( ! str_contains( $public_search, $required ) ) {
+		$failures[] = 'Public Docs search contract is missing ' . $required . '.';
+	}
+}
+
+$public_conditions = (string) file_get_contents( $root . '/src/Frontend/Conditions/Documents.php' );
+foreach ( [ 'is_current', 'in_category', 'has_tag', 'user_can_read', 'DocumentAccess::can_read' ] as $required ) {
+	if ( ! str_contains( $public_conditions, $required ) ) {
+		$failures[] = 'Public Docs conditions contract is missing ' . $required . '.';
 	}
 }
 
