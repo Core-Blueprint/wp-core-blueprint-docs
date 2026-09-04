@@ -1,0 +1,423 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Core Blueprint Docs 0.1.0-rc1.1\\n"
+"PO-Revision-Date: 2026-09-04 12:00+0000\\n"
+"Last-Translator: Core Blueprint\\n"
+"Language-Team: nl_NL\\n"
+"Language: nl_NL\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+
+msgid "%1$d published · %2$d drafts"
+msgstr "%1$d gepubliceerd · %2$d concepten"
+
+msgid "Action"
+msgstr "Actie"
+
+msgid "Add New"
+msgstr "Nieuwe toevoegen"
+
+msgid "Add New Doc"
+msgstr "Nieuw Doc toevoegen"
+
+msgid "Add New Doc Category"
+msgstr "Nieuwe Doc-categorie toevoegen"
+
+msgid "Add New Doc Tag"
+msgstr "Nieuwe Doc-tag toevoegen"
+
+msgid "Add or remove doc tags"
+msgstr "Doc-tags toevoegen of verwijderen"
+
+msgid "All Doc Categories"
+msgstr "Alle Doc-categorieën"
+
+msgid "All Doc Tags"
+msgstr "Alle Doc-tags"
+
+msgid "All Docs"
+msgstr "Alle Docs"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "Breadcrumbs"
+msgstr "Broodkruimels"
+
+msgid "Categories"
+msgstr "Categorieën"
+
+msgid "Category slug or ID"
+msgstr "Categorie-slug of ID"
+
+msgid "Choose from the most used doc tags"
+msgstr "Kies uit de meest gebruikte Doc-tags"
+
+msgid "Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects."
+msgstr "Kies de URL-basis voor het Docs-archief en elk afzonderlijk Doc. Als je dit later wijzigt, veranderen openbare URL's en kunnen bestaande externe links redirects nodig hebben."
+
+msgid "Configure the small set of site-wide Docs settings. Documentation content and presentation remain native WordPress and builder-agnostic."
+msgstr "Configureer de beperkte set sitebrede Docs-instellingen. Documentatie-inhoud en presentatie blijven native WordPress en builder-agnostisch."
+
+msgid "Copy"
+msgstr "Kopiëren"
+
+msgid "Core Blueprint dependency required"
+msgstr "Core Blueprint-afhankelijkheid vereist"
+
+msgid "Core Blueprint Docs"
+msgstr "Core Blueprint Docs"
+
+msgid "Core Blueprint Docs cannot access the required public Base contracts."
+msgstr "Core Blueprint Docs heeft geen toegang tot de vereiste publieke Base-contracten."
+
+msgid "Core Blueprint Docs requires an active Core Blueprint Base plugin."
+msgstr "Core Blueprint Docs vereist een actieve Core Blueprint Base-plugin."
+
+msgid "Core Blueprint Docs requires an active, Core API 1.x compatible Core Blueprint Base installation."
+msgstr "Core Blueprint Docs vereist een actieve Core Blueprint Base-installatie die compatibel is met Core API 1.x."
+
+msgid "Core Blueprint Docs requires Core API %1$s or a newer compatible minor version. This site provides %2$s."
+msgstr "Core Blueprint Docs vereist Core API %1$s of een nieuwere compatibele minorversie. Deze site biedt %2$s."
+
+msgid "Core Blueprint Docs:"
+msgstr "Core Blueprint Docs:"
+
+msgid "Current"
+msgstr "Actueel"
+
+msgid "Current item is a Doc"
+msgstr "Huidig item is een Doc"
+
+msgid "Deprecated"
+msgstr "Verouderd"
+
+msgid "Doc"
+msgstr "Doc"
+
+msgid "Doc Attributes"
+msgstr "Doc-attributen"
+
+msgid "Doc Categories"
+msgstr "Doc-categorieën"
+
+msgid "Doc categories"
+msgstr "Doc-categorieën"
+
+msgid "Doc Category"
+msgstr "Doc-categorie"
+
+msgid "Doc category"
+msgstr "Doc-categorie"
+
+msgid "Doc content"
+msgstr "Doc-inhoud"
+
+msgid "Doc Details"
+msgstr "Doc-details"
+
+msgid "Doc excerpt"
+msgstr "Doc-samenvatting"
+
+msgid "Doc ID"
+msgstr "Doc-ID"
+
+msgid "Doc published privately."
+msgstr "Doc privé gepubliceerd."
+
+msgid "Doc published."
+msgstr "Doc gepubliceerd."
+
+msgid "Doc reverted to draft."
+msgstr "Doc teruggezet naar concept."
+
+msgid "Doc scheduled."
+msgstr "Doc ingepland."
+
+msgid "Doc subtitle"
+msgstr "Doc-ondertitel"
+
+msgid "Doc Tag"
+msgstr "Doc-tag"
+
+msgid "Doc tag"
+msgstr "Doc-tag"
+
+msgid "Doc Tags"
+msgstr "Doc-tags"
+
+msgid "Doc tags"
+msgstr "Doc-tags"
+
+msgid "Doc title"
+msgstr "Doc-titel"
+
+msgid "Doc updated."
+msgstr "Doc bijgewerkt."
+
+msgid "Doc URL"
+msgstr "Doc-URL"
+
+msgid "Doc version"
+msgstr "Doc-versie"
+
+msgid "Docs"
+msgstr "Docs"
+
+msgid "Docs Archives"
+msgstr "Docs-archieven"
+
+msgid "Docs document created"
+msgstr "Docs-document aangemaakt"
+
+msgid "Docs document permanently deleted"
+msgstr "Docs-document permanent verwijderd"
+
+msgid "Docs document published"
+msgstr "Docs-document gepubliceerd"
+
+msgid "Docs document restored"
+msgstr "Docs-document hersteld"
+
+msgid "Docs document trashed"
+msgstr "Docs-document naar prullenbak verplaatst"
+
+msgid "Docs document updated"
+msgstr "Docs-document bijgewerkt"
+
+msgid "Docs list"
+msgstr "Docs-lijst"
+
+msgid "Docs list navigation"
+msgstr "Navigatie van Docs-lijst"
+
+msgid "Docs Settings"
+msgstr "Docs-instellingen"
+
+msgid "Docs settings updated"
+msgstr "Docs-instellingen bijgewerkt"
+
+msgid "Docs URL base"
+msgstr "Docs URL-basis"
+
+msgid "Docs: Documents"
+msgstr "Docs: Documenten"
+
+msgid "Docs: Search Results"
+msgstr "Docs: Zoekresultaten"
+
+msgid "Documentation articles managed by Core Blueprint Docs."
+msgstr "Documentatieartikelen beheerd door Core Blueprint Docs."
+
+msgid "Documentation category not found."
+msgstr "Documentatiecategorie niet gevonden."
+
+msgid "Documentation navigation"
+msgstr "Documentatienavigatie"
+
+msgid "Documentation status"
+msgstr "Documentatiestatus"
+
+msgid "Edit Doc"
+msgstr "Doc bewerken"
+
+msgid "Edit Doc Category"
+msgstr "Doc-categorie bewerken"
+
+msgid "Edit Doc Tag"
+msgstr "Doc-tag bewerken"
+
+msgid "Example:"
+msgstr "Voorbeeld:"
+
+msgid "Featured doc"
+msgstr "Uitgelicht Doc"
+
+msgid "Featured Doc"
+msgstr "Uitgelicht Doc"
+
+msgid "Featured image"
+msgstr "Uitgelichte afbeelding"
+
+msgid "Filter docs list"
+msgstr "Docs-lijst filteren"
+
+msgid "is"
+msgstr "is"
+
+msgid "is not"
+msgstr "is niet"
+
+msgid "Last reviewed"
+msgstr "Laatst beoordeeld"
+
+msgid "Lists published Docs ordered by menu order and title."
+msgstr "Toont gepubliceerde Docs gesorteerd op menuvolgorde en titel."
+
+msgid "New Doc"
+msgstr "Nieuw Doc"
+
+msgid "New Doc Category Name"
+msgstr "Naam nieuwe Doc-categorie"
+
+msgid "New Doc Tag Name"
+msgstr "Naam nieuwe Doc-tag"
+
+msgid "No changes needed"
+msgstr "Geen wijzigingen nodig"
+
+msgid "No docs found in Trash."
+msgstr "Geen Docs gevonden in de prullenbak."
+
+msgid "No docs found."
+msgstr "Geen Docs gevonden."
+
+msgid "No documentation found."
+msgstr "Geen documentatie gevonden."
+
+msgid "No documentation navigation is available."
+msgstr "Er is geen documentatienavigatie beschikbaar."
+
+msgid "No matching documentation found."
+msgstr "Geen overeenkomende documentatie gevonden."
+
+msgid "Optional attributes"
+msgstr "Optionele attributen"
+
+msgid "Optional product or documentation version."
+msgstr "Optionele product- of documentatieversie."
+
+msgid "Parent Doc Category"
+msgstr "Bovenliggende Doc-categorie"
+
+msgid "Parent Doc Category:"
+msgstr "Bovenliggende Doc-categorie:"
+
+msgid "Parent Doc:"
+msgstr "Bovenliggend Doc:"
+
+msgid "Permalinks"
+msgstr "Permalinks"
+
+msgid "Popular Doc Tags"
+msgstr "Populaire Doc-tags"
+
+msgid "Published"
+msgstr "Gepubliceerd"
+
+msgid "Purpose"
+msgstr "Doel"
+
+msgid "Remove featured image"
+msgstr "Uitgelichte afbeelding verwijderen"
+
+msgid "Renders a documentation search form with scoped Docs results."
+msgstr "Toont een documentatiezoekformulier met resultaten binnen Docs."
+
+msgid "Renders archive, category and single-document breadcrumbs in Docs contexts."
+msgstr "Toont broodkruimels voor archief-, categorie- en individuele Doc-contexten."
+
+msgid "Renders documentation metadata for the current Doc or a specific Doc ID."
+msgstr "Toont documentatiemetadata voor het huidige Doc of een specifiek Doc-ID."
+
+msgid "Renders the hierarchical Doc Category tree with its published Docs."
+msgstr "Toont de hiërarchische Doc-categorieboom met de gepubliceerde Docs."
+
+msgid "Save URL base"
+msgstr "URL-basis opslaan"
+
+msgid "Search"
+msgstr "Zoeken"
+
+msgid "Search Doc Categories"
+msgstr "Doc-categorieën zoeken"
+
+msgid "Search Doc Tags"
+msgstr "Doc-tags zoeken"
+
+msgid "Search Docs"
+msgstr "Docs zoeken"
+
+msgid "Search documentation"
+msgstr "Documentatie zoeken"
+
+msgid "Search documentation…"
+msgstr "Documentatie zoeken…"
+
+msgid "Separate doc tags with commas"
+msgstr "Scheid Doc-tags met komma's"
+
+msgid "Set featured image"
+msgstr "Uitgelichte afbeelding instellen"
+
+msgid "Settings"
+msgstr "Instellingen"
+
+msgid "Shortcode"
+msgstr "Shortcode"
+
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Subtitle"
+msgstr "Ondertitel"
+
+msgid "Tag slug or ID"
+msgstr "Tag-slug of ID"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "The Docs URL base already had this value, so no rewrite refresh was necessary."
+msgstr "De Docs URL-basis had deze waarde al, dus het vernieuwen van de rewrite-regels was niet nodig."
+
+msgid "The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered."
+msgstr "De nieuwe Docs URL-basis is actief. De WordPress rewrite-regels zijn één keer vernieuwd nadat de nieuwe route is geregistreerd."
+
+msgid "These values are native WordPress post meta and can be used by builders, queries and the REST API."
+msgstr "Deze waarden zijn native WordPress-postmeta en kunnen worden gebruikt door builders, queries en de REST API."
+
+msgid "Update Doc Category"
+msgstr "Doc-categorie bijwerken"
+
+msgid "Update Doc Tag"
+msgstr "Doc-tag bijwerken"
+
+msgid "Updated"
+msgstr "Bijgewerkt"
+
+msgid "URL base updated"
+msgstr "URL-basis bijgewerkt"
+
+msgid "Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs."
+msgstr "Gebruik een slug zoals docs, documentatie of handleiding. Geneste paden zoals knowledge/docs worden ook ondersteund. Lege of ongeldige invoer valt terug op docs."
+
+msgid "Use as featured image"
+msgstr "Als uitgelichte afbeelding gebruiken"
+
+msgid "Use these built-in shortcodes to place Docs content in WordPress content areas. Copy a shortcode and add optional attributes where needed."
+msgstr "Gebruik deze ingebouwde shortcodes om Docs-inhoud in WordPress-contentgebieden te plaatsen. Kopieer een shortcode en voeg waar nodig optionele attributen toe."
+
+msgid "User can read current Doc"
+msgstr "Gebruiker kan huidig Doc lezen"
+
+msgid "Version"
+msgstr "Versie"
+
+msgid "View Doc"
+msgstr "Doc bekijken"
+
+msgid "View Docs"
+msgstr "Docs bekijken"
+
+msgid "You do not have permission to access this page."
+msgstr "Je hebt geen toestemming om deze pagina te openen."
+
+msgid "You do not have permission to change Docs settings."
+msgstr "Je hebt geen toestemming om de Docs-instellingen te wijzigen."
