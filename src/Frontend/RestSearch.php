@@ -81,7 +81,7 @@ final class RestSearch {
 			];
 		}
 
-		return new \WP_REST_Response(
+		$response = new \WP_REST_Response(
 			[
 				'items'       => $items,
 				'total'       => max( 0, (int) $result['total'] ),
@@ -89,5 +89,8 @@ final class RestSearch {
 			],
 			200
 		);
+		$response->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
+		$response->header( 'Vary', 'Cookie' );
+		return $response;
 	}
 }
