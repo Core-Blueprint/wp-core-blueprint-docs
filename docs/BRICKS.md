@@ -52,7 +52,7 @@ Conditions are display logic only. They never grant access. The adapter calls th
 
 ## Form Actions
 
-Phase 4 does **not** register a Docs write Form Action. The current public Docs contracts expose safe reads/search/conditions but no canonical frontend mutation service. Adding direct post/meta writes inside the Bricks adapter would duplicate WordPress/Docs authorization and mutation semantics and would violate the suite rule that builder actions must call canonical builder-neutral services.
+Core Blueprint Docs `v1.0.0-rc1` does **not** register a Docs write Form Action. The current public Docs contracts expose safe reads/search/conditions but no canonical frontend mutation service. Adding direct post/meta writes inside the Bricks adapter would duplicate WordPress/Docs authorization and mutation semantics and would violate the suite rule that builder actions must call canonical builder-neutral services.
 
 WordPress Admin therefore remains the canonical Docs editing interface. A future Form Action may be added only after an explicit, authorization-aware Docs application action exists.
 
