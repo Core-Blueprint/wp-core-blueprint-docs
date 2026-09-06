@@ -1,0 +1,44 @@
+name: Docs i18n sync
+
+on:
+  push:
+    branches:
+      - docs-v1-d-i18n-closure
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Sync Docs translation catalogs
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: docs-v1-d-i18n-closure
+
+      - name: Install gettext and polib
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
+          python3 -m venv /tmp/docs-i18n-venv
+          /tmp/docs-i18n-venv/bin/pip install --disable-pip-version-check polib
+
+      - name: Sync catalogs and hard-check completeness
+        shell: bash
+        run: /tmp/docs-i18n-venv/bin/python tools/sync-i18n.py
+
+      - name: Commit generated catalogs when changed
+        shell: bash
+        run: |
+          git add languages/*.pot languages/*.po languages/*.mo
+          if git diff --cached --quiet; then
+            echo "Translation catalogs are already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "DOCS-V1-D: sync generated translation catalogs"
+          git push origin HEAD:docs-v1-d-i18n-closure
