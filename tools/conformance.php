@@ -44,6 +44,7 @@ $expected = [
 	'src/Governance/Events.php',
 	'src/Integration/Suite.php',
 	'src/Integration/Builders/Bootstrap.php',
+	'src/Integration/Builders/Readiness.php',
 	'src/Integration/Builders/Bricks/Bootstrap.php',
 	'src/Integration/Builders/Bricks/DocumentContext.php',
 	'src/Integration/Builders/Bricks/DynamicData.php',
@@ -139,11 +140,26 @@ $integration_readiness = (string) file_get_contents( $root . '/src/Admin/Integra
 foreach ( [
 	'IntegrationGrid::READY',
 	'IntegrationGrid::OPTIONAL',
-	"defined( 'BRICKS_VERSION' )",
-	"class_exists( '\\\\Bricks\\\\Query' )",
+	'BuilderReadiness::bricks_active()',
 ] as $required ) {
 	if ( ! str_contains( $integration_readiness, $required ) ) {
 		$failures[] = 'Integration readiness contract is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'BRICKS_VERSION', '\\Bricks\\' ] as $forbidden_admin_builder_reference ) {
+	if ( str_contains( $integration_readiness, $forbidden_admin_builder_reference ) ) {
+		$failures[] = 'Admin integration readiness must consume the builder-neutral readiness boundary, not Bricks directly: ' . $forbidden_admin_builder_reference . '.';
+	}
+}
+
+$builder_readiness = (string) file_get_contents( $root . '/src/Integration/Builders/Readiness.php' );
+foreach ( [
+	'bricks_active',
+	"defined( 'BRICKS_VERSION' )",
+	"class_exists( '\\\\Bricks\\\\Query' )",
+] as $required ) {
+	if ( ! str_contains( $builder_readiness, $required ) ) {
+		$failures[] = 'Builder readiness boundary is missing ' . $required . '.';
 	}
 }
 
