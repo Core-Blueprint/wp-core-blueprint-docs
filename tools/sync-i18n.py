@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import subprocess
@@ -14,7 +15,6 @@ ROOT = Path(__file__).resolve().parents[1]
 LANG_DIR = ROOT / "languages"
 ENTRY_FILE = ROOT / "core-blueprint-docs.php"
 DOMAIN = "core-blueprint-docs"
-POT = LANG_DIR / f"{DOMAIN}.pot"
 LOCALES = ("nl_NL", "de_DE", "fr_FR", "es_ES", "it_IT", "pt_PT")
 TRANSLATION_GLOB = "i18n-translations*.json"
 
@@ -41,10 +41,14 @@ def php_sources() -> list[str]:
     return sorted(files)
 
 
-def make_pot(version: str) -> None:
+def make_pot(version: str, output_dir: Path) -> Path:
     sources = php_sources()
     if not sources:
         raise RuntimeError("No PHP sources found for translation extraction.")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    pot_path = output_dir / f"{DOMAIN}.pot"
+    output_arg = str(pot_path.relative_to(ROOT)) if pot_path.is_relative_to(ROOT) else str(pot_path)
 
     run(
         "xgettext",
@@ -67,16 +71,17 @@ def make_pot(version: str) -> None:
         "--package-name=Core Blueprint Docs",
         f"--package-version={version}",
         "--output",
-        str(POT.relative_to(ROOT)),
+        output_arg,
         *sources,
     )
 
-    pot = polib.pofile(str(POT))
+    pot = polib.pofile(str(pot_path))
     pot.metadata["Project-Id-Version"] = f"Core Blueprint Docs {version}"
     pot.metadata["Content-Type"] = "text/plain; charset=UTF-8"
     pot.metadata["Content-Transfer-Encoding"] = "8bit"
     pot.metadata.pop("POT-Creation-Date", None)
-    pot.save(str(POT))
+    pot.save(str(pot_path))
+    return pot_path
 
 
 def load_translation_map() -> dict[str, dict[str, str]]:
@@ -104,22 +109,34 @@ def load_translation_map() -> dict[str, dict[str, str]]:
     return merged
 
 
-def sync_locale(locale: str, version: str, translations: dict[str, dict[str, str]]) -> list[str]:
-    po_path = LANG_DIR / f"{DOMAIN}-{locale}.po"
-    mo_path = LANG_DIR / f"{DOMAIN}-{locale}.mo"
-    if not po_path.is_file():
-        raise RuntimeError(f"Missing source catalog: {po_path.name}")
+def sync_locale(
+    locale: str,
+    version: str,
+    translations: dict[str, dict[str, str]],
+    pot_path: Path,
+    output_dir: Path,
+) -> list[str]:
+    source_po = LANG_DIR / f"{DOMAIN}-{locale}.po"
+    output_po = output_dir / f"{DOMAIN}-{locale}.po"
+    output_mo = output_dir / f"{DOMAIN}-{locale}.mo"
+    if not source_po.is_file():
+        raise RuntimeError(f"Missing source catalog: {source_po.name}")
 
-    po = polib.pofile(str(po_path))
-    pot = polib.pofile(str(POT))
+    po = polib.pofile(str(source_po))
+    pot = polib.pofile(str(pot_path))
     po.merge(pot)
+
+    for entry in list(po):
+        if entry.obsolete:
+            po.remove(entry)
+
     po.metadata["Project-Id-Version"] = f"Core Blueprint Docs {version}"
     po.metadata["Language"] = locale
     po.metadata["Content-Type"] = "text/plain; charset=UTF-8"
     po.metadata["Content-Transfer-Encoding"] = "8bit"
 
     for entry in po:
-        if entry.obsolete or entry.msgid_plural:
+        if entry.msgid_plural:
             continue
         localized = translations.get(entry.msgid, {}).get(locale)
         if localized is not None:
@@ -127,32 +144,48 @@ def sync_locale(locale: str, version: str, translations: dict[str, dict[str, str
 
     missing: list[str] = []
     for entry in po:
-        if entry.obsolete:
-            continue
         if entry.msgid_plural:
             if not entry.msgstr_plural or any(not value.strip() for value in entry.msgstr_plural.values()):
                 missing.append(entry.msgid)
         elif not entry.msgstr.strip():
             missing.append(entry.msgid)
 
-    po.save(str(po_path))
+    po.save(str(output_po))
     if not missing:
-        po.save_as_mofile(str(mo_path))
+        po.save_as_mofile(str(output_mo))
     return missing
 
 
+def resolve_output_dir(raw: str) -> Path:
+    output = Path(raw)
+    if not output.is_absolute():
+        output = ROOT / output
+    return output.resolve()
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Generate complete Core Blueprint Docs gettext catalogs.")
+    parser.add_argument(
+        "--output-dir",
+        default="build/i18n",
+        help="Directory for generated POT/PO/MO catalogs (default: build/i18n).",
+    )
+    args = parser.parse_args()
+
     if not which("xgettext"):
         print("Missing required command: xgettext", file=sys.stderr)
         return 2
 
+    output_dir = resolve_output_dir(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     version = plugin_version()
-    make_pot(version)
+    pot_path = make_pot(version, output_dir)
     translations = load_translation_map()
 
     all_missing: dict[str, list[str]] = {}
     for locale in LOCALES:
-        missing = sync_locale(locale, version, translations)
+        missing = sync_locale(locale, version, translations, pot_path, output_dir)
         if missing:
             all_missing[locale] = missing
 
@@ -164,7 +197,7 @@ def main() -> int:
                 print(f"- {msgid}", file=sys.stderr)
         return 1
 
-    print(f"Docs i18n sync: PASS ({version})")
+    print(f"Docs i18n sync: PASS ({version}) -> {output_dir}")
     return 0
 
 
