@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace CB\Docs\Admin;
 
 use CB\Core\UI\IntegrationGrid;
+use CB\Docs\Integration\Builders\Readiness as BuilderReadiness;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -11,7 +12,8 @@ defined( 'ABSPATH' ) || exit;
  * Docs-owned integration discovery and readiness descriptors.
  *
  * Base owns IntegrationGrid presentation. Docs owns only integration meaning,
- * readiness detection and customer-facing copy.
+ * readiness semantics and customer-facing copy. Builder detection stays inside
+ * the builder integration boundary.
  */
 final class IntegrationReadiness {
 	/** @return array<int,array<string,mixed>> */
@@ -21,7 +23,7 @@ final class IntegrationReadiness {
 
 	/** @return array<string,mixed> */
 	private static function bricks_item(): array {
-		$active = defined( 'BRICKS_VERSION' ) || class_exists( '\\Bricks\\Query' );
+		$active = BuilderReadiness::bricks_active();
 
 		return [
 			'name'         => __( 'Bricks Builder', 'core-blueprint-docs' ),
