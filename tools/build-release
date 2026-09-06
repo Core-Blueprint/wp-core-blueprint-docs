@@ -9,7 +9,7 @@ fail() {
   exit 1
 }
 
-for command in php python3 xgettext zip unzip git sha256sum; do
+for command in php python3 xgettext zip unzip sha256sum; do
   command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"
 done
 
@@ -32,13 +32,6 @@ grep -Fq "## v$VERSION scope" README.md \
 grep -Fq "## $VERSION" CHANGELOG.md \
   || fail "CHANGELOG public version does not match plugin header"
 
-echo "==> Synchronizing and validating translations"
-python3 tools/sync-i18n.py
-if ! git diff --quiet -- languages; then
-  git diff --name-only -- languages >&2
-  fail "translation catalogs were stale; commit generated languages/ changes and rebuild"
-fi
-
 echo "==> Linting PHP"
 while IFS= read -r -d '' file; do
   php -l "$file" >/dev/null || fail "PHP lint failed: $file"
@@ -49,14 +42,27 @@ php tools/conformance.php
 
 BUILD="$ROOT/build"
 PACKAGE_ROOT="$BUILD/core-blueprint-docs"
+PACKAGE_LANG="$PACKAGE_ROOT/languages"
 ZIP="$BUILD/core-blueprint-docs-$VERSION.zip"
 CHECKSUM="$ZIP.sha256"
 
 rm -rf "$BUILD"
-mkdir -p "$PACKAGE_ROOT"
+mkdir -p "$PACKAGE_ROOT" "$PACKAGE_LANG"
 
 cp core-blueprint-docs.php uninstall.php readme.txt README.md CHANGELOG.md "$PACKAGE_ROOT/"
-cp -R assets languages src "$PACKAGE_ROOT/"
+cp -R assets src "$PACKAGE_ROOT/"
+
+echo "==> Generating complete release translations"
+python3 tools/sync-i18n.py --output-dir "$PACKAGE_LANG"
+
+for locale in nl_NL de_DE fr_FR es_ES it_IT pt_PT; do
+  [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.po" ]] \
+    || fail "generated release package is missing $locale PO catalog"
+  [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.mo" ]] \
+    || fail "generated release package is missing $locale MO catalog"
+done
+[[ -s "$PACKAGE_LANG/core-blueprint-docs.pot" ]] \
+  || fail "generated release package is missing POT catalog"
 
 find "$PACKAGE_ROOT" -type f \( -name '.DS_Store' -o -name '*.map' \) -delete
 
