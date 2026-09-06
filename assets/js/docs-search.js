@@ -106,6 +106,7 @@
 				const link = document.createElement('a');
 				link.className = 'cb-docs-search__result';
 				link.href = item.permalink;
+				link.tabIndex = -1;
 				link.append(createText('cb-docs-search__title', item.title));
 
 				if (showCategory && Array.isArray(item.categories) && item.categories[0] && item.categories[0].name) {
@@ -134,7 +135,8 @@
 			if (request) {
 				request.abort();
 			}
-			request = new AbortController();
+			const controller = new AbortController();
+			request = controller;
 			status.textContent = loadingLabel;
 			list.replaceChildren();
 			clearActive();
@@ -154,7 +156,7 @@
 				const response = await fetch(url.toString(), {
 					method: 'GET',
 					headers: { Accept: 'application/json' },
-					signal: request.signal,
+					signal: controller.signal,
 					credentials: 'same-origin',
 				});
 				if (!response.ok) {
@@ -175,7 +177,9 @@
 				clearActive();
 				setExpanded(true);
 			} finally {
-				request = null;
+				if (request === controller) {
+					request = null;
+				}
 			}
 		};
 
