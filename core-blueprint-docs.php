@@ -3,7 +3,7 @@
  * Plugin Name:       Core Blueprint Docs
  * Plugin URI:        https://coreblueprint.io
  * Description:       Lightweight builder-agnostic documentation with native WordPress content, taxonomies and metadata.
- * Version:           0.1.0-rc1.1
+ * Version:           1.0.0-rc1
  * Author:            Core Blueprint
  * Author URI:        https://coreblueprint.io
  * License:           GPL-2.0+
@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CB_DOCS_VERSION',      '0.1.0-rc1.1' );
+define( 'CB_DOCS_VERSION',      '1.0.0-rc1' );
 define( 'CB_DOCS_REQUIRED_API', '1.0' );
 define( 'CB_DOCS_FILE',         __FILE__ );
 define( 'CB_DOCS_DIR',          plugin_dir_path( __FILE__ ) );

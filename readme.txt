@@ -3,7 +3,7 @@ Contributors: coreblueprint
 Tags: documentation, knowledge base, docs, gutenberg, builder
 Requires at least: 7.0
 Requires PHP: 8.4
-Stable tag: 0.1.0-rc1.1
+Stable tag: 1.0.0-rc1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,9 @@ Lightweight builder-agnostic documentation using native WordPress content, taxon
 
 Core Blueprint Docs provides a ready-made native WordPress documentation model so sites can start authoring immediately without manually configuring a custom post type, taxonomies and common documentation fields.
 
-Docs are normal WordPress content and can be edited in Gutenberg or consumed by builders such as Bricks without a builder-specific storage layer.
+Docs are normal WordPress content and can be edited in Gutenberg, consumed through builder-neutral frontend contracts and used by optional builder adapters. Bricks is the first supported adapter and is never required for Docs to function.
 
-The Docs URL base is configurable under Core Blueprint > Docs. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported.
+The Docs URL base is configurable under Core Blueprint > Docs > General. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported.
 
 Core Blueprint Base with Core API 1.0 is required.
 
@@ -25,7 +25,7 @@ Core Blueprint Base with Core API 1.0 is required.
 2. Upload the canonical `core-blueprint-docs` plugin folder or release ZIP.
 3. Activate Core Blueprint Docs.
 4. Open Docs in WordPress admin and start authoring.
-5. Optionally open Core Blueprint > Docs to change the public URL base.
+5. Optionally open Core Blueprint > Docs to review Overview, General and Integrations.
 
 == Shortcodes ==
 
@@ -37,9 +37,10 @@ Core Blueprint Base with Core API 1.0 is required.
 
 == Changelog ==
 
-= 0.1.0-rc1.1 =
-* Added configurable Docs URL base and Core Admin settings page.
-* Added safe deferred rewrite flushing and settings governance auditing.
-
-= 0.1.0-rc1 =
-* Initial release candidate.
+= 1.0.0-rc1 =
+* First public release candidate.
+* Added native Docs content, taxonomies, metadata, shortcodes and Governance lifecycle auditing.
+* Added Golden Core Admin Overview, General and Integrations information architecture.
+* Added builder-neutral data, query and condition contracts with an optional Bricks adapter.
+* Added configurable Docs URL base with safe deferred rewrite flushing.
+* Added reproducible conformance, localization and release packaging tooling.
