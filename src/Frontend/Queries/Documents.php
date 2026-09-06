@@ -45,7 +45,9 @@ final class Documents {
 
 		$search = sanitize_text_field( trim( self::scalar_string( $args['search'] ?? '' ) ) );
 		if ( '' !== $search ) {
-			$query_args['s'] = $search;
+			$query_args['s']       = $search;
+			$query_args['orderby'] = 'relevance';
+			$query_args['order']   = 'DESC';
 		}
 
 		$category = sanitize_title( self::scalar_string( $args['category'] ?? '' ) );
