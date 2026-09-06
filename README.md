@@ -20,13 +20,15 @@ It provides a native WordPress documentation content model that can be edited wi
   - `cb_docs_featured`
 - WP-native Doc Details metabox for documentation fields.
 - Builder-neutral frontend data, query, search and condition contracts.
+- Relevance-ordered live Docs search with a read-only REST endpoint and normal GET fallback.
 - Builder-agnostic shortcodes.
-- Optional Bricks adapter for Dynamic Data, custom Queries and Conditions.
+- Optional Bricks adapter for Dynamic Data, custom Queries, Conditions and a dedicated Docs Search element.
 - Hard dependency on the Core Blueprint Base public API `1.0` and the public Base contracts Docs consumes.
 - Canonical Core Blueprint ExtensionRegistry and health registration.
 - Canonical Governance events through `EventRegistry` and `Audit::record()`.
 - No direct Core Blueprint Access dependency.
 - No custom database tables or proprietary field storage.
+- No search analytics, search-history storage or user tracking.
 
 ## Admin workflow
 
@@ -57,6 +59,21 @@ Changing the URL base marks rewrite rules dirty. Docs waits until the next `init
 
 Changing the URL base changes public archive and single URLs. Existing external links may therefore need redirects.
 
+## Search architecture
+
+`CB\Docs\Frontend\Search` is the canonical bounded search provider. Search queries delegate to the public Docs query contract and use WordPress relevance ordering while keeping normal WordPress filters enabled so compatible access policy remains in the query path.
+
+The frontend search component is progressive enhancement:
+
+- `[cb_docs_search]` renders a normal GET search form and server-side results.
+- When JavaScript is available, debounced live requests use the public read-only Docs search REST endpoint.
+- Live responses contain only result data needed by the search UI, not full document content.
+- Stale requests are aborted when the query changes.
+- Arrow keys, Enter and Escape support keyboard navigation.
+- If JavaScript or the endpoint is unavailable, the GET form remains functional.
+
+Docs does not record search terms, IP addresses, user agents, search histories or analytics events.
+
 ## Builder architecture
 
 Docs remains builder-neutral. The canonical frontend contracts live outside any builder adapter and own data projection, querying, search, conditions and access-aware document resolution.
@@ -66,9 +83,12 @@ The Bricks integration is optional and thin. When Bricks is active, Docs exposes
 - Core Blueprint Docs Dynamic Data tags;
 - Docs document and search Queries;
 - Docs Conditions;
+- a dedicated **Docs Search** element backed by the same builder-neutral search component as the shortcode;
 - Core Blueprint group ordering and Bricks loop/document context support.
 
 The Bricks adapter delegates to the builder-neutral Docs providers. It does not own storage, authorization, business logic or independent query policy. Sites without Bricks continue to use the same Docs domain through WordPress, themes, shortcodes or future builder adapters.
+
+Core Blueprint Docs intentionally does not duplicate generic builder features. Grids, cards, taxonomy presentation, table-of-contents layouts and other general composition remain the responsibility of Bricks or the active theme. Dedicated builder elements are reserved for Docs-specific behavior.
 
 See [`docs/BRICKS.md`](docs/BRICKS.md) and [`docs/INTEGRATION-API.md`](docs/INTEGRATION-API.md) for repository-side integration documentation.
 
@@ -102,6 +122,8 @@ See [`docs/SHORTCODES.md`](docs/SHORTCODES.md).
 
 Autosaves, revisions and auto-drafts are excluded. Multiple document-field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list. URL-base changes are recorded as settings Governance events.
 
+Search requests do not create Governance events or analytics records.
+
 ## Requirements
 
 - WordPress 7.0+
@@ -115,6 +137,7 @@ If Base is missing or incompatible, Docs remains inert. Interactive activation i
 ```bash
 php tools/conformance.php
 find . -type f -name '*.php' -not -path './build/*' -print0 | xargs -0 -n1 php -l
+for file in assets/js/*.js; do node --check "$file"; done
 python3 tools/sync-i18n.py
 bash tools/build-release
 ```
