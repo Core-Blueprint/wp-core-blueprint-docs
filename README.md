@@ -2,13 +2,13 @@
 
 Core Blueprint Docs is a lightweight, builder-agnostic documentation extension for the Core Blueprint WordPress suite.
 
-It exists to remove setup work: activate the plugin and immediately get a native WordPress documentation content model that can be edited with Gutenberg and queried or templated by Bricks, another builder, a theme, REST consumers or normal WordPress code.
+It provides a native WordPress documentation content model that can be edited with Gutenberg and consumed by shortcodes, themes, normal WordPress code, REST consumers and optional builder adapters.
 
-## v0.1.0-rc1.1 scope
+## v1.0.0-rc1 scope
 
 - Native public `cb_doc` post type.
 - Configurable Docs URL base with `docs` as the default.
-- Core Admin settings page for the URL base.
+- Golden Core Admin page with `Overview → General → Integrations`.
 - Gutenberg and standard WordPress support for title, content, excerpt, author, featured image, revisions, custom fields, comments and menu order.
 - Hierarchical `cb_doc_category` taxonomy.
 - Non-hierarchical `cb_doc_tag` taxonomy.
@@ -18,20 +18,33 @@ It exists to remove setup work: activate the plugin and immediately get a native
   - `cb_docs_version`
   - `cb_docs_last_reviewed`
   - `cb_docs_featured`
-- WP-native Doc Details metabox for those standard documentation fields.
-- Minimal builder-agnostic shortcodes.
-- Hard dependency on the Core Blueprint Base public API `1.0`.
+- WP-native Doc Details metabox for documentation fields.
+- Builder-neutral frontend data, query, search and condition contracts.
+- Builder-agnostic shortcodes.
+- Optional Bricks adapter for Dynamic Data, custom Queries and Conditions.
+- Hard dependency on the Core Blueprint Base public API `1.0` and the public Base contracts Docs consumes.
 - Canonical Core Blueprint ExtensionRegistry and health registration.
 - Canonical Governance events through `EventRegistry` and `Audit::record()`.
 - No direct Core Blueprint Access dependency.
-- No Bricks-specific runtime integration.
 - No custom database tables or proprietary field storage.
+
+## Admin workflow
+
+Core Blueprint owns the shared Core Admin presentation. Docs owns its domain semantics and keeps operational content management WordPress-native.
+
+Under **Core Blueprint → Docs**:
+
+- **Overview** shows Docs, draft, category and tag metrics plus the shortcode reference.
+- **General** owns site-wide Docs configuration such as the public URL base.
+- **Integrations** reports optional integration readiness through the Base `IntegrationGrid` contract.
+
+Actual Docs, Categories and Tags remain on their normal WordPress content screens.
 
 ## Permalinks
 
 The default archive is `/docs/` and individual documents use `/docs/{doc-slug}/`.
 
-Under **Core Blueprint → Docs**, administrators can change the URL base to values such as:
+Under **Core Blueprint → Docs → General**, administrators can change the URL base to values such as:
 
 - `documentation`
 - `handleiding`
@@ -44,24 +57,28 @@ Changing the URL base marks rewrite rules dirty. Docs waits until the next `init
 
 Changing the URL base changes public archive and single URLs. Existing external links may therefore need redirects.
 
-## Builder workflow
+## Builder architecture
 
-The intended builder workflow is deliberately native:
+Docs remains builder-neutral. The canonical frontend contracts live outside any builder adapter and own data projection, querying, search, conditions and access-aware document resolution.
 
-1. Query the `cb_doc` post type.
-2. Query `cb_doc_category` and `cb_doc_tag` where needed.
-3. Read normal WordPress fields and the registered `cb_docs_*` post meta.
-4. Build archive and single templates in the builder of choice.
+The Bricks integration is optional and thin. When Bricks is active, Docs exposes:
 
-Bricks and other builders do not need a Core Blueprint Docs adapter when they can consume normal WordPress post types, taxonomies and meta.
+- Core Blueprint Docs Dynamic Data tags;
+- Docs document and search Queries;
+- Docs Conditions;
+- Core Blueprint group ordering and Bricks loop/document context support.
+
+The Bricks adapter delegates to the builder-neutral Docs providers. It does not own storage, authorization, business logic or independent query policy. Sites without Bricks continue to use the same Docs domain through WordPress, themes, shortcodes or future builder adapters.
+
+See [`docs/BRICKS.md`](docs/BRICKS.md) and [`docs/INTEGRATION-API.md`](docs/INTEGRATION-API.md) for repository-side integration documentation.
 
 ## Core Blueprint Access
 
 Docs does not call or depend on Core Blueprint Access.
 
-Core Blueprint Access discovers public WordPress post types generically. Because `cb_doc` is a normal public post type, it becomes available in Access' content-type configuration. The administrator decides whether Docs belongs to the protected Access scope.
+Core Blueprint Access discovers public WordPress post types generically. Because `cb_doc` is a normal public post type, it becomes available in Access content-type configuration. The administrator decides whether Docs belongs to the protected Access scope.
 
-Shortcode queries keep WordPress filters enabled, so Access can apply its normal query policy when Docs is enrolled in Access.
+Docs queries keep WordPress filters enabled so external access policy can participate through normal WordPress contracts.
 
 ## Shortcodes
 
@@ -83,13 +100,13 @@ See [`docs/SHORTCODES.md`](docs/SHORTCODES.md).
 - `docs.document.deleted`
 - `docs.settings.updated`
 
-Autosaves, revisions and auto-drafts are excluded. Multiple document-field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list. URL-base changes are recorded as settings governance events.
+Autosaves, revisions and auto-drafts are excluded. Multiple document-field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list. URL-base changes are recorded as settings Governance events.
 
 ## Requirements
 
 - WordPress 7.0+
 - PHP 8.4+
-- Core Blueprint Base with Core API `1.0` or a compatible newer `1.x` minor
+- Core Blueprint Base with Core API `1.0` or a compatible newer `1.x` minor and the public Base contracts Docs consumes
 
 If Base is missing or incompatible, Docs remains inert. Interactive activation is refused rather than creating a standalone fallback runtime.
 
@@ -98,6 +115,8 @@ If Base is missing or incompatible, Docs remains inert. Interactive activation i
 ```bash
 php tools/conformance.php
 find . -type f -name '*.php' -not -path './build/*' -print0 | xargs -0 -n1 php -l
+python3 tools/sync-i18n.py
+bash tools/build-release
 ```
 
-Build instructions live in [`tools/README.md`](tools/README.md).
+Release tooling is documented in [`tools/README.md`](tools/README.md).
