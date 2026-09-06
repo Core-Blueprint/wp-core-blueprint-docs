@@ -9,6 +9,7 @@ use CB\Docs\Admin\SettingsPage;
 use CB\Docs\Content\Meta;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
+use CB\Docs\Frontend\RestSearch;
 use CB\Docs\Frontend\Shortcodes;
 use CB\Docs\Governance\Events;
 use CB\Docs\Integration\Builders\Bootstrap as BuildersBootstrap;
@@ -29,6 +30,7 @@ final class Plugin {
 		Events::init();
 		Settings::init();
 		BuildersBootstrap::init();
+		RestSearch::init();
 
 		add_action( 'init', [ PostType::class, 'register' ], 5 );
 		add_action( 'init', [ Taxonomies::class, 'register' ], 6 );
