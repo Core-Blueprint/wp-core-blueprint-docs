@@ -15,6 +15,8 @@ Core Blueprint Docs provides a ready-made native WordPress documentation model s
 
 Docs are normal WordPress content and can be edited in Gutenberg, consumed through builder-neutral frontend contracts and used by optional builder adapters. Bricks is the first supported adapter and is never required for Docs to function.
 
+Docs Search provides relevance-ordered live documentation search with keyboard support and a normal GET fallback. The same search component is available through `[cb_docs_search]` and the optional Bricks Docs Search element. Docs does not store search analytics or search histories.
+
 The Docs URL base is configurable under Core Blueprint > Docs > General. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported.
 
 Core Blueprint Base with Core API 1.0 is required.
@@ -40,6 +42,7 @@ Core Blueprint Base with Core API 1.0 is required.
 = 1.0.0-rc1 =
 * First public release candidate.
 * Added native Docs content, taxonomies, metadata, shortcodes and Governance lifecycle auditing.
+* Added live relevance-ordered Docs search with progressive GET fallback and an optional Bricks Docs Search element.
 * Added Golden Core Admin Overview, General and Integrations information architecture.
 * Added builder-neutral data, query and condition contracts with an optional Bricks adapter.
 * Added configurable Docs URL base with safe deferred rewrite flushing.
