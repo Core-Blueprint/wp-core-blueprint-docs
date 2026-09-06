@@ -14,12 +14,15 @@ Docs requires Core Blueprint Base and consumes only public Base contracts:
 - `CB\Core\ExtensionRegistry`
 - `CB\Core\Admin\PageRegistry`
 - `CB\Core\Admin\Page`
+- `CB\Core\UI\Card`
+- `CB\Core\UI\Notice`
+- `CB\Core\UI\IntegrationGrid`
 - `CB\Core\Governance\EventRegistry`
 - `CB\Core\Governance\Audit`
 
-The Docs settings page is registered through Core Admin `PageRegistry` and declares semantic Base components instead of private asset handles.
+The Docs Core Admin page is registered through `PageRegistry` and declares semantic Base components instead of private asset handles. Base owns shared presentation; Docs owns its information architecture and domain semantics.
 
-Docs does not use Base-private assets, repositories or AuditLog internals.
+Docs does not use Base-private assets, repositories, `PageBase` or AuditLog internals.
 
 ## Content Models boundary
 
@@ -41,6 +44,8 @@ Activation and deactivation remain explicit rewrite-maintenance points. No reque
 
 Docs has no direct dependency on Core Blueprint Access. Access may attach its taxonomy to `cb_doc` through its generic public-post-type scope.
 
-## Presentation boundary
+## Builder and presentation boundary
 
-WordPress data is the primary interface. The shortcodes are a minimal fallback/presentation API and intentionally produce small semantic markup with `cb-docs-*` classes. Docs does not take over theme templates and does not ship a builder-specific integration.
+WordPress data and the builder-neutral Docs frontend contracts are the primary interface. Shortcodes are a minimal fallback/presentation API and intentionally produce small semantic markup with `cb-docs-*` classes. Docs does not take over theme templates.
+
+Docs ships an optional Bricks adapter under `src/Integration/Builders/`. The adapter exposes Docs data, queries and conditions to Bricks, but delegates storage, access-aware reads, query policy and condition semantics to the builder-neutral Docs frontend layer. Bricks is never required for Docs to function and future builder adapters must be addable without redesigning the Docs domain.
