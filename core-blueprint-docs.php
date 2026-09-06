@@ -3,7 +3,7 @@
  * Plugin Name:       Core Blueprint Docs
  * Plugin URI:        https://coreblueprint.io
  * Description:       Lightweight builder-agnostic documentation with native WordPress content, taxonomies and metadata.
- * Version:           0.1.0-rc1.1
+ * Version:           1.0.0-rc1
  * Author:            Core Blueprint
  * Author URI:        https://coreblueprint.io
  * License:           GPL-2.0+
@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CB_DOCS_VERSION',      '0.1.0-rc1.1' );
+define( 'CB_DOCS_VERSION',      '1.0.0-rc1' );
 define( 'CB_DOCS_REQUIRED_API', '1.0' );
 define( 'CB_DOCS_FILE',         __FILE__ );
 define( 'CB_DOCS_DIR',          plugin_dir_path( __FILE__ ) );
@@ -71,14 +71,14 @@ function cb_docs_base_ready(): bool {
 		return false;
 	}
 
-	return class_exists( '\\CB\\Core\\ExtensionRegistry' )
-		&& class_exists( '\\CB\\Core\\Admin\\PageRegistry' )
-		&& interface_exists( '\\CB\\Core\\Admin\\Page' )
-		&& class_exists( '\\CB\\Core\\UI\\Card' )
-		&& class_exists( '\\CB\\Core\\UI\\Notice' )
-		&& class_exists( '\\CB\\Core\\UI\\IntegrationGrid' )
-		&& class_exists( '\\CB\\Core\\Governance\\EventRegistry' )
-		&& class_exists( '\\CB\\Core\\Governance\\Audit' );
+	return class_exists( '\CB\Core\ExtensionRegistry' )
+		&& class_exists( '\CB\Core\Admin\PageRegistry' )
+		&& interface_exists( '\CB\Core\Admin\Page' )
+		&& class_exists( '\CB\Core\UI\Card' )
+		&& class_exists( '\CB\Core\UI\Notice' )
+		&& class_exists( '\CB\Core\UI\IntegrationGrid' )
+		&& class_exists( '\CB\Core\Governance\EventRegistry' )
+		&& class_exists( '\CB\Core\Governance\Audit' );
 }
 
 function cb_docs_dependency_message(): string {
@@ -115,7 +115,7 @@ function cb_docs_activate(): void {
 	\CB\Docs\Install::activate();
 }
 register_activation_hook( __FILE__, 'cb_docs_activate' );
-register_deactivation_hook( __FILE__, [ '\\CB\\Docs\\Install', 'deactivate' ] );
+register_deactivation_hook( __FILE__, [ '\CB\Docs\Install', 'deactivate' ] );
 
 add_action( 'plugins_loaded', static function (): void {
 	if ( ! cb_docs_base_ready() ) {
