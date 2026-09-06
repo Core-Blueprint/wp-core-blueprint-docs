@@ -1,40 +1,88 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PLUGIN_SLUG="core-blueprint-docs"
-ENTRY_FILE="$ROOT_DIR/core-blueprint-docs.php"
-VERSION="$(php -r '$s=file_get_contents($argv[1]); preg_match("/Version:\\s+([^\\r\\n]+)/", $s, $m); echo trim($m[1] ?? "");' "$ENTRY_FILE")"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
 
-if [[ -z "$VERSION" ]]; then
-  echo "Unable to determine plugin version." >&2
+fail() {
+  printf 'Docs release build failed: %s\n' "$*" >&2
   exit 1
+}
+
+for command in php python3 xgettext zip unzip git sha256sum; do
+  command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"
+done
+
+php -r 'exit(version_compare(PHP_VERSION, "8.4", ">=") ? 0 : 1);' \
+  || fail "PHP 8.4 or newer is required to build Docs"
+
+python3 -c 'import polib' >/dev/null 2>&1 \
+  || fail "Python package polib is required; install polib==1.2.0"
+
+VERSION="$(sed -n 's/^ \* Version:[[:space:]]*//p' core-blueprint-docs.php | head -n 1)"
+[[ -n "$VERSION" ]] || fail "could not read plugin version"
+[[ "$VERSION" == "1.0.0-rc1" ]] || fail "public release builder currently expects 1.0.0-rc1, found $VERSION"
+
+grep -Fq "define( 'CB_DOCS_VERSION',      '$VERSION' );" core-blueprint-docs.php \
+  || fail "runtime CB_DOCS_VERSION does not match plugin header"
+grep -Fq "Stable tag: $VERSION" readme.txt \
+  || fail "readme.txt Stable tag does not match plugin header"
+grep -Fq "## v$VERSION scope" README.md \
+  || fail "README public scope version does not match plugin header"
+grep -Fq "## $VERSION" CHANGELOG.md \
+  || fail "CHANGELOG public version does not match plugin header"
+
+echo "==> Synchronizing and validating translations"
+python3 tools/sync-i18n.py
+if ! git diff --quiet -- languages; then
+  git diff --name-only -- languages >&2
+  fail "translation catalogs were stale; commit generated languages/ changes and rebuild"
 fi
 
-command -v rsync >/dev/null 2>&1 || { echo "rsync is required." >&2; exit 1; }
-command -v zip >/dev/null 2>&1 || { echo "zip is required." >&2; exit 1; }
-command -v php >/dev/null 2>&1 || { echo "php is required." >&2; exit 1; }
+echo "==> Linting PHP"
+while IFS= read -r -d '' file; do
+  php -l "$file" >/dev/null || fail "PHP lint failed: $file"
+done < <(find . -path './.git' -prune -o -path './build' -prune -o -type f -name '*.php' -print0)
 
-BUILD_DIR="$ROOT_DIR/build"
-STAGE_DIR="$BUILD_DIR/$PLUGIN_SLUG"
-ZIP_PATH="$BUILD_DIR/${PLUGIN_SLUG}-${VERSION}.zip"
+echo "==> Running source conformance"
+php tools/conformance.php
 
-rm -rf "$BUILD_DIR"
-mkdir -p "$STAGE_DIR"
+BUILD="$ROOT/build"
+PACKAGE_ROOT="$BUILD/core-blueprint-docs"
+ZIP="$BUILD/core-blueprint-docs-$VERSION.zip"
+CHECKSUM="$ZIP.sha256"
 
-rsync -a \
-  --exclude='.git/' \
-  --exclude='.github/' \
-  --exclude='build/' \
-  --exclude='*.zip' \
-  "$ROOT_DIR/" "$STAGE_DIR/"
+rm -rf "$BUILD"
+mkdir -p "$PACKAGE_ROOT"
 
-find "$STAGE_DIR" -type f -name '*.php' -print0 | xargs -0 -n1 php -l >/dev/null
-php "$STAGE_DIR/tools/conformance.php" >/dev/null
+cp core-blueprint-docs.php uninstall.php readme.txt README.md CHANGELOG.md "$PACKAGE_ROOT/"
+cp -R assets languages src "$PACKAGE_ROOT/"
+
+find "$PACKAGE_ROOT" -type f \( -name '.DS_Store' -o -name '*.map' \) -delete
 
 (
-  cd "$BUILD_DIR"
-  zip -qr "$(basename "$ZIP_PATH")" "$PLUGIN_SLUG"
+  cd "$BUILD"
+  zip -X -q -r "$(basename "$ZIP")" core-blueprint-docs
+  sha256sum "$(basename "$ZIP")" > "$(basename "$CHECKSUM")"
 )
 
-echo "$ZIP_PATH"
+[[ -s "$ZIP" ]] || fail "release ZIP was not created"
+[[ -s "$CHECKSUM" ]] || fail "release checksum was not created"
+
+if unzip -Z1 "$ZIP" | grep -Eq '^core-blueprint-docs/(tests|tools|docs|\.github|build)/'; then
+  fail "developer-only files leaked into the release package"
+fi
+
+if ! unzip -Z1 "$ZIP" | grep -qx 'core-blueprint-docs/core-blueprint-docs.php'; then
+  fail "release package does not preserve the canonical core-blueprint-docs root folder"
+fi
+
+if ! unzip -Z1 "$ZIP" | grep -qx 'core-blueprint-docs/uninstall.php'; then
+  fail "release package is missing uninstall.php"
+fi
+
+if unzip -Z1 "$ZIP" | grep -Eq '(^|/)(\.git|\.github|tools|tests|docs|build)(/|$)'; then
+  fail "release package contains repository-only paths"
+fi
+
+printf 'Docs release build: PASS\nPackage: %s\nChecksum: %s\n' "$ZIP" "$CHECKSUM"
