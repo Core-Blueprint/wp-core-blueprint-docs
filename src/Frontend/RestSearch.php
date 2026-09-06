@@ -6,7 +6,7 @@ namespace CB\Docs\Frontend;
 defined( 'ABSPATH' ) || exit;
 
 final class RestSearch {
-	public const NAMESPACE = 'core-blueprint-docs/v1';
+	public const NAMESPACE = 'cb-docs/v1';
 	public const ROUTE     = '/search';
 
 	public static function init(): void {
