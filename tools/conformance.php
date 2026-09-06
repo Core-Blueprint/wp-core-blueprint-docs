@@ -94,10 +94,8 @@ foreach ( [
 		$failures[] = 'Base dependency contract is missing ' . $required . '.';
 	}
 }
-foreach ( [ 'CB\\Core\\Admin\\PageRegistry', 'CB\\Core\\Admin\\Page\'' ] as $retired_contract ) {
-	if ( str_contains( $bootstrap, $retired_contract ) ) {
-		$failures[] = 'Bootstrap retains retired settings routing contract: ' . $retired_contract . '.';
-	}
+if ( str_contains( $bootstrap, 'CB\\Core\\Admin\\PageRegistry' ) || str_contains( $bootstrap, "interface_exists( '\\\\CB\\\\Core\\\\Admin\\\\Page' )" ) ) {
+	$failures[] = 'Bootstrap retains the retired PageRegistry/Page settings routing contract.';
 }
 
 $post_type = (string) file_get_contents( $root . '/src/Content/PostType.php' );
