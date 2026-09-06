@@ -2,50 +2,78 @@
 
 ## Purpose
 
-`tools/build-release` creates a canonical installable WordPress ZIP whose single root folder is always `core-blueprint-docs/`.
+`tools/build-release` creates the canonical installable Core Blueprint Docs release package. It is fail-closed: version drift, stale localization catalogs, syntax errors, conformance failures, package-boundary leaks or checksum failures stop the build.
 
 ## Requirements
 
 - Bash
 - PHP CLI 8.4+
-- `rsync`
-- `zip`
+- Python 3
+- GNU gettext (`xgettext`)
+- Python package `polib==1.2.0`
+- `git`
+- `zip` / `unzip`
+- `sha256sum`
 
 ## Usage
 
 From the repository root:
 
 ```bash
+python3 tools/sync-i18n.py
 bash tools/build-release
 ```
 
+The build command reruns localization synchronization itself and fails if that process would change committed catalog files.
+
 ## Output
 
-The script recreates `build/` and writes:
+For the current first public release candidate the builder writes:
 
 ```text
-build/core-blueprint-docs-<version>.zip
+build/core-blueprint-docs-1.0.0-rc1.zip
+build/core-blueprint-docs-1.0.0-rc1.zip.sha256
 ```
 
-The ZIP contains exactly one plugin root folder:
+The ZIP has exactly one canonical plugin root:
 
 ```text
 core-blueprint-docs/
 ```
 
-The folder is never renamed to a branch, version or GitHub archive name.
+The plugin root is never renamed to a branch, tag, version or GitHub archive name.
+
+## Production package boundary
+
+The installable package contains only the release-facing plugin surface:
+
+- `core-blueprint-docs.php`
+- `uninstall.php`
+- `readme.txt`
+- `README.md`
+- `CHANGELOG.md`
+- `assets/`
+- `languages/`
+- `src/`
+
+Repository-only paths such as `.github/`, `tools/`, `tests/`, `docs/` and `build/` are excluded and explicitly rejected if they leak into the ZIP.
 
 ## Validation and failure behavior
 
-Before zipping, the script:
+Before a ZIP is accepted, the builder:
 
-1. verifies required command-line tools;
-2. stages the canonical plugin root;
-3. runs PHP syntax validation over every staged PHP file;
-4. runs `tools/conformance.php` against the staged source.
+1. verifies all required command-line tools and Python dependencies;
+2. requires public version `1.0.0-rc1` and checks plugin-header/runtime/readme/README/changelog consistency;
+3. synchronizes POT/PO/MO catalogs and rejects uncommitted localization drift;
+4. lints all PHP source with PHP 8.4+;
+5. runs `tools/conformance.php`;
+6. stages only the production package boundary;
+7. creates the ZIP with canonical `core-blueprint-docs/` root;
+8. rejects repository-only paths in the archive;
+9. writes a SHA256 checksum next to the ZIP.
 
-Any failed prerequisite or validation exits non-zero and no release should be treated as valid.
+Any failed prerequisite or validation exits non-zero. A package from a failed run is not a valid release artifact.
 
 ## Maintenance
 
-When runtime files or source-only files are added, review the `rsync` exclusions. The canonical plugin slug and entry filename must stay synchronized with the plugin header and repository release process.
+When runtime paths change, update the explicit copy list and package leak assertions together. When user-facing strings change, update the translation map and regenerate all six launch-locale catalogs before building. The canonical plugin slug, entry filename and public release version must remain synchronized across runtime and release metadata.
