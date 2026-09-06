@@ -117,7 +117,7 @@ Conditions are display/query helpers only. They do not grant access and never re
 
 ## Write contracts
 
-Phase 3 intentionally does **not** expose unrestricted create/update/content actions. Safe metadata/taxonomy actions may be added later behind explicit authorization and canonical application services. Generic block/content editing through builder forms remains outside this contract.
+The `v1.0.0-rc1` public contract intentionally does **not** expose unrestricted create/update/content actions. Safe metadata/taxonomy actions may be added later behind explicit authorization and canonical application services. Generic block/content editing through builder forms remains outside this contract.
 
 ## Inactive integrations
 
