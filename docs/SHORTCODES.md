@@ -23,14 +23,23 @@ Attribute:
 
 ## `[cb_docs_search]`
 
-Renders a GET search form and scoped documentation results.
+Renders the canonical Core Blueprint Docs search component.
+
+With JavaScript available, the component performs debounced live search through the public read-only Docs search endpoint. Results use the builder-neutral Docs search provider and therefore keep normal WordPress query filters and compatible access policy in the query path.
+
+Without JavaScript, or when the live endpoint is unavailable, the same form remains a normal GET search using the `cb_docs_q` query parameter. Server-rendered fallback results use the same canonical search provider.
 
 Attributes:
 
-- `placeholder="..."`
-- `limit="20"` — 1–100, default 20.
+- `placeholder="..."` — search input placeholder.
+- `limit="20"` — 1–50, default 20.
+- `min_chars="2"` — 1–10, default 2; minimum input length before live search starts.
+- `excerpt="true"` — show or hide result excerpts.
+- `show_category="true"` — show or hide the first result category.
+- `category="slug"` — optional category scope.
+- `tag="slug"` — optional tag scope.
 
-The query parameter is `cb_docs_q`.
+Search requests are not analytics events and Docs does not store search terms, IP addresses, user agents or search histories.
 
 ## `[cb_docs_breadcrumbs]`
 
