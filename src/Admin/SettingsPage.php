@@ -6,13 +6,20 @@ namespace CB\Docs\Admin;
 use CB\Core\Admin\Page as PageContract;
 use CB\Core\Admin\PageRegistry;
 use CB\Core\UI\Card;
+use CB\Core\UI\IntegrationGrid;
 use CB\Core\UI\Notice;
+use CB\Docs\Content\PostType;
+use CB\Docs\Content\Taxonomies;
 use CB\Docs\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
 final class SettingsPage implements PageContract {
 	public const SLUG = 'core-blueprint-docs-settings';
+
+	private const TAB_OVERVIEW     = 'overview';
+	private const TAB_GENERAL      = 'general';
+	private const TAB_INTEGRATIONS = 'integrations';
 
 	public static function init(): void {
 		add_action( 'cb_core_register_pages', [ __CLASS__, 'register' ] );
@@ -31,6 +38,10 @@ final class SettingsPage implements PageContract {
 					'notices',
 					'form-controls',
 					'cards',
+					'integration-grid',
+					'metric-tiles',
+					'nav-tabs',
+					'status',
 				],
 			]
 		);
@@ -54,7 +65,7 @@ final class SettingsPage implements PageContract {
 	}
 
 	public function title(): string {
-		return __( 'Docs Settings', 'core-blueprint-docs' );
+		return __( 'Docs', 'core-blueprint-docs' );
 	}
 
 	public function menu_title(): string {
@@ -74,63 +85,167 @@ final class SettingsPage implements PageContract {
 			wp_die( esc_html__( 'You do not have permission to access this page.', 'core-blueprint-docs' ) );
 		}
 
+		$tab = self::current_tab();
+		?>
+		<div class="wrap cb-core-wrap cb-core-page cb-docs-settings-wrap">
+			<p class="cb-core-eyebrow"><?php esc_html_e( 'Core Blueprint', 'core-blueprint-docs' ); ?></p>
+			<h1 class="cb-core-title"><?php esc_html_e( 'Docs', 'core-blueprint-docs' ); ?></h1>
+			<p class="cb-core-intro">
+				<?php esc_html_e( 'Manage documentation health, URL behavior, frontend composition and optional integrations. Documentation content remains native WordPress and is managed from the Docs content screen.', 'core-blueprint-docs' ); ?>
+			</p>
+
+			<?php self::render_tabs( $tab ); ?>
+
+			<?php
+			switch ( $tab ) {
+				case self::TAB_GENERAL:
+					self::render_general();
+					break;
+				case self::TAB_INTEGRATIONS:
+					self::render_integrations();
+					break;
+				case self::TAB_OVERVIEW:
+				default:
+					self::render_overview();
+					break;
+			}
+			?>
+		</div>
+		<?php
+	}
+
+	/** @return array<string,string> */
+	private static function tabs(): array {
+		return [
+			self::TAB_OVERVIEW     => __( 'Overview', 'core-blueprint-docs' ),
+			self::TAB_GENERAL      => __( 'General', 'core-blueprint-docs' ),
+			self::TAB_INTEGRATIONS => __( 'Integrations', 'core-blueprint-docs' ),
+		];
+	}
+
+	private static function current_tab(): string {
+		$tab = isset( $_GET['tab'] )
+			? sanitize_key( (string) wp_unslash( $_GET['tab'] ) )
+			: self::TAB_OVERVIEW; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation-only state.
+
+		return array_key_exists( $tab, self::tabs() ) ? $tab : self::TAB_OVERVIEW;
+	}
+
+	private static function tab_url( string $tab ): string {
+		if ( ! array_key_exists( $tab, self::tabs() ) ) {
+			$tab = self::TAB_OVERVIEW;
+		}
+
+		return add_query_arg(
+			[
+				'page' => self::SLUG,
+				'tab'  => $tab,
+			],
+			admin_url( 'admin.php' )
+		);
+	}
+
+	private static function render_tabs( string $active_tab ): void {
+		?>
+		<nav class="nav-tab-wrapper cb-core-tab-wrapper" aria-label="<?php echo esc_attr__( 'Docs sections', 'core-blueprint-docs' ); ?>">
+			<?php foreach ( self::tabs() as $key => $label ) : ?>
+				<a class="nav-tab <?php echo $active_tab === $key ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( self::tab_url( $key ) ); ?>"<?php echo $active_tab === $key ? ' aria-current="page"' : ''; ?>><?php echo esc_html( $label ); ?></a>
+			<?php endforeach; ?>
+		</nav>
+		<?php
+	}
+
+	private static function render_overview(): void {
+		$counts = wp_count_posts( PostType::TYPE );
+		$published = (int) ( $counts->publish ?? 0 );
+		$drafts    = (int) ( $counts->draft ?? 0 );
+		$categories = wp_count_terms( [
+			'taxonomy'   => Taxonomies::CATEGORY,
+			'hide_empty' => false,
+		] );
+		$tags = wp_count_terms( [
+			'taxonomy'   => Taxonomies::TAG,
+			'hide_empty' => false,
+		] );
+		$categories = is_wp_error( $categories ) ? 0 : (int) $categories;
+		$tags       = is_wp_error( $tags ) ? 0 : (int) $tags;
+		?>
+		<div class="cb-core-tiles" aria-label="<?php echo esc_attr__( 'Docs at a glance', 'core-blueprint-docs' ); ?>">
+			<a class="cb-core-tile cb-core-tile--metric cb-core-tile--navigation cb-core-tile--neutral" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . PostType::TYPE ) ); ?>">
+				<span class="cb-core-tile__label"><?php esc_html_e( 'Published Docs', 'core-blueprint-docs' ); ?></span>
+				<strong class="cb-core-tile__value"><?php echo esc_html( number_format_i18n( $published ) ); ?></strong>
+			</a>
+			<a class="cb-core-tile cb-core-tile--metric cb-core-tile--navigation cb-core-tile--neutral" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . PostType::TYPE . '&post_status=draft' ) ); ?>">
+				<span class="cb-core-tile__label"><?php esc_html_e( 'Drafts', 'core-blueprint-docs' ); ?></span>
+				<strong class="cb-core-tile__value"><?php echo esc_html( number_format_i18n( $drafts ) ); ?></strong>
+			</a>
+			<a class="cb-core-tile cb-core-tile--metric cb-core-tile--navigation cb-core-tile--neutral" href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=' . Taxonomies::CATEGORY . '&post_type=' . PostType::TYPE ) ); ?>">
+				<span class="cb-core-tile__label"><?php esc_html_e( 'Categories', 'core-blueprint-docs' ); ?></span>
+				<strong class="cb-core-tile__value"><?php echo esc_html( number_format_i18n( $categories ) ); ?></strong>
+			</a>
+			<a class="cb-core-tile cb-core-tile--metric cb-core-tile--navigation cb-core-tile--neutral" href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=' . Taxonomies::TAG . '&post_type=' . PostType::TYPE ) ); ?>">
+				<span class="cb-core-tile__label"><?php esc_html_e( 'Tags', 'core-blueprint-docs' ); ?></span>
+				<strong class="cb-core-tile__value"><?php echo esc_html( number_format_i18n( $tags ) ); ?></strong>
+			</a>
+		</div>
+
+		<?php echo self::render_shortcodes_card(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- method escapes consumer content before passing HTML to Base Card. ?>
+		<?php
+	}
+
+	private static function render_general(): void {
 		$rewrite_base = Settings::rewrite_base();
 		$example      = home_url( '/' . $rewrite_base . '/example-doc/' );
 		$updated      = isset( $_GET['cb_docs_updated'] )
 			? sanitize_key( (string) wp_unslash( $_GET['cb_docs_updated'] ) )
 			: ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only redirect state.
 		?>
-		<div class="wrap cb-core-wrap cb-docs-settings-wrap">
-			<h1 class="cb-core-title"><?php esc_html_e( 'Core Blueprint Docs', 'core-blueprint-docs' ); ?></h1>
-			<p class="cb-core-intro">
-				<?php esc_html_e( 'Configure the small set of site-wide Docs settings. Documentation content and presentation remain native WordPress and builder-agnostic.', 'core-blueprint-docs' ); ?>
-			</p>
+		<?php if ( 'changed' === $updated ) : ?>
+			<?php
+			echo Notice::render( [
+				'variant' => Notice::SUCCESS,
+				'title'   => __( 'URL base updated', 'core-blueprint-docs' ),
+				'message' => __( 'The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered.', 'core-blueprint-docs' ),
+			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
+			?>
+		<?php elseif ( 'unchanged' === $updated ) : ?>
+			<?php
+			echo Notice::render( [
+				'variant' => Notice::INFO,
+				'title'   => __( 'No changes needed', 'core-blueprint-docs' ),
+				'message' => __( 'The Docs URL base already had this value, so no rewrite refresh was necessary.', 'core-blueprint-docs' ),
+			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
+			?>
+		<?php endif; ?>
 
-			<?php if ( 'changed' === $updated ) : ?>
-				<?php
-				echo Notice::render( [
-					'variant' => Notice::SUCCESS,
-					'title'   => __( 'URL base updated', 'core-blueprint-docs' ),
-					'message' => __( 'The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered.', 'core-blueprint-docs' ),
-				] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
-				?>
-			<?php elseif ( 'unchanged' === $updated ) : ?>
-				<?php
-				echo Notice::render( [
-					'variant' => Notice::INFO,
-					'title'   => __( 'No changes needed', 'core-blueprint-docs' ),
-					'message' => __( 'The Docs URL base already had this value, so no rewrite refresh was necessary.', 'core-blueprint-docs' ),
-				] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
-				?>
-			<?php endif; ?>
+		<section class="cb-core-panel">
+			<h2><?php esc_html_e( 'Permalinks', 'core-blueprint-docs' ); ?></h2>
+			<p><?php esc_html_e( 'Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects.', 'core-blueprint-docs' ); ?></p>
 
-			<section class="cb-core-panel">
-				<h2><?php esc_html_e( 'Permalinks', 'core-blueprint-docs' ); ?></h2>
-				<p><?php esc_html_e( 'Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects.', 'core-blueprint-docs' ); ?></p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="cb_docs_save_settings">
+				<?php wp_nonce_field( 'cb_docs_save_settings', 'cb_docs_settings_nonce' ); ?>
 
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-					<input type="hidden" name="action" value="cb_docs_save_settings">
-					<?php wp_nonce_field( 'cb_docs_save_settings', 'cb_docs_settings_nonce' ); ?>
+				<p>
+					<label for="cb_docs_rewrite_base"><strong><?php esc_html_e( 'Docs URL base', 'core-blueprint-docs' ); ?></strong></label><br>
+					<input class="regular-text" type="text" id="cb_docs_rewrite_base" name="rewrite_base" value="<?php echo esc_attr( $rewrite_base ); ?>" placeholder="docs" autocomplete="off">
+				</p>
+				<p class="description">
+					<?php esc_html_e( 'Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs.', 'core-blueprint-docs' ); ?>
+				</p>
+				<p class="description">
+					<strong><?php esc_html_e( 'Example:', 'core-blueprint-docs' ); ?></strong>
+					<code><?php echo esc_html( $example ); ?></code>
+				</p>
 
-					<p>
-						<label for="cb_docs_rewrite_base"><strong><?php esc_html_e( 'Docs URL base', 'core-blueprint-docs' ); ?></strong></label><br>
-						<input class="regular-text" type="text" id="cb_docs_rewrite_base" name="rewrite_base" value="<?php echo esc_attr( $rewrite_base ); ?>" placeholder="docs" autocomplete="off">
-					</p>
-					<p class="description">
-						<?php esc_html_e( 'Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs.', 'core-blueprint-docs' ); ?>
-					</p>
-					<p class="description">
-						<strong><?php esc_html_e( 'Example:', 'core-blueprint-docs' ); ?></strong>
-						<code><?php echo esc_html( $example ); ?></code>
-					</p>
-
-					<?php submit_button( __( 'Save URL base', 'core-blueprint-docs' ) ); ?>
-				</form>
-			</section>
-
-			<?php echo self::render_shortcodes_card(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- method escapes all consumer-owned content before passing HTML to Base Card. ?>
-		</div>
+				<?php submit_button( __( 'Save URL base', 'core-blueprint-docs' ) ); ?>
+			</form>
+		</section>
 		<?php
+	}
+
+	private static function render_integrations(): void {
+		echo IntegrationGrid::render( IntegrationReadiness::items() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base IntegrationGrid owns escaping and presentation.
 	}
 
 	private static function render_shortcodes_card(): string {
