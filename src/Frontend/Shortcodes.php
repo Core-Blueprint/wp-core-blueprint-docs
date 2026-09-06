@@ -88,40 +88,28 @@ final class Shortcodes {
 
 	public static function search_shortcode( array|string $atts = [] ): string {
 		$atts = shortcode_atts(
-			[ 'placeholder' => __( 'Search documentation…', 'core-blueprint-docs' ), 'limit' => '20' ],
+			[
+				'placeholder'   => __( 'Search documentation…', 'core-blueprint-docs' ),
+				'limit'         => '20',
+				'min_chars'     => '2',
+				'excerpt'       => 'true',
+				'show_category' => 'true',
+				'category'      => '',
+				'tag'           => '',
+			],
 			(array) $atts,
 			'cb_docs_search'
 		);
-		$query_string = isset( $_GET['cb_docs_q'] )
-			? sanitize_text_field( (string) wp_unslash( $_GET['cb_docs_q'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only search input.
-			: '';
 
-		$html  = '<div class="cb-docs-search">';
-		$html .= '<form class="cb-docs-search__form" method="get" role="search">';
-		$html .= '<label><span class="screen-reader-text">' . esc_html__( 'Search documentation', 'core-blueprint-docs' ) . '</span>';
-		$html .= '<input type="search" name="cb_docs_q" value="' . esc_attr( $query_string ) . '" placeholder="' . esc_attr( (string) $atts['placeholder'] ) . '"></label>';
-		$html .= '<button type="submit">' . esc_html__( 'Search', 'core-blueprint-docs' ) . '</button></form>';
-
-		if ( '' === $query_string ) {
-			return $html . '</div>';
-		}
-
-		$limit = max( 1, min( 100, absint( $atts['limit'] ) ?: 20 ) );
-		$query = Queries::docs( [ 's' => $query_string, 'posts_per_page' => $limit ] );
-		$html .= '<div class="cb-docs-search__results" aria-live="polite">';
-		if ( ! $query->have_posts() ) {
-			$html .= self::state( 'no-results', __( 'No matching documentation found.', 'core-blueprint-docs' ) );
-		} else {
-			$html .= '<ul class="cb-docs-search__list">';
-			foreach ( $query->posts as $doc ) {
-				if ( $doc instanceof \WP_Post ) {
-					$html .= '<li><a href="' . esc_url( get_permalink( $doc ) ) . '">' . esc_html( get_the_title( $doc ) ) . '</a></li>';
-				}
-			}
-			$html .= '</ul>';
-		}
-		wp_reset_postdata();
-		return $html . '</div></div>';
+		return Components\Search::render( [
+			'placeholder'   => (string) $atts['placeholder'],
+			'limit'         => $atts['limit'],
+			'min_chars'     => $atts['min_chars'],
+			'show_excerpt'  => $atts['excerpt'],
+			'show_category' => $atts['show_category'],
+			'category'      => (string) $atts['category'],
+			'tag'           => (string) $atts['tag'],
+		] );
 	}
 
 	public static function breadcrumbs_shortcode( array|string $atts = [] ): string {
