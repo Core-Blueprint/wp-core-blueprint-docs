@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs;
 
+use CB\Core\Admin\SettingsRegistry;
 use CB\Docs\Admin\DocDetails;
 use CB\Docs\Admin\SettingsPage;
 use CB\Docs\Content\Meta;
@@ -52,7 +53,7 @@ final class Plugin {
 		);
 		$links[] = sprintf(
 			'<a href="%s">%s</a>',
-			esc_url( admin_url( 'admin.php?page=' . SettingsPage::SLUG ) ),
+			esc_url( SettingsRegistry::url( Suite::ID ) ),
 			esc_html__( 'Settings', 'core-blueprint-docs' )
 		);
 		return $links;
