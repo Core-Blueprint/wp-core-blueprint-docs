@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace CB\Docs;
 
-use CB\Docs\Admin\SettingsPage;
+use CB\Core\Admin\SettingsRegistry;
 use CB\Docs\Governance\Events;
+use CB\Docs\Integration\Suite;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -71,13 +72,12 @@ final class Settings {
 		}
 
 		wp_safe_redirect(
-			add_query_arg(
+			SettingsRegistry::url(
+				Suite::ID,
 				[
-					'page'            => SettingsPage::SLUG,
 					'tab'             => 'general',
 					'cb_docs_updated' => $changed ? 'changed' : 'unchanged',
-				],
-				admin_url( 'admin.php' )
+				]
 			)
 		);
 		exit;

@@ -3,52 +3,59 @@ declare(strict_types=1);
 
 namespace CB\Docs\Admin;
 
-use CB\Core\Admin\Page as PageContract;
-use CB\Core\Admin\PageRegistry;
+use CB\Core\Admin\SettingsRegistry;
 use CB\Core\UI\Card;
 use CB\Core\UI\IntegrationGrid;
 use CB\Core\UI\Notice;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
+use CB\Docs\Integration\Suite;
 use CB\Docs\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
-final class SettingsPage implements PageContract {
-	public const SLUG = 'core-blueprint-docs-settings';
-
+final class SettingsPage {
 	private const TAB_OVERVIEW     = 'overview';
 	private const TAB_GENERAL      = 'general';
 	private const TAB_INTEGRATIONS = 'integrations';
 
 	public static function init(): void {
-		add_action( 'cb_core_register_pages', [ __CLASS__, 'register' ] );
+		add_action( 'cb_core_register_settings', [ __CLASS__, 'register' ] );
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_assets' ] );
 	}
 
 	public static function register(): void {
-		PageRegistry::register(
-			new self(),
+		$page = new self();
+
+		SettingsRegistry::register(
+			Suite::ID,
 			[
-				'foundations' => [
-					'clipboard',
-				],
-				'components' => [
-					'panels',
-					'notices',
-					'form-controls',
-					'cards',
-					'integration-grid',
-					'metric-tiles',
-					'nav-tabs',
-					'status',
+				'label'        => $page->menu_title(),
+				'description'  => __( 'Manage documentation health, URL behavior, frontend composition and optional integrations. Documentation content remains native WordPress and is managed from the Docs content screen.', 'core-blueprint-docs' ),
+				'group'        => SettingsRegistry::GROUP_CONTENT_PUBLISHING,
+				'capability'   => $page->capability(),
+				'renderer'     => [ $page, 'render' ],
+				'requirements' => [
+					'foundations' => [
+						'clipboard',
+					],
+					'components' => [
+						'panels',
+						'notices',
+						'form-controls',
+						'cards',
+						'integration-grid',
+						'metric-tiles',
+						'nav-tabs',
+						'status',
+					],
 				],
 			]
 		);
 	}
 
 	public static function enqueue_assets( string $hook_suffix ): void {
-		if ( $hook_suffix !== PageRegistry::hook_suffix( self::SLUG ) ) {
+		if ( ! self::is_settings_screen() ) {
 			return;
 		}
 
@@ -58,10 +65,6 @@ final class SettingsPage implements PageContract {
 			[ '@cb-core/clipboard' ],
 			CB_DOCS_VERSION
 		);
-	}
-
-	public function slug(): string {
-		return self::SLUG;
 	}
 
 	public function title(): string {
@@ -74,10 +77,6 @@ final class SettingsPage implements PageContract {
 
 	public function capability(): string {
 		return 'manage_options';
-	}
-
-	public function position(): ?int {
-		return null;
 	}
 
 	public function render(): void {
@@ -136,13 +135,25 @@ final class SettingsPage implements PageContract {
 			$tab = self::TAB_OVERVIEW;
 		}
 
-		return add_query_arg(
-			[
-				'page' => self::SLUG,
-				'tab'  => $tab,
-			],
-			admin_url( 'admin.php' )
-		);
+		return SettingsRegistry::url( Suite::ID, [ 'tab' => $tab ] );
+	}
+
+	private static function is_settings_screen(): bool {
+		$canonical_url = SettingsRegistry::url( Suite::ID );
+		$query         = wp_parse_url( $canonical_url, PHP_URL_QUERY );
+		$args          = [];
+
+		if ( is_string( $query ) && '' !== $query ) {
+			parse_str( $query, $args );
+		}
+
+		$settings_page = isset( $args['page'] ) ? sanitize_key( (string) $args['page'] ) : '';
+		$current_page  = isset( $_GET['page'] ) ? sanitize_key( (string) wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- admin routing only.
+		$extension_id  = isset( $_GET['extension'] ) ? sanitize_key( (string) wp_unslash( $_GET['extension'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- admin routing only.
+
+		return '' !== $settings_page
+			&& $settings_page === $current_page
+			&& Suite::ID === $extension_id;
 	}
 
 	private static function render_tabs( string $active_tab ): void {

@@ -67,7 +67,7 @@ $forbidden = [
 	'cb_core_event_labels'                 => 'legacy event-label mutation is not the Governance contract',
 	'CB\\Core\\Log\\AuditLog'            => 'extensions must write through Governance\\Audit',
 	'CB\\Core\\Admin\\AdminAssetCatalog' => 'the Base asset catalog is private',
-	'CB\\Core\\Admin\\PageBase'          => 'PageBase is internal; extensions implement the public Page contract',
+	'CB\\Core\\Admin\\PageBase'          => 'PageBase is internal and must not be consumed by extensions',
 	'Requires Plugins:'                    => 'first-party extensions use the runtime Base dependency guard',
 	'jquery'                               => 'Docs has no jQuery runtime',
 ];
@@ -85,6 +85,7 @@ foreach ( $php_files as $file ) {
 
 $bootstrap = (string) file_get_contents( $root . '/core-blueprint-docs.php' );
 foreach ( [
+	"class_exists( '\\\\CB\\\\Core\\\\Admin\\\\SettingsRegistry' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Notice' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\IntegrationGrid' )",
@@ -92,6 +93,9 @@ foreach ( [
 	if ( ! str_contains( $bootstrap, $required ) ) {
 		$failures[] = 'Base dependency contract is missing ' . $required . '.';
 	}
+}
+if ( str_contains( $bootstrap, 'CB\\Core\\Admin\\PageRegistry' ) || str_contains( $bootstrap, "interface_exists( '\\\\CB\\\\Core\\\\Admin\\\\Page' )" ) ) {
+	$failures[] = 'Bootstrap retains the retired PageRegistry/Page settings routing contract.';
 }
 
 $post_type = (string) file_get_contents( $root . '/src/Content/PostType.php' );
@@ -102,15 +106,21 @@ foreach ( [ "'custom-fields'", "'comments'", "'revisions'", "'page-attributes'",
 }
 
 $settings = (string) file_get_contents( $root . '/src/Settings.php' );
-foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', "'tab'             => 'general'" ] as $required ) {
+foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', 'SettingsRegistry::url(', 'Suite::ID', "'tab'             => 'general'" ] as $required ) {
 	if ( ! str_contains( $settings, $required ) ) {
 		$failures[] = 'Settings contract is missing ' . $required . '.';
 	}
 }
+if ( str_contains( $settings, 'SettingsPage::SLUG' ) || str_contains( $settings, 'core-blueprint-docs-settings' ) ) {
+	$failures[] = 'Settings save redirect retains the retired flat Docs settings route.';
+}
 
 $settings_page = (string) file_get_contents( $root . '/src/Admin/SettingsPage.php' );
 foreach ( [
-	'PageRegistry::register',
+	"add_action( 'cb_core_register_settings'",
+	'SettingsRegistry::register',
+	'SettingsRegistry::GROUP_CONTENT_PUBLISHING',
+	"SettingsRegistry::url( Suite::ID",
 	"'form-controls'",
 	"'cards'",
 	"'clipboard'",
@@ -133,6 +143,11 @@ foreach ( [
 ] as $required ) {
 	if ( ! str_contains( $settings_page, $required ) ) {
 		$failures[] = 'Settings page contract is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'cb_core_register_pages', 'PageRegistry::', 'implements PageContract', 'core-blueprint-docs-settings' ] as $retired_settings_route ) {
+	if ( str_contains( $settings_page, $retired_settings_route ) ) {
+		$failures[] = 'Settings page retains retired routing contract: ' . $retired_settings_route . '.';
 	}
 }
 
@@ -211,10 +226,13 @@ foreach ( [ 'is_current', 'in_category', 'has_tag', 'user_can_read', 'DocumentAc
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
-foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()' ] as $required ) {
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )' ] as $required ) {
 	if ( ! str_contains( $plugin, $required ) ) {
-		$failures[] = 'Plugin builder bootstrap contract is missing ' . $required . '.';
+		$failures[] = 'Plugin contract is missing ' . $required . '.';
 	}
+}
+if ( str_contains( $plugin, 'SettingsPage::SLUG' ) || str_contains( $plugin, 'core-blueprint-docs-settings' ) ) {
+	$failures[] = 'Plugin action links retain the retired flat Docs settings route.';
 }
 
 $builder_bootstrap = (string) file_get_contents( $root . '/src/Integration/Builders/Bootstrap.php' );

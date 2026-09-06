@@ -72,8 +72,7 @@ function cb_docs_base_ready(): bool {
 	}
 
 	return class_exists( '\\CB\\Core\\ExtensionRegistry' )
-		&& class_exists( '\\CB\\Core\\Admin\\PageRegistry' )
-		&& interface_exists( '\\CB\\Core\\Admin\\Page' )
+		&& class_exists( '\\CB\\Core\\Admin\\SettingsRegistry' )
 		&& class_exists( '\\CB\\Core\\UI\\Card' )
 		&& class_exists( '\\CB\\Core\\UI\\Notice' )
 		&& class_exists( '\\CB\\Core\\UI\\IntegrationGrid' )
