@@ -74,6 +74,7 @@ final class Settings {
 			add_query_arg(
 				[
 					'page'            => SettingsPage::SLUG,
+					'tab'             => 'general',
 					'cb_docs_updated' => $changed ? 'changed' : 'unchanged',
 				],
 				admin_url( 'admin.php' )

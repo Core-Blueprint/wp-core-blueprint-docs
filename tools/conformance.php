@@ -33,6 +33,7 @@ $expected = [
 	'src/Content/Meta.php',
 	'src/Admin/DocDetails.php',
 	'src/Admin/SettingsPage.php',
+	'src/Admin/IntegrationReadiness.php',
 	'src/Frontend/Queries.php',
 	'src/Frontend/Shortcodes.php',
 	'src/Frontend/DocumentAccess.php',
@@ -43,6 +44,7 @@ $expected = [
 	'src/Governance/Events.php',
 	'src/Integration/Suite.php',
 	'src/Integration/Builders/Bootstrap.php',
+	'src/Integration/Builders/Readiness.php',
 	'src/Integration/Builders/Bricks/Bootstrap.php',
 	'src/Integration/Builders/Bricks/DocumentContext.php',
 	'src/Integration/Builders/Bricks/DynamicData.php',
@@ -65,6 +67,7 @@ $forbidden = [
 	'cb_core_event_labels'                 => 'legacy event-label mutation is not the Governance contract',
 	'CB\\Core\\Log\\AuditLog'            => 'extensions must write through Governance\\Audit',
 	'CB\\Core\\Admin\\AdminAssetCatalog' => 'the Base asset catalog is private',
+	'CB\\Core\\Admin\\PageBase'          => 'PageBase is internal; extensions implement the public Page contract',
 	'Requires Plugins:'                    => 'first-party extensions use the runtime Base dependency guard',
 	'jquery'                               => 'Docs has no jQuery runtime',
 ];
@@ -80,6 +83,17 @@ foreach ( $php_files as $file ) {
 	}
 }
 
+$bootstrap = (string) file_get_contents( $root . '/core-blueprint-docs.php' );
+foreach ( [
+	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
+	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Notice' )",
+	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\IntegrationGrid' )",
+] as $required ) {
+	if ( ! str_contains( $bootstrap, $required ) ) {
+		$failures[] = 'Base dependency contract is missing ' . $required . '.';
+	}
+}
+
 $post_type = (string) file_get_contents( $root . '/src/Content/PostType.php' );
 foreach ( [ "'custom-fields'", "'comments'", "'revisions'", "'page-attributes'", "'show_in_rest'", 'Settings::rewrite_base()' ] as $required ) {
 	if ( ! str_contains( $post_type, $required ) ) {
@@ -88,7 +102,7 @@ foreach ( [ "'custom-fields'", "'comments'", "'revisions'", "'page-attributes'",
 }
 
 $settings = (string) file_get_contents( $root . '/src/Settings.php' );
-foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated' ] as $required ) {
+foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', "'tab'             => 'general'" ] as $required ) {
 	if ( ! str_contains( $settings, $required ) ) {
 		$failures[] = 'Settings contract is missing ' . $required . '.';
 	}
@@ -100,6 +114,14 @@ foreach ( [
 	"'form-controls'",
 	"'cards'",
 	"'clipboard'",
+	"'integration-grid'",
+	"'metric-tiles'",
+	"'nav-tabs'",
+	'TAB_OVERVIEW',
+	'TAB_GENERAL',
+	'TAB_INTEGRATIONS',
+	'IntegrationGrid::render',
+	'IntegrationReadiness::items',
 	'Card::render',
 	'cb_docs_save_settings',
 	'data-cb-docs-shortcode-copy',
@@ -111,6 +133,33 @@ foreach ( [
 ] as $required ) {
 	if ( ! str_contains( $settings_page, $required ) ) {
 		$failures[] = 'Settings page contract is missing ' . $required . '.';
+	}
+}
+
+$integration_readiness = (string) file_get_contents( $root . '/src/Admin/IntegrationReadiness.php' );
+foreach ( [
+	'IntegrationGrid::READY',
+	'IntegrationGrid::OPTIONAL',
+	'BuilderReadiness::bricks_active()',
+] as $required ) {
+	if ( ! str_contains( $integration_readiness, $required ) ) {
+		$failures[] = 'Integration readiness contract is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'BRICKS_VERSION', '\\Bricks\\' ] as $forbidden_admin_builder_reference ) {
+	if ( str_contains( $integration_readiness, $forbidden_admin_builder_reference ) ) {
+		$failures[] = 'Admin integration readiness must consume the builder-neutral readiness boundary, not Bricks directly: ' . $forbidden_admin_builder_reference . '.';
+	}
+}
+
+$builder_readiness = (string) file_get_contents( $root . '/src/Integration/Builders/Readiness.php' );
+foreach ( [
+	'bricks_active',
+	"defined( 'BRICKS_VERSION' )",
+	"class_exists( '\\\\Bricks\\\\Query' )",
+] as $required ) {
+	if ( ! str_contains( $builder_readiness, $required ) ) {
+		$failures[] = 'Builder readiness boundary is missing ' . $required . '.';
 	}
 }
 
