@@ -9,6 +9,7 @@ final class Bootstrap {
 	private static bool $booted = false;
 
 	public static function init(): void {
+		add_action( 'init', [ \CB\Docs\Integration\Builders\Bricks\ElementRegistry::class, 'register' ], 11 );
 		add_action( 'init', [ self::class, 'boot' ], 50 );
 	}
 

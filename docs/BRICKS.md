@@ -37,7 +37,29 @@ The adapter also accepts category, tag, search and include-ID values when those 
 
 Object type: `cb_docs_search_results`
 
-Uses the public `CB\Docs\Frontend\Search` provider and the existing public Docs search parameter `cb_docs_q`. An empty search term returns no documents rather than the full Docs catalog. Results are bounded to the public search maximum.
+Uses the public `CB\Docs\Frontend\Search` provider and the existing public Docs search parameter `cb_docs_q`. An empty search term returns no documents rather than the full Docs catalog. Results are bounded to the public search maximum and search queries use relevance ordering.
+
+## Docs Search element
+
+Element: **Core Blueprint Docs → Docs Search**
+
+The dedicated element exists because live documentation search is Docs-specific behavior that Bricks does not own. Generic layout, cards, grids, taxonomy presentation and table-of-contents composition remain Bricks responsibilities.
+
+The element renders the same builder-neutral search component used by `[cb_docs_search]`. It does not implement its own query or authorization logic.
+
+Content controls:
+
+- placeholder;
+- result limit;
+- minimum characters before live search starts;
+- show/hide excerpts;
+- show/hide the first result category;
+- optional category slug scope;
+- optional tag slug scope.
+
+Style controls target the search input, fallback search button and result presentation while standard Bricks element controls remain available for overall layout and advanced styling.
+
+The frontend behavior includes debounced live search, stale-request cancellation, keyboard navigation, accessible combobox/listbox state, and a normal GET form fallback when JavaScript or the live endpoint is unavailable.
 
 ## Element Conditions
 

@@ -1,0 +1,194 @@
+{
+  "Searching…": {
+    "nl_NL": "Zoeken…",
+    "de_DE": "Suche…",
+    "fr_FR": "Recherche…",
+    "es_ES": "Buscando…",
+    "it_IT": "Ricerca…",
+    "pt_PT": "A pesquisar…"
+  },
+  "Live search is temporarily unavailable. Submit the form to search.": {
+    "nl_NL": "Live zoeken is tijdelijk niet beschikbaar. Verstuur het formulier om te zoeken.",
+    "de_DE": "Die Live-Suche ist vorübergehend nicht verfügbar. Sende das Formular ab, um zu suchen.",
+    "fr_FR": "La recherche en direct est temporairement indisponible. Envoyez le formulaire pour lancer la recherche.",
+    "es_ES": "La búsqueda en vivo no está disponible temporalmente. Envía el formulario para buscar.",
+    "it_IT": "La ricerca in tempo reale è temporaneamente non disponibile. Invia il modulo per effettuare la ricerca.",
+    "pt_PT": "A pesquisa em tempo real está temporariamente indisponível. Envie o formulário para pesquisar."
+  },
+  "Docs Search": {
+    "nl_NL": "Docs zoeken",
+    "de_DE": "Docs-Suche",
+    "fr_FR": "Recherche Docs",
+    "es_ES": "Búsqueda en Docs",
+    "it_IT": "Ricerca Docs",
+    "pt_PT": "Pesquisa no Docs"
+  },
+  "Input": {
+    "nl_NL": "Invoerveld",
+    "de_DE": "Eingabefeld",
+    "fr_FR": "Champ de saisie",
+    "es_ES": "Campo de entrada",
+    "it_IT": "Campo di input",
+    "pt_PT": "Campo de entrada"
+  },
+  "Button": {
+    "nl_NL": "Knop",
+    "de_DE": "Schaltfläche",
+    "fr_FR": "Bouton",
+    "es_ES": "Botón",
+    "it_IT": "Pulsante",
+    "pt_PT": "Botão"
+  },
+  "Results": {
+    "nl_NL": "Resultaten",
+    "de_DE": "Ergebnisse",
+    "fr_FR": "Résultats",
+    "es_ES": "Resultados",
+    "it_IT": "Risultati",
+    "pt_PT": "Resultados"
+  },
+  "Live search is powered by the builder-neutral Core Blueprint Docs search service. Bricks only controls presentation.": {
+    "nl_NL": "Live zoeken wordt aangestuurd door de builder-neutrale zoekservice van Core Blueprint Docs. Bricks bepaalt alleen de presentatie.",
+    "de_DE": "Die Live-Suche wird vom Builder-neutralen Suchdienst von Core Blueprint Docs bereitgestellt. Bricks steuert nur die Darstellung.",
+    "fr_FR": "La recherche en direct est fournie par le service de recherche de Core Blueprint Docs, indépendant du builder. Bricks contrôle uniquement la présentation.",
+    "es_ES": "La búsqueda en vivo funciona mediante el servicio de búsqueda de Core Blueprint Docs, independiente del constructor. Bricks solo controla la presentación.",
+    "it_IT": "La ricerca in tempo reale è gestita dal servizio di ricerca di Core Blueprint Docs, indipendente dal builder. Bricks controlla solo la presentazione.",
+    "pt_PT": "A pesquisa em tempo real é fornecida pelo serviço de pesquisa do Core Blueprint Docs, independente do builder. O Bricks controla apenas a apresentação."
+  },
+  "Placeholder": {
+    "nl_NL": "Plaatshouder",
+    "de_DE": "Platzhalter",
+    "fr_FR": "Texte indicatif",
+    "es_ES": "Marcador de posición",
+    "it_IT": "Segnaposto",
+    "pt_PT": "Marcador de posição"
+  },
+  "Result limit": {
+    "nl_NL": "Resultaatlimiet",
+    "de_DE": "Ergebnislimit",
+    "fr_FR": "Limite de résultats",
+    "es_ES": "Límite de resultados",
+    "it_IT": "Limite risultati",
+    "pt_PT": "Limite de resultados"
+  },
+  "Minimum characters": {
+    "nl_NL": "Minimum aantal tekens",
+    "de_DE": "Mindestanzahl Zeichen",
+    "fr_FR": "Nombre minimal de caractères",
+    "es_ES": "Mínimo de caracteres",
+    "it_IT": "Numero minimo di caratteri",
+    "pt_PT": "Número mínimo de caracteres"
+  },
+  "Live search starts after this many characters.": {
+    "nl_NL": "Live zoeken start na dit aantal tekens.",
+    "de_DE": "Die Live-Suche startet nach dieser Anzahl von Zeichen.",
+    "fr_FR": "La recherche en direct démarre après ce nombre de caractères.",
+    "es_ES": "La búsqueda en vivo comienza después de este número de caracteres.",
+    "it_IT": "La ricerca in tempo reale inizia dopo questo numero di caratteri.",
+    "pt_PT": "A pesquisa em tempo real começa após este número de caracteres."
+  },
+  "Show excerpts": {
+    "nl_NL": "Samenvattingen tonen",
+    "de_DE": "Textauszüge anzeigen",
+    "fr_FR": "Afficher les extraits",
+    "es_ES": "Mostrar extractos",
+    "it_IT": "Mostra estratti",
+    "pt_PT": "Mostrar excertos"
+  },
+  "Show category": {
+    "nl_NL": "Categorie tonen",
+    "de_DE": "Kategorie anzeigen",
+    "fr_FR": "Afficher la catégorie",
+    "es_ES": "Mostrar categoría",
+    "it_IT": "Mostra categoria",
+    "pt_PT": "Mostrar categoria"
+  },
+  "Category slug": {
+    "nl_NL": "Categorie-slug",
+    "de_DE": "Kategorie-Slug",
+    "fr_FR": "Slug de catégorie",
+    "es_ES": "Slug de categoría",
+    "it_IT": "Slug categoria",
+    "pt_PT": "Slug da categoria"
+  },
+  "Optional. Limit search to one Docs category.": {
+    "nl_NL": "Optioneel. Beperk zoeken tot één Docs-categorie.",
+    "de_DE": "Optional. Beschränke die Suche auf eine Docs-Kategorie.",
+    "fr_FR": "Facultatif. Limitez la recherche à une catégorie Docs.",
+    "es_ES": "Opcional. Limita la búsqueda a una categoría de Docs.",
+    "it_IT": "Facoltativo. Limita la ricerca a una categoria Docs.",
+    "pt_PT": "Opcional. Limite a pesquisa a uma categoria do Docs."
+  },
+  "Tag slug": {
+    "nl_NL": "Tag-slug",
+    "de_DE": "Tag-Slug",
+    "fr_FR": "Slug d’étiquette",
+    "es_ES": "Slug de etiqueta",
+    "it_IT": "Slug tag",
+    "pt_PT": "Slug da etiqueta"
+  },
+  "Optional. Limit search to one Docs tag.": {
+    "nl_NL": "Optioneel. Beperk zoeken tot één Docs-tag.",
+    "de_DE": "Optional. Beschränke die Suche auf einen Docs-Tag.",
+    "fr_FR": "Facultatif. Limitez la recherche à une étiquette Docs.",
+    "es_ES": "Opcional. Limita la búsqueda a una etiqueta de Docs.",
+    "it_IT": "Facoltativo. Limita la ricerca a un tag Docs.",
+    "pt_PT": "Opcional. Limite a pesquisa a uma etiqueta do Docs."
+  },
+  "Typography": {
+    "nl_NL": "Typografie",
+    "de_DE": "Typografie",
+    "fr_FR": "Typographie",
+    "es_ES": "Tipografía",
+    "it_IT": "Tipografia",
+    "pt_PT": "Tipografia"
+  },
+  "Background": {
+    "nl_NL": "Achtergrond",
+    "de_DE": "Hintergrund",
+    "fr_FR": "Arrière-plan",
+    "es_ES": "Fondo",
+    "it_IT": "Sfondo",
+    "pt_PT": "Fundo"
+  },
+  "Border": {
+    "nl_NL": "Rand",
+    "de_DE": "Rahmen",
+    "fr_FR": "Bordure",
+    "es_ES": "Borde",
+    "it_IT": "Bordo",
+    "pt_PT": "Contorno"
+  },
+  "Padding": {
+    "nl_NL": "Binnenruimte",
+    "de_DE": "Innenabstand",
+    "fr_FR": "Marge intérieure",
+    "es_ES": "Relleno",
+    "it_IT": "Spaziatura interna",
+    "pt_PT": "Espaçamento interno"
+  },
+  "Title typography": {
+    "nl_NL": "Typografie titel",
+    "de_DE": "Titeltypografie",
+    "fr_FR": "Typographie du titre",
+    "es_ES": "Tipografía del título",
+    "it_IT": "Tipografia del titolo",
+    "pt_PT": "Tipografia do título"
+  },
+  "Category typography": {
+    "nl_NL": "Typografie categorie",
+    "de_DE": "Kategorietypografie",
+    "fr_FR": "Typographie de la catégorie",
+    "es_ES": "Tipografía de la categoría",
+    "it_IT": "Tipografia della categoria",
+    "pt_PT": "Tipografia da categoria"
+  },
+  "Excerpt typography": {
+    "nl_NL": "Typografie samenvatting",
+    "de_DE": "Auszugstypografie",
+    "fr_FR": "Typographie de l’extrait",
+    "es_ES": "Tipografía del extracto",
+    "it_IT": "Tipografia dell’estratto",
+    "pt_PT": "Tipografia do excerto"
+  }
+}
