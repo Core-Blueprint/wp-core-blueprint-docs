@@ -20,12 +20,48 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
+if ( defined( 'CB_DOCS_FILE' ) ) {
+	return;
+}
+
+define( 'CB_DOCS_NAME',         'Core Blueprint Docs' );
 define( 'CB_DOCS_VERSION',      '1.0.0-rc1' );
+define( 'CB_DOCS_MIN_PHP',      '8.4' );
 define( 'CB_DOCS_REQUIRED_API', '1.0' );
 define( 'CB_DOCS_FILE',         __FILE__ );
 define( 'CB_DOCS_DIR',          plugin_dir_path( __FILE__ ) );
 define( 'CB_DOCS_URL',          plugin_dir_url( __FILE__ ) );
 define( 'CB_DOCS_BASENAME',     plugin_basename( __FILE__ ) );
+
+/* Bootstrap v1 earliest-safe PHP boundary. */
+if ( version_compare( PHP_VERSION, CB_DOCS_MIN_PHP, '<' ) ) {
+	register_activation_hook( __FILE__, static function () {
+		if ( ! function_exists( 'deactivate_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		deactivate_plugins( CB_DOCS_BASENAME );
+		wp_die(
+			esc_html( sprintf( '%s requires PHP %s or newer. This server runs PHP %s.', CB_DOCS_NAME, CB_DOCS_MIN_PHP, PHP_VERSION ) ),
+			esc_html( 'Core Blueprint dependency required' ),
+			[
+				'link_url'  => admin_url( 'plugins.php' ),
+				'link_text' => __( 'Plugins' ),
+			]
+		);
+	} );
+
+	add_action( 'admin_notices', static function () {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+		printf(
+			'<div class="notice notice-error"><p><strong>%s</strong> %s</p></div>',
+			esc_html( CB_DOCS_NAME . ':' ),
+			esc_html( sprintf( 'PHP %s or newer is required. This server runs PHP %s.', CB_DOCS_MIN_PHP, PHP_VERSION ) )
+		);
+	} );
+	return;
+}
 
 spl_autoload_register( static function ( string $class ): void {
 	$prefix = 'CB\\Docs\\';
@@ -52,25 +88,11 @@ add_action( 'init', static function (): void {
 }, 1 );
 
 function cb_docs_api_compatible( string $available, string $required ): bool {
-	if ( 1 !== preg_match( '/^(\d+)\.(\d+)$/', $available, $available_match ) ) {
-		return false;
-	}
-	if ( 1 !== preg_match( '/^(\d+)\.(\d+)$/', $required, $required_match ) ) {
-		return false;
-	}
-
-	return (int) $available_match[1] === (int) $required_match[1]
-		&& (int) $available_match[2] >= (int) $required_match[2];
+	return \CB\Docs\Support\Requirements::api_compatible( $available, $required );
 }
 
-function cb_docs_base_ready(): bool {
-	if ( ! defined( 'CB_CORE_API_VERSION' ) ) {
-		return false;
-	}
-	if ( ! cb_docs_api_compatible( (string) CB_CORE_API_VERSION, CB_DOCS_REQUIRED_API ) ) {
-		return false;
-	}
-
+/** Product-specific public Base services consumed by Docs. */
+function cb_docs_base_contracts_ready(): bool {
 	return class_exists( '\\CB\\Core\\ExtensionRegistry' )
 		&& class_exists( '\\CB\\Core\\Admin\\SettingsRegistry' )
 		&& class_exists( '\\CB\\Core\\UI\\Card' )
@@ -80,35 +102,46 @@ function cb_docs_base_ready(): bool {
 		&& class_exists( '\\CB\\Core\\Governance\\Audit' );
 }
 
+/** Backward-compatible product readiness helper. */
+function cb_docs_base_ready(): bool {
+	return \CB\Docs\Support\Requirements::runtime_ready() && cb_docs_base_contracts_ready();
+}
+
 function cb_docs_dependency_message(): string {
-	if ( ! defined( 'CB_CORE_API_VERSION' ) ) {
-		return __( 'Core Blueprint Docs requires an active Core Blueprint Base plugin.', 'core-blueprint-docs' );
+	if ( ! \CB\Docs\Support\Requirements::runtime_ready() ) {
+		return \CB\Docs\Support\Requirements::operator_message();
 	}
-
-	if ( ! cb_docs_api_compatible( (string) CB_CORE_API_VERSION, CB_DOCS_REQUIRED_API ) ) {
-		return sprintf(
-			/* translators: 1: required Core API version, 2: available Core API version. */
-			__( 'Core Blueprint Docs requires Core API %1$s or a newer compatible minor version. This site provides %2$s.', 'core-blueprint-docs' ),
-			CB_DOCS_REQUIRED_API,
-			(string) CB_CORE_API_VERSION
-		);
-	}
-
 	return __( 'Core Blueprint Docs cannot access the required public Base contracts.', 'core-blueprint-docs' );
 }
 
-function cb_docs_activate(): void {
-	if ( ! cb_docs_base_ready() ) {
-		if ( ! function_exists( 'deactivate_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
+function cb_docs_fail_activation( string $message ): void {
+	if ( ! function_exists( 'deactivate_plugins' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+	deactivate_plugins( CB_DOCS_BASENAME );
+	wp_die(
+		esc_html( $message ),
+		esc_html( 'Core Blueprint dependency required' ),
+		[
+			'link_url'  => admin_url( 'plugins.php' ),
+			'link_text' => __( 'Plugins' ),
+		]
+	);
+}
 
-		deactivate_plugins( CB_DOCS_BASENAME );
-		wp_die(
-			esc_html__( 'Core Blueprint Docs requires an active, Core API 1.x compatible Core Blueprint Base installation.', 'core-blueprint-docs' ),
-			esc_html__( 'Core Blueprint dependency required', 'core-blueprint-docs' ),
-			[ 'back_link' => true ]
+function cb_docs_activate(): void {
+	if ( ! \CB\Docs\Support\Requirements::runtime_ready() ) {
+		cb_docs_fail_activation(
+			sprintf(
+				'%s requires PHP %s or newer and an active Core Blueprint Base installation compatible with Core API %s.',
+				CB_DOCS_NAME,
+				CB_DOCS_MIN_PHP,
+				CB_DOCS_REQUIRED_API
+			)
 		);
+	}
+	if ( ! cb_docs_base_contracts_ready() ) {
+		cb_docs_fail_activation( 'Core Blueprint Docs requires the public Base services used by Docs. Update Core Blueprint Base first.' );
 	}
 
 	\CB\Docs\Install::activate();
@@ -116,18 +149,34 @@ function cb_docs_activate(): void {
 register_activation_hook( __FILE__, 'cb_docs_activate' );
 register_deactivation_hook( __FILE__, [ '\\CB\\Docs\\Install', 'deactivate' ] );
 
+/* Docs retains its existing plugins_loaded:30 product boot timing. */
 add_action( 'plugins_loaded', static function (): void {
-	if ( ! cb_docs_base_ready() ) {
+	if ( ! \CB\Docs\Support\Requirements::runtime_ready() ) {
 		if ( is_admin() ) {
 			add_action( 'admin_notices', static function (): void {
 				if ( ! current_user_can( 'activate_plugins' ) ) {
 					return;
 				}
-
 				printf(
 					'<div class="notice notice-error"><p><strong>%s</strong> %s</p></div>',
 					esc_html__( 'Core Blueprint Docs:', 'core-blueprint-docs' ),
-					esc_html( cb_docs_dependency_message() )
+					esc_html( \CB\Docs\Support\Requirements::operator_message() )
+				);
+			} );
+		}
+		return;
+	}
+
+	if ( ! cb_docs_base_contracts_ready() ) {
+		if ( is_admin() ) {
+			add_action( 'admin_notices', static function (): void {
+				if ( ! current_user_can( 'activate_plugins' ) ) {
+					return;
+				}
+				printf(
+					'<div class="notice notice-error"><p><strong>%s</strong> %s</p></div>',
+					esc_html__( 'Core Blueprint Docs:', 'core-blueprint-docs' ),
+					esc_html__( 'Required public Core Blueprint Base services are unavailable. Update Core Blueprint Base first.', 'core-blueprint-docs' )
 				);
 			} );
 		}
