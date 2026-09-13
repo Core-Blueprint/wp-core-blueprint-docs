@@ -74,19 +74,22 @@ find "$PACKAGE_ROOT" -type f \( -name '.DS_Store' -o -name '*.map' \) -delete
 [[ -s "$ZIP" ]] || fail "release ZIP was not created"
 [[ -s "$CHECKSUM" ]] || fail "release checksum was not created"
 
-if unzip -Z1 "$ZIP" | grep -Eq '^core-blueprint-docs/(tests|tools|docs|\.github|build)/'; then
+unzip -tqq "$ZIP"
+ZIP_ENTRIES="$(unzip -Z1 "$ZIP")"
+
+if grep -Eq '^core-blueprint-docs/(tests|tools|docs|\.github|build)/' <<<"$ZIP_ENTRIES"; then
   fail "developer-only files leaked into the release package"
 fi
 
-if ! unzip -Z1 "$ZIP" | grep -qx 'core-blueprint-docs/core-blueprint-docs.php'; then
+if ! grep -Fxq 'core-blueprint-docs/core-blueprint-docs.php' <<<"$ZIP_ENTRIES"; then
   fail "release package does not preserve the canonical core-blueprint-docs root folder"
 fi
 
-if ! unzip -Z1 "$ZIP" | grep -qx 'core-blueprint-docs/uninstall.php'; then
+if ! grep -Fxq 'core-blueprint-docs/uninstall.php' <<<"$ZIP_ENTRIES"; then
   fail "release package is missing uninstall.php"
 fi
 
-if unzip -Z1 "$ZIP" | grep -Eq '(^|/)(\.git|\.github|tools|tests|docs|build)(/|$)'; then
+if grep -Eq '(^|/)(\.git|\.github|tools|tests|docs|build)(/|$)' <<<"$ZIP_ENTRIES"; then
   fail "release package contains repository-only paths"
 fi
 
