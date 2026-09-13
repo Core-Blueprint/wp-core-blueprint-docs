@@ -9,15 +9,12 @@ fail() {
   exit 1
 }
 
-for command in php python3 xgettext zip unzip sha256sum; do
+for command in php python3 wp msgfmt zip unzip sha256sum; do
   command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"
 done
 
 php -r 'exit(version_compare(PHP_VERSION, "8.4", ">=") ? 0 : 1);' \
   || fail "PHP 8.4 or newer is required to build Docs"
-
-python3 -c 'import polib' >/dev/null 2>&1 \
-  || fail "Python package polib is required; install polib==1.2.0"
 
 VERSION="$(sed -n 's/^ \* Version:[[:space:]]*//p' core-blueprint-docs.php | head -n 1)"
 [[ -n "$VERSION" ]] || fail "could not read plugin version"
@@ -52,17 +49,19 @@ mkdir -p "$PACKAGE_ROOT" "$PACKAGE_LANG"
 cp core-blueprint-docs.php uninstall.php readme.txt README.md CHANGELOG.md "$PACKAGE_ROOT/"
 cp -R assets src "$PACKAGE_ROOT/"
 
-echo "==> Generating complete release translations"
-python3 tools/sync-i18n.py --output-dir "$PACKAGE_LANG"
-
+echo "==> Verifying canonical release translations"
+tools/i18n/check
+cp languages/core-blueprint-docs.pot "$PACKAGE_LANG/"
 for locale in nl_NL de_DE fr_FR es_ES it_IT pt_PT; do
+  cp "languages/core-blueprint-docs-$locale.po" "$PACKAGE_LANG/"
+  cp "languages/core-blueprint-docs-$locale.mo" "$PACKAGE_LANG/"
   [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.po" ]] \
-    || fail "generated release package is missing $locale PO catalog"
+    || fail "release package is missing $locale PO catalog"
   [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.mo" ]] \
-    || fail "generated release package is missing $locale MO catalog"
+    || fail "release package is missing $locale MO catalog"
 done
 [[ -s "$PACKAGE_LANG/core-blueprint-docs.pot" ]] \
-  || fail "generated release package is missing POT catalog"
+  || fail "release package is missing POT catalog"
 
 find "$PACKAGE_ROOT" -type f \( -name '.DS_Store' -o -name '*.map' \) -delete
 
