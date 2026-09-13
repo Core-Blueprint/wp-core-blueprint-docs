@@ -9,12 +9,29 @@
 - Bash
 - PHP CLI 8.4+
 - Python 3
-- GNU gettext (`xgettext`)
-- Python package `polib==1.2.0`
+- WP-CLI with `wp i18n`
+- GNU gettext (`msgfmt`; `msgmerge` and `msgattrib` are also required when updating catalogs)
 - `zip` / `unzip`
 - `sha256sum`
 
-## Usage
+## Canonical localization workflow
+
+English source is authoritative. The repository owns the release catalogs in `languages/`.
+
+Use the canonical operator entrypoints only:
+
+```bash
+tools/i18n/update
+tools/i18n/check
+```
+
+`tools/i18n/update` regenerates the POT from current source, synchronizes the six reviewed PO catalogs, removes obsolete entries, validates placeholders and completeness, and rebuilds committed MO artifacts for Docs.
+
+`tools/i18n/check` is read-only. It proves source/POT equality, required locale coverage, current metadata, no fuzzy or untranslated release strings, placeholder validity, shared Core Blueprint translations and reproducible MO artifacts.
+
+There is no separate compatibility sync command, translation-map overlay, xgettext workflow, polib authority or alternate catalog generator. Reviewed PO files remain translation source; POT and MO files are generated/reproducible artifacts under the canonical Core Blueprint i18n contract.
+
+## Release build
 
 From the repository root:
 
@@ -22,19 +39,7 @@ From the repository root:
 bash tools/build-release
 ```
 
-For a standalone localization preview without mutating source catalogs:
-
-```bash
-python3 tools/sync-i18n.py --output-dir build/i18n-preview
-```
-
-## Localization model
-
-The committed locale PO files provide the existing translation baseline. Repository translation maps such as `tools/i18n-translations-golden.json` provide explicit overlays for newly introduced or corrected runtime strings.
-
-`tools/sync-i18n.py` extracts the current runtime strings, merges the baseline translations, applies the translation-map overlays, removes obsolete entries from generated output, hard-fails on any untranslated current string and compiles MO files.
-
-Generated POT/PO/MO files are written to the selected output directory. The release builder writes them directly into the staged customer package, so release catalogs are reproducible without mutating source-controlled binary files.
+The release builder runs `tools/i18n/check` before copying catalogs into the package. It never repairs or mutates localization during packaging. A stale or incomplete catalog therefore fails before a release ZIP is accepted.
 
 ## Output
 
@@ -63,7 +68,7 @@ The installable package contains only the release-facing plugin surface:
 - `README.md`
 - `CHANGELOG.md`
 - `assets/`
-- generated `languages/`
+- `languages/`
 - `src/`
 
 Repository-only paths such as `.github/`, `tools/`, `tests/`, `docs/` and `build/` are excluded and explicitly rejected if they leak into the ZIP.
@@ -72,12 +77,12 @@ Repository-only paths such as `.github/`, `tools/`, `tests/`, `docs/` and `build
 
 Before a ZIP is accepted, the builder:
 
-1. verifies all required command-line tools and Python dependencies;
+1. verifies required command-line tools;
 2. requires public version `1.0.0-rc1` and checks plugin-header/runtime/readme/README/changelog consistency;
 3. lints all PHP source with PHP 8.4+;
 4. runs `tools/conformance.php`;
-5. stages only the production package boundary;
-6. generates current POT/PO/MO catalogs inside the staged package and requires all six launch locales to be complete;
+5. runs canonical `tools/i18n/check`;
+6. stages only the production package boundary and committed verified catalogs;
 7. creates the ZIP with canonical `core-blueprint-docs/` root;
 8. rejects repository-only paths in the archive;
 9. writes a SHA256 checksum next to the ZIP.
@@ -86,4 +91,4 @@ Any failed prerequisite or validation exits non-zero. A package from a failed ru
 
 ## Maintenance
 
-When runtime paths change, update the explicit copy list and package leak assertions together. When user-facing strings change, add or update the relevant translation-map entries so all six launch locales remain complete. The canonical plugin slug, entry filename and public release version must remain synchronized across runtime and release metadata.
+When runtime paths change, update the explicit copy list and package leak assertions together. When user-facing strings change, run `tools/i18n/update`, review every changed translation, then require `tools/i18n/check` to pass. Do not introduce a second localization authority or compatibility entrypoint before launch.
