@@ -12,6 +12,7 @@
  * Domain Path:       /languages
  * Requires at least: 7.0
  * Requires PHP:      8.4
+ * Requires Plugins: core-blueprint
  *
  * @package CB_Docs
  */
@@ -41,8 +42,8 @@ if ( version_compare( PHP_VERSION, CB_DOCS_MIN_PHP, '<' ) ) {
 		}
 		deactivate_plugins( CB_DOCS_BASENAME );
 		wp_die(
-			esc_html( sprintf( '%s requires PHP %s or newer. This server runs PHP %s.', CB_DOCS_NAME, CB_DOCS_MIN_PHP, PHP_VERSION ) ),
-			esc_html( 'Core Blueprint dependency required' ),
+			esc_html( sprintf( 'PHP %1$s or newer is required. This server runs PHP %2$s.', CB_DOCS_MIN_PHP, PHP_VERSION ) ),
+			esc_html( 'Core Blueprint requirements not met' ),
 			[
 				'link_url'  => admin_url( 'plugins.php' ),
 				'link_text' => __( 'Plugins' ),
@@ -57,7 +58,7 @@ if ( version_compare( PHP_VERSION, CB_DOCS_MIN_PHP, '<' ) ) {
 		printf(
 			'<div class="notice notice-error"><p><strong>%s</strong> %s</p></div>',
 			esc_html( CB_DOCS_NAME . ':' ),
-			esc_html( sprintf( 'PHP %s or newer is required. This server runs PHP %s.', CB_DOCS_MIN_PHP, PHP_VERSION ) )
+			esc_html( sprintf( 'PHP %1$s or newer is required. This server runs PHP %2$s.', CB_DOCS_MIN_PHP, PHP_VERSION ) )
 		);
 	} );
 	return;
@@ -111,7 +112,7 @@ function cb_docs_dependency_message(): string {
 	if ( ! \CB\Docs\Support\Requirements::runtime_ready() ) {
 		return \CB\Docs\Support\Requirements::operator_message();
 	}
-	return __( 'Core Blueprint Docs cannot access the required public Base contracts.', 'core-blueprint-docs' );
+	return __( 'Required Core Blueprint Base contracts are unavailable.', 'core-blueprint-docs' );
 }
 
 function cb_docs_fail_activation( string $message ): void {
@@ -121,7 +122,7 @@ function cb_docs_fail_activation( string $message ): void {
 	deactivate_plugins( CB_DOCS_BASENAME );
 	wp_die(
 		esc_html( $message ),
-		esc_html( 'Core Blueprint dependency required' ),
+		esc_html( 'Core Blueprint requirements not met' ),
 		[
 			'link_url'  => admin_url( 'plugins.php' ),
 			'link_text' => __( 'Plugins' ),
@@ -131,17 +132,10 @@ function cb_docs_fail_activation( string $message ): void {
 
 function cb_docs_activate(): void {
 	if ( ! \CB\Docs\Support\Requirements::runtime_ready() ) {
-		cb_docs_fail_activation(
-			sprintf(
-				'%s requires PHP %s or newer and an active Core Blueprint Base installation compatible with Core API %s.',
-				CB_DOCS_NAME,
-				CB_DOCS_MIN_PHP,
-				CB_DOCS_REQUIRED_API
-			)
-		);
+		cb_docs_fail_activation( \CB\Docs\Support\Requirements::activation_message() );
 	}
 	if ( ! cb_docs_base_contracts_ready() ) {
-		cb_docs_fail_activation( 'Core Blueprint Docs requires the public Base services used by Docs. Update Core Blueprint Base first.' );
+		cb_docs_fail_activation( 'Required Core Blueprint Base contracts are unavailable.' );
 	}
 
 	\CB\Docs\Install::activate();
@@ -176,7 +170,7 @@ add_action( 'plugins_loaded', static function (): void {
 				printf(
 					'<div class="notice notice-error"><p><strong>%s</strong> %s</p></div>',
 					esc_html__( 'Core Blueprint Docs:', 'core-blueprint-docs' ),
-					esc_html__( 'Required public Core Blueprint Base services are unavailable. Update Core Blueprint Base first.', 'core-blueprint-docs' )
+					esc_html__( 'Required Core Blueprint Base contracts are unavailable.', 'core-blueprint-docs' )
 				);
 			} );
 		}
