@@ -4,93 +4,139 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+PACKAGE="core-blueprint-docs"
+MAIN_FILE="core-blueprint-docs.php"
+ENTRY="$ROOT/$MAIN_FILE"
+LOCALES=(nl_NL de_DE fr_FR es_ES it_IT pt_PT)
+
 fail() {
   printf 'Docs release build failed: %s\n' "$*" >&2
   exit 1
 }
 
-for command in php python3 wp msgfmt zip unzip sha256sum; do
+# 1. Resolve and validate canonical product identity before tooling.
+VERSION=""
+CONSTANT_VERSION=""
+REQUIRES_PHP=""
+REQUIRED_API=""
+header_re='^[[:space:]]*\*[[:space:]]*Version:[[:space:]]*([^[:space:]]+)'
+php_re='^[[:space:]]*\*[[:space:]]*Requires PHP:[[:space:]]*([^[:space:]]+)'
+version_re="^[[:space:]]*define\\([[:space:]]*'CB_DOCS_VERSION'[[:space:]]*,[[:space:]]*'([^']+)'[[:space:]]*\\)[[:space:]]*;"
+api_re="^[[:space:]]*define\\([[:space:]]*'CB_DOCS_REQUIRED_API'[[:space:]]*,[[:space:]]*'([^']+)'[[:space:]]*\\)[[:space:]]*;"
+while IFS= read -r line; do
+  if [[ -z "$VERSION" && "$line" =~ $header_re ]]; then VERSION="${BASH_REMATCH[1]}"; fi
+  if [[ -z "$REQUIRES_PHP" && "$line" =~ $php_re ]]; then REQUIRES_PHP="${BASH_REMATCH[1]}"; fi
+  if [[ -z "$CONSTANT_VERSION" && "$line" =~ $version_re ]]; then CONSTANT_VERSION="${BASH_REMATCH[1]}"; fi
+  if [[ -z "$REQUIRED_API" && "$line" =~ $api_re ]]; then REQUIRED_API="${BASH_REMATCH[1]}"; fi
+done < "$ENTRY"
+
+[[ -n "$VERSION" ]] || fail "could not read plugin version"
+[[ "$VERSION" == "$CONSTANT_VERSION" ]] || fail "Version header and CB_DOCS_VERSION differ"
+[[ "$VERSION" == "1.0.0-rc1" ]] || fail "public release builder currently expects 1.0.0-rc1, found $VERSION"
+[[ "$REQUIRES_PHP" == "8.4" ]] || fail "Requires PHP must remain 8.4"
+[[ "$REQUIRED_API" == "1.0" ]] || fail "CB_DOCS_REQUIRED_API must remain 1.0"
+
+grep -Fq "Stable tag: $VERSION" readme.txt || fail "readme.txt Stable tag does not match plugin header"
+grep -Fq "## v$VERSION scope" README.md || fail "README public scope version does not match plugin header"
+grep -Fq "## $VERSION" CHANGELOG.md || fail "CHANGELOG public version does not match plugin header"
+
+# 2. Prove required local toolchain.
+for command in php python3 git wp msgfmt node zip unzip sha256sum find sort touch grep; do
   command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"
 done
-
 php -r 'exit(version_compare(PHP_VERSION, "8.4", ">=") ? 0 : 1);' \
   || fail "PHP 8.4 or newer is required to build Docs"
 
-VERSION="$(sed -n 's/^ \* Version:[[:space:]]*//p' core-blueprint-docs.php | head -n 1)"
-[[ -n "$VERSION" ]] || fail "could not read plugin version"
-[[ "$VERSION" == "1.0.0-rc1" ]] || fail "public release builder currently expects 1.0.0-rc1, found $VERSION"
+# 3. Canonical read-only localization gate before source validation/regressions.
+tools/i18n/check
 
-grep -Fq "define( 'CB_DOCS_VERSION',      '$VERSION' );" core-blueprint-docs.php \
-  || fail "runtime CB_DOCS_VERSION does not match plugin header"
-grep -Fq "Stable tag: $VERSION" readme.txt \
-  || fail "readme.txt Stable tag does not match plugin header"
-grep -Fq "## v$VERSION scope" README.md \
-  || fail "README public scope version does not match plugin header"
-grep -Fq "## $VERSION" CHANGELOG.md \
-  || fail "CHANGELOG public version does not match plugin header"
-
-echo "==> Linting PHP"
+# 4. Source syntax/static checks.
+for file in "$ENTRY" "$ROOT/uninstall.php"; do
+  php -l "$file" >/dev/null || fail "PHP lint failed: $file"
+done
 while IFS= read -r -d '' file; do
   php -l "$file" >/dev/null || fail "PHP lint failed: $file"
-done < <(find . -path './.git' -prune -o -path './build' -prune -o -type f -name '*.php' -print0)
+done < <(find "$ROOT/src" -type f -name '*.php' -print0)
 
-echo "==> Running source conformance"
+# 5. Product-owned conformance.
 php tools/conformance.php
 
+# 6-7. Explicit customer runtime staging and verified localization artifacts.
 BUILD="$ROOT/build"
-PACKAGE_ROOT="$BUILD/core-blueprint-docs"
+PACKAGE_ROOT="$BUILD/$PACKAGE"
 PACKAGE_LANG="$PACKAGE_ROOT/languages"
-ZIP="$BUILD/core-blueprint-docs-$VERSION.zip"
+ZIP="$BUILD/$PACKAGE-$VERSION.zip"
 CHECKSUM="$ZIP.sha256"
 
 rm -rf "$BUILD"
 mkdir -p "$PACKAGE_ROOT" "$PACKAGE_LANG"
 
-cp core-blueprint-docs.php uninstall.php readme.txt README.md CHANGELOG.md "$PACKAGE_ROOT/"
+cp "$MAIN_FILE" uninstall.php readme.txt README.md CHANGELOG.md "$PACKAGE_ROOT/"
 cp -R assets src "$PACKAGE_ROOT/"
 
-echo "==> Verifying canonical release translations"
-tools/i18n/check
 cp languages/core-blueprint-docs.pot "$PACKAGE_LANG/"
-for locale in nl_NL de_DE fr_FR es_ES it_IT pt_PT; do
+for locale in "${LOCALES[@]}"; do
   cp "languages/core-blueprint-docs-$locale.po" "$PACKAGE_LANG/"
   cp "languages/core-blueprint-docs-$locale.mo" "$PACKAGE_LANG/"
-  [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.po" ]] \
-    || fail "release package is missing $locale PO catalog"
-  [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.mo" ]] \
-    || fail "release package is missing $locale MO catalog"
+  [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.po" ]] || fail "release package is missing $locale PO catalog"
+  [[ -s "$PACKAGE_LANG/core-blueprint-docs-$locale.mo" ]] || fail "release package is missing $locale MO catalog"
 done
-[[ -s "$PACKAGE_LANG/core-blueprint-docs.pot" ]] \
-  || fail "release package is missing POT catalog"
+[[ -s "$PACKAGE_LANG/core-blueprint-docs.pot" ]] || fail "release package is missing POT catalog"
 
 find "$PACKAGE_ROOT" -type f \( -name '.DS_Store' -o -name '*.map' \) -delete
 
+# 8. Validate staged runtime syntax/assets.
+while IFS= read -r -d '' file; do
+  php -l "$file" >/dev/null || fail "staged PHP lint failed: $file"
+done < <(find "$PACKAGE_ROOT" -type f -name '*.php' -print0)
+while IFS= read -r -d '' file; do
+  node --check "$file" >/dev/null || fail "staged JavaScript syntax failed: $file"
+done < <(find "$PACKAGE_ROOT/assets" -type f -name '*.js' -print0)
+
+find "$PACKAGE_ROOT" -exec touch -t 198001010000 {} +
 (
   cd "$BUILD"
-  zip -X -q -r "$(basename "$ZIP")" core-blueprint-docs
-  sha256sum "$(basename "$ZIP")" > "$(basename "$CHECKSUM")"
+  zip -X -q "$ZIP" "$PACKAGE/"
+  find "$PACKAGE" -type f -print | LC_ALL=C sort | zip -X -q "$ZIP" -@
 )
 
+# 9-10. Archive integrity, canonical identity and customer boundary.
 [[ -s "$ZIP" ]] || fail "release ZIP was not created"
-[[ -s "$CHECKSUM" ]] || fail "release checksum was not created"
-
 unzip -tqq "$ZIP"
 ZIP_ENTRIES="$(unzip -Z1 "$ZIP")"
+FIRST_ENTRY="${ZIP_ENTRIES%%$'\n'*}"
+[[ "$FIRST_ENTRY" == "$PACKAGE/" ]] || fail "release package does not preserve canonical root $PACKAGE/"
 
-if grep -Eq '^core-blueprint-docs/(tests|tools|docs|\.github|build)/' <<<"$ZIP_ENTRIES"; then
-  fail "developer-only files leaked into the release package"
-fi
-
-if ! grep -Fxq 'core-blueprint-docs/core-blueprint-docs.php' <<<"$ZIP_ENTRIES"; then
-  fail "release package does not preserve the canonical core-blueprint-docs root folder"
-fi
-
-if ! grep -Fxq 'core-blueprint-docs/uninstall.php' <<<"$ZIP_ENTRIES"; then
-  fail "release package is missing uninstall.php"
-fi
-
-if grep -Eq '(^|/)(\.git|\.github|tools|tests|docs|build)(/|$)' <<<"$ZIP_ENTRIES"; then
+if grep -Eq '(^|/)(\.git|\.github|tools|tests|docs|build|dist)(/|$)' <<<"$ZIP_ENTRIES"; then
   fail "release package contains repository-only paths"
 fi
 
-printf 'Docs release build: PASS\nPackage: %s\nChecksum: %s\n' "$ZIP" "$CHECKSUM"
+for required in "$PACKAGE/$MAIN_FILE" "$PACKAGE/uninstall.php" "$PACKAGE/languages/core-blueprint-docs.pot"; do
+  grep -Fxq "$required" <<<"$ZIP_ENTRIES" || fail "required release file missing from ZIP: $required"
+done
+for locale in "${LOCALES[@]}"; do
+  for ext in po mo; do
+    required="$PACKAGE/languages/core-blueprint-docs-${locale}.${ext}"
+    grep -Fxq "$required" <<<"$ZIP_ENTRIES" || fail "required catalog missing from ZIP: $required"
+  done
+done
+
+PACKAGED_MAIN="$(unzip -p "$ZIP" "$PACKAGE/$MAIN_FILE")"
+PACKAGED_VERSION=""
+PACKAGED_CONSTANT=""
+while IFS= read -r line; do
+  if [[ -z "$PACKAGED_VERSION" && "$line" =~ $header_re ]]; then PACKAGED_VERSION="${BASH_REMATCH[1]}"; fi
+  if [[ -z "$PACKAGED_CONSTANT" && "$line" =~ $version_re ]]; then PACKAGED_CONSTANT="${BASH_REMATCH[1]}"; fi
+done <<< "$PACKAGED_MAIN"
+[[ "$PACKAGED_VERSION" == "$VERSION" ]] || fail "packaged Version header differs from verified source"
+[[ "$PACKAGED_CONSTANT" == "$VERSION" ]] || fail "packaged CB_DOCS_VERSION differs from verified source"
+
+# 11. Emit SHA-256 only after archive acceptance.
+(
+  cd "$BUILD"
+  sha256sum "$(basename "$ZIP")" > "$(basename "$CHECKSUM")"
+)
+[[ -s "$CHECKSUM" ]] || fail "release checksum was not created"
+read -r SHA256 _ < "$CHECKSUM"
+
+printf 'Docs release build: PASS\nPackage: %s\nVersion: %s\nCanonical root: %s/\nSHA-256: %s\n' "$ZIP" "$VERSION" "$PACKAGE" "$SHA256"
