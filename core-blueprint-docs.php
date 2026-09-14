@@ -103,11 +103,6 @@ function cb_docs_base_contracts_ready(): bool {
 		&& class_exists( '\\CB\\Core\\Governance\\Audit' );
 }
 
-/** Backward-compatible product readiness helper. */
-function cb_docs_base_ready(): bool {
-	return \CB\Docs\Support\Requirements::runtime_ready() && cb_docs_base_contracts_ready();
-}
-
 function cb_docs_dependency_message(): string {
 	if ( ! \CB\Docs\Support\Requirements::runtime_ready() ) {
 		return \CB\Docs\Support\Requirements::operator_message();
