@@ -68,7 +68,6 @@ $forbidden = [
 	'CB\\Core\\Log\\AuditLog'            => 'extensions must write through Governance\\Audit',
 	'CB\\Core\\Admin\\AdminAssetCatalog' => 'the Base asset catalog is private',
 	'CB\\Core\\Admin\\PageBase'          => 'PageBase is internal and must not be consumed by extensions',
-	'Requires Plugins:'                    => 'first-party extensions use the runtime Base dependency guard',
 	'jquery'                               => 'Docs has no jQuery runtime',
 ];
 foreach ( $php_files as $file ) {
@@ -84,6 +83,12 @@ foreach ( $php_files as $file ) {
 }
 
 $bootstrap = (string) file_get_contents( $root . '/core-blueprint-docs.php' );
+if ( ! str_contains( $bootstrap, 'Requires Plugins: core-blueprint' ) ) {
+	$failures[] = 'Bootstrap is missing the canonical native Base dependency header.';
+}
+if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
+	$failures[] = 'Bootstrap retains the obsolete pre-v1 readiness compatibility helper.';
+}
 foreach ( [
 	"class_exists( '\\\\CB\\\\Core\\\\Admin\\\\SettingsRegistry' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
