@@ -86,14 +86,22 @@ $bootstrap = (string) file_get_contents( $root . '/core-blueprint-docs.php' );
 if ( ! str_contains( $bootstrap, 'Requires Plugins: core-blueprint' ) ) {
 	$failures[] = 'Bootstrap is missing the canonical native Base dependency header.';
 }
+if ( ! str_contains( $bootstrap, "define( 'CB_DOCS_REQUIRED_API', '1.0' );" ) ) {
+	$failures[] = 'Bootstrap is missing the canonical Core API 1.0 requirement.';
+}
 if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
 	$failures[] = 'Bootstrap retains the obsolete pre-v1 readiness compatibility helper.';
 }
 foreach ( [
+	"class_exists( '\\\\CB\\\\Core\\\\ExtensionRegistry' )",
 	"class_exists( '\\\\CB\\\\Core\\\\Admin\\\\SettingsRegistry' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Notice' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\IntegrationGrid' )",
+	"class_exists( '\\\\CB\\\\Core\\\\Governance\\\\EventRegistry' )",
+	"class_exists( '\\\\CB\\\\Core\\\\Governance\\\\Audit' )",
+	'\\CB\\Docs\\Support\\Requirements::runtime_ready()',
+	'cb_docs_base_contracts_ready()',
 ] as $required ) {
 	if ( ! str_contains( $bootstrap, $required ) ) {
 		$failures[] = 'Base dependency contract is missing ' . $required . '.';
@@ -107,6 +115,18 @@ $post_type = (string) file_get_contents( $root . '/src/Content/PostType.php' );
 foreach ( [ "'custom-fields'", "'comments'", "'revisions'", "'page-attributes'", "'show_in_rest'", 'Settings::rewrite_base()' ] as $required ) {
 	if ( ! str_contains( $post_type, $required ) ) {
 		$failures[] = 'Post type contract is missing ' . $required . '.';
+	}
+}
+
+$install = (string) file_get_contents( $root . '/src/Install.php' );
+foreach ( [
+	'unregister_taxonomy( Taxonomies::CATEGORY )',
+	'unregister_taxonomy( Taxonomies::TAG )',
+	'unregister_post_type( PostType::TYPE )',
+	'flush_rewrite_rules();',
+] as $required ) {
+	if ( ! str_contains( $install, $required ) ) {
+		$failures[] = 'Install lifecycle contract is missing ' . $required . '.';
 	}
 }
 
@@ -227,6 +247,13 @@ $public_conditions = (string) file_get_contents( $root . '/src/Frontend/Conditio
 foreach ( [ 'is_current', 'in_category', 'has_tag', 'user_can_read', 'DocumentAccess::can_read' ] as $required ) {
 	if ( ! str_contains( $public_conditions, $required ) ) {
 		$failures[] = 'Public Docs conditions contract is missing ' . $required . '.';
+	}
+}
+
+$shortcodes = (string) file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
+foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $required ) {
+	if ( ! str_contains( $shortcodes, $required ) ) {
+		$failures[] = 'Docs shortcode read-boundary contract is missing ' . $required . '.';
 	}
 }
 
