@@ -163,7 +163,7 @@ final class Shortcodes {
 		if ( 0 === $post_id && is_singular( PostType::TYPE ) ) {
 			$post_id = get_queried_object_id();
 		}
-		if ( PostType::TYPE !== get_post_type( $post_id ) ) {
+		if ( PostType::TYPE !== get_post_type( $post_id ) || ! DocumentAccess::can_read( $post_id ) ) {
 			return '';
 		}
 

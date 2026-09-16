@@ -19,6 +19,16 @@ final class Install {
 	}
 
 	public static function deactivate(): void {
+		if ( taxonomy_exists( Taxonomies::CATEGORY ) ) {
+			unregister_taxonomy( Taxonomies::CATEGORY );
+		}
+		if ( taxonomy_exists( Taxonomies::TAG ) ) {
+			unregister_taxonomy( Taxonomies::TAG );
+		}
+		if ( post_type_exists( PostType::TYPE ) ) {
+			unregister_post_type( PostType::TYPE );
+		}
+
 		flush_rewrite_rules();
 	}
 }
