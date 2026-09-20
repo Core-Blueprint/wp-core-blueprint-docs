@@ -1,423 +1,792 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Core Blueprint Docs 0.1.0-rc1.1\\n"
-"PO-Revision-Date: 2026-09-04 12:00+0000\\n"
-"Last-Translator: Core Blueprint\\n"
-"Language-Team: it_IT\\n"
-"Language: it_IT\\n"
-"MIME-Version: 1.0\\n"
-"Content-Type: text/plain; charset=UTF-8\\n"
-"Content-Transfer-Encoding: 8bit\\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+"Project-Id-Version: Core Blueprint Docs 1.0.0-rc1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-core-blueprint-"
+"docs\n"
+"POT-Creation-Date: 2026-09-20 13:32+0000\n"
+"PO-Revision-Date: 2026-09-20 13:32+0000\n"
+"Last-Translator: Core Blueprint\n"
+"Language-Team: it_IT\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Core Blueprint i18n tooling 1.1.6\n"
 
-msgid "%1$d published · %2$d drafts"
-msgstr "%1$d pubblicati · %2$d bozze"
-
-msgid "Action"
-msgstr "Azione"
-
-msgid "Add New"
-msgstr "Aggiungi nuovo"
-
-msgid "Add New Doc"
-msgstr "Aggiungi nuovo Doc"
-
-msgid "Add New Doc Category"
-msgstr "Aggiungi nuova categoria Doc"
-
-msgid "Add New Doc Tag"
-msgstr "Aggiungi nuovo tag Doc"
-
-msgid "Add or remove doc tags"
-msgstr "Aggiungi o rimuovi tag Doc"
-
-msgid "All Doc Categories"
-msgstr "Tutte le categorie Doc"
-
-msgid "All Doc Tags"
-msgstr "Tutti i tag Doc"
-
-msgid "All Docs"
-msgstr "Tutti i Docs"
-
-msgid "Author"
-msgstr "Autore"
-
-msgid "Breadcrumbs"
-msgstr "Breadcrumb"
-
-msgid "Categories"
-msgstr "Categorie"
-
-msgid "Category slug or ID"
-msgstr "Slug o ID categoria"
-
-msgid "Choose from the most used doc tags"
-msgstr "Scegli tra i tag Doc più usati"
-
-msgid "Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects."
-msgstr "Scegli la base URL usata dall'archivio Docs e da ogni singolo Doc. Modificarla in seguito cambia gli URL pubblici, quindi i link esterni esistenti potrebbero richiedere reindirizzamenti."
-
-msgid "Configure the small set of site-wide Docs settings. Documentation content and presentation remain native WordPress and builder-agnostic."
-msgstr "Configura il piccolo insieme di impostazioni Docs valide per tutto il sito. Contenuti e presentazione della documentazione restano nativi di WordPress e indipendenti dal builder."
-
-msgid "Copy"
-msgstr "Copia"
-
-msgid "Core Blueprint dependency required"
-msgstr "Dipendenza Core Blueprint richiesta"
-
+#. Plugin Name of the plugin
+#: core-blueprint-docs.php src/Integration/Builders/Bricks/Conditions.php:27
+#: src/Integration/Builders/Bricks/ElementRegistry.php:37
 msgid "Core Blueprint Docs"
 msgstr "Core Blueprint Docs"
 
-msgid "Core Blueprint Docs cannot access the required public Base contracts."
-msgstr "Core Blueprint Docs non può accedere ai contratti pubblici Base richiesti."
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: core-blueprint-docs.php
+msgid "https://coreblueprint.io"
+msgstr "https://coreblueprint.io"
 
-msgid "Core Blueprint Docs requires an active Core Blueprint Base plugin."
-msgstr "Core Blueprint Docs richiede un plugin Core Blueprint Base attivo."
+#. Description of the plugin
+#: core-blueprint-docs.php
+msgid ""
+"Lightweight builder-agnostic documentation with native WordPress content, "
+"taxonomies and metadata."
+msgstr "Documentazione leggera e indipendente dal builder con contenuti, tassonomie e metadati nativi di WordPress."
 
-msgid "Core Blueprint Docs requires an active, Core API 1.x compatible Core Blueprint Base installation."
-msgstr "Core Blueprint Docs richiede un'installazione Core Blueprint Base attiva e compatibile con Core API 1.x."
+#. Author of the plugin
+#: core-blueprint-docs.php src/Admin/SettingsPage.php:90
+msgid "Core Blueprint"
+msgstr "Core Blueprint"
 
-msgid "Core Blueprint Docs requires Core API %1$s or a newer compatible minor version. This site provides %2$s."
-msgstr "Core Blueprint Docs richiede Core API %1$s o una versione minor compatibile più recente. Questo sito fornisce %2$s."
+#: core-blueprint-docs.php:110 core-blueprint-docs.php:168
+msgid "Required Core Blueprint Base contracts are unavailable."
+msgstr "I contratti Core Blueprint Base richiesti non sono disponibili."
 
+#: core-blueprint-docs.php:151 core-blueprint-docs.php:167
 msgid "Core Blueprint Docs:"
 msgstr "Core Blueprint Docs:"
 
-msgid "Current"
-msgstr "Corrente"
-
-msgid "Current item is a Doc"
-msgstr "L'elemento corrente è un Doc"
-
-msgid "Deprecated"
-msgstr "Obsoleto"
-
-msgid "Doc"
-msgstr "Doc"
-
-msgid "Doc Attributes"
-msgstr "Attributi Doc"
-
-msgid "Doc Categories"
-msgstr "Categorie Doc"
-
-msgid "Doc categories"
-msgstr "Categorie Doc"
-
-msgid "Doc Category"
-msgstr "Categoria Doc"
-
-msgid "Doc category"
-msgstr "Categoria Doc"
-
-msgid "Doc content"
-msgstr "Contenuto Doc"
-
+#: src/Admin/DocDetails.php:23
 msgid "Doc Details"
 msgstr "Dettagli Doc"
 
-msgid "Doc excerpt"
-msgstr "Riassunto Doc"
-
-msgid "Doc ID"
-msgstr "ID Doc"
-
-msgid "Doc published privately."
-msgstr "Doc pubblicato privatamente."
-
-msgid "Doc published."
-msgstr "Doc pubblicato."
-
-msgid "Doc reverted to draft."
-msgstr "Doc ripristinato come bozza."
-
-msgid "Doc scheduled."
-msgstr "Doc programmato."
-
-msgid "Doc subtitle"
-msgstr "Sottotitolo Doc"
-
-msgid "Doc Tag"
-msgstr "Tag Doc"
-
-msgid "Doc tag"
-msgstr "Tag Doc"
-
-msgid "Doc Tags"
-msgstr "Tag Doc"
-
-msgid "Doc tags"
-msgstr "Tag Doc"
-
-msgid "Doc title"
-msgstr "Titolo Doc"
-
-msgid "Doc updated."
-msgstr "Doc aggiornato."
-
-msgid "Doc URL"
-msgstr "URL Doc"
-
-msgid "Doc version"
-msgstr "Versione Doc"
-
-msgid "Docs"
-msgstr "Docs"
-
-msgid "Docs Archives"
-msgstr "Archivi Docs"
-
-msgid "Docs document created"
-msgstr "Documento Docs creato"
-
-msgid "Docs document permanently deleted"
-msgstr "Documento Docs eliminato definitivamente"
-
-msgid "Docs document published"
-msgstr "Documento Docs pubblicato"
-
-msgid "Docs document restored"
-msgstr "Documento Docs ripristinato"
-
-msgid "Docs document trashed"
-msgstr "Documento Docs spostato nel cestino"
-
-msgid "Docs document updated"
-msgstr "Documento Docs aggiornato"
-
-msgid "Docs list"
-msgstr "Elenco Docs"
-
-msgid "Docs list navigation"
-msgstr "Navigazione elenco Docs"
-
-msgid "Docs Settings"
-msgstr "Impostazioni Docs"
-
-msgid "Docs settings updated"
-msgstr "Impostazioni Docs aggiornate"
-
-msgid "Docs URL base"
-msgstr "Base URL Docs"
-
-msgid "Docs: Documents"
-msgstr "Docs: Documenti"
-
-msgid "Docs: Search Results"
-msgstr "Docs: Risultati di ricerca"
-
-msgid "Documentation articles managed by Core Blueprint Docs."
-msgstr "Articoli di documentazione gestiti da Core Blueprint Docs."
-
-msgid "Documentation category not found."
-msgstr "Categoria della documentazione non trovata."
-
-msgid "Documentation navigation"
-msgstr "Navigazione documentazione"
-
-msgid "Documentation status"
-msgstr "Stato della documentazione"
-
-msgid "Edit Doc"
-msgstr "Modifica Doc"
-
-msgid "Edit Doc Category"
-msgstr "Modifica categoria Doc"
-
-msgid "Edit Doc Tag"
-msgstr "Modifica tag Doc"
-
-msgid "Example:"
-msgstr "Esempio:"
-
-msgid "Featured doc"
-msgstr "Doc in evidenza"
-
-msgid "Featured Doc"
-msgstr "Doc in evidenza"
-
-msgid "Featured image"
-msgstr "Immagine in evidenza"
-
-msgid "Filter docs list"
-msgstr "Filtra elenco Docs"
-
-msgid "is"
-msgstr "è"
-
-msgid "is not"
-msgstr "non è"
-
-msgid "Last reviewed"
-msgstr "Ultima revisione"
-
-msgid "Lists published Docs ordered by menu order and title."
-msgstr "Elenca i Docs pubblicati ordinati per ordine di menu e titolo."
-
-msgid "New Doc"
-msgstr "Nuovo Doc"
-
-msgid "New Doc Category Name"
-msgstr "Nome nuova categoria Doc"
-
-msgid "New Doc Tag Name"
-msgstr "Nome nuovo tag Doc"
-
-msgid "No changes needed"
-msgstr "Nessuna modifica necessaria"
-
-msgid "No docs found in Trash."
-msgstr "Nessun Doc trovato nel cestino."
-
-msgid "No docs found."
-msgstr "Nessun Doc trovato."
-
-msgid "No documentation found."
-msgstr "Nessuna documentazione trovata."
-
-msgid "No documentation navigation is available."
-msgstr "Nessuna navigazione della documentazione disponibile."
-
-msgid "No matching documentation found."
-msgstr "Nessuna documentazione corrispondente trovata."
-
-msgid "Optional attributes"
-msgstr "Attributi opzionali"
-
-msgid "Optional product or documentation version."
-msgstr "Versione opzionale del prodotto o della documentazione."
-
-msgid "Parent Doc Category"
-msgstr "Categoria Doc genitore"
-
-msgid "Parent Doc Category:"
-msgstr "Categoria Doc genitore:"
-
-msgid "Parent Doc:"
-msgstr "Doc genitore:"
-
-msgid "Permalinks"
-msgstr "Permalink"
-
-msgid "Popular Doc Tags"
-msgstr "Tag Doc popolari"
-
-msgid "Published"
-msgstr "Pubblicato"
-
-msgid "Purpose"
-msgstr "Scopo"
-
-msgid "Remove featured image"
-msgstr "Rimuovi immagine in evidenza"
-
-msgid "Renders a documentation search form with scoped Docs results."
-msgstr "Mostra un modulo di ricerca della documentazione con risultati limitati a Docs."
-
-msgid "Renders archive, category and single-document breadcrumbs in Docs contexts."
-msgstr "Mostra breadcrumb di archivio, categoria e singolo documento nei contesti Docs."
-
-msgid "Renders documentation metadata for the current Doc or a specific Doc ID."
-msgstr "Mostra i metadati della documentazione per il Doc corrente o per uno specifico ID Doc."
-
-msgid "Renders the hierarchical Doc Category tree with its published Docs."
-msgstr "Mostra l'albero gerarchico delle categorie Doc con i relativi Docs pubblicati."
-
-msgid "Save URL base"
-msgstr "Salva base URL"
-
-msgid "Search"
-msgstr "Cerca"
-
-msgid "Search Doc Categories"
-msgstr "Cerca categorie Doc"
-
-msgid "Search Doc Tags"
-msgstr "Cerca tag Doc"
-
-msgid "Search Docs"
-msgstr "Cerca Docs"
-
-msgid "Search documentation"
-msgstr "Cerca nella documentazione"
-
-msgid "Search documentation…"
-msgstr "Cerca nella documentazione…"
-
-msgid "Separate doc tags with commas"
-msgstr "Separa i tag Doc con virgole"
-
-msgid "Set featured image"
-msgstr "Imposta immagine in evidenza"
-
-msgid "Settings"
-msgstr "Impostazioni"
-
-msgid "Shortcode"
-msgstr "Shortcode"
-
-msgid "Shortcodes"
-msgstr "Shortcode"
-
-msgid "Status"
-msgstr "Stato"
-
+#: src/Admin/DocDetails.php:41
 msgid "Subtitle"
 msgstr "Sottotitolo"
 
-msgid "Tag slug or ID"
-msgstr "Slug o ID tag"
+#: src/Admin/DocDetails.php:45
+#: src/Integration/Builders/Bricks/DynamicData.php:91
+msgid "Documentation status"
+msgstr "Stato della documentazione"
 
-msgid "Tags"
-msgstr "Tag"
-
-msgid "The Docs URL base already had this value, so no rewrite refresh was necessary."
-msgstr "La base URL di Docs aveva già questo valore, quindi non è stato necessario aggiornare le regole di riscrittura."
-
-msgid "The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered."
-msgstr "La nuova base URL di Docs è attiva. Le regole di riscrittura di WordPress sono state aggiornate una volta dopo la registrazione della nuova rotta."
-
-msgid "These values are native WordPress post meta and can be used by builders, queries and the REST API."
-msgstr "Questi valori sono metadati nativi dei post di WordPress e possono essere usati da builder, query e API REST."
-
-msgid "Update Doc Category"
-msgstr "Aggiorna categoria Doc"
-
-msgid "Update Doc Tag"
-msgstr "Aggiorna tag Doc"
-
-msgid "Updated"
-msgstr "Aggiornato"
-
-msgid "URL base updated"
-msgstr "Base URL aggiornata"
-
-msgid "Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs."
-msgstr "Usa uno slug come docs, documentazione o guida. Sono supportati anche percorsi annidati come knowledge/docs. Un valore vuoto o non valido torna a docs."
-
-msgid "Use as featured image"
-msgstr "Usa come immagine in evidenza"
-
-msgid "Use these built-in shortcodes to place Docs content in WordPress content areas. Copy a shortcode and add optional attributes where needed."
-msgstr "Usa questi shortcode integrati per inserire contenuti Docs nelle aree di contenuto WordPress. Copia uno shortcode e aggiungi gli attributi opzionali dove necessario."
-
-msgid "User can read current Doc"
-msgstr "L'utente può leggere il Doc corrente"
-
+#: src/Admin/DocDetails.php:53 src/Frontend/Shortcodes.php:191
 msgid "Version"
 msgstr "Versione"
 
-msgid "View Doc"
-msgstr "Visualizza Doc"
+#: src/Admin/DocDetails.php:55
+msgid "Optional product or documentation version."
+msgstr "Versione opzionale del prodotto o della documentazione."
 
-msgid "View Docs"
-msgstr "Visualizza Docs"
+#: src/Admin/DocDetails.php:58 src/Frontend/Shortcodes.php:194
+#: src/Integration/Builders/Bricks/DynamicData.php:93
+msgid "Last reviewed"
+msgstr "Ultima revisione"
 
+#: src/Admin/DocDetails.php:64
+msgid "Featured doc"
+msgstr "Doc in evidenza"
+
+#: src/Admin/DocDetails.php:67
+msgid ""
+"These values are native WordPress post meta and can be used by builders, "
+"queries and the REST API."
+msgstr ""
+"Questi valori sono metadati nativi dei post di WordPress e possono essere "
+"usati da builder, query e API REST."
+
+#: src/Admin/IntegrationReadiness.php:29
+msgid "Bricks Builder"
+msgstr "Bricks Builder"
+
+#: src/Admin/IntegrationReadiness.php:31
+msgid ""
+"Bricks is active. Docs dynamic data, queries and conditions are available "
+"through the optional adapter while Docs data and access logic remain builder-"
+"neutral."
+msgstr "Bricks è attivo. Dati dinamici, query e condizioni di Docs sono disponibili tramite l’adattatore opzionale, mentre i dati e la logica di accesso di Docs restano indipendenti dal builder."
+
+#: src/Admin/IntegrationReadiness.php:32
+msgid ""
+"Bricks is optional. Docs works without a builder through native WordPress "
+"content, shortcodes and builder-neutral frontend contracts."
+msgstr "Bricks è opzionale. Docs funziona senza builder tramite contenuti WordPress nativi, shortcode e contratti frontend indipendenti dal builder."
+
+#: src/Admin/IntegrationReadiness.php:35 src/Support/Requirements.php:88
+msgid "Ready"
+msgstr "Pronto"
+
+#: src/Admin/IntegrationReadiness.php:36
+msgid "Not active"
+msgstr "Non attivo"
+
+#: src/Admin/SettingsPage.php:34 src/Admin/SettingsPage.php:93
+msgid ""
+"Manage documentation health, URL behavior, frontend composition and optional "
+"integrations. Documentation content remains native WordPress and is managed "
+"from the Docs content screen."
+msgstr "Gestisci lo stato della documentazione, il comportamento degli URL, la composizione frontend e le integrazioni opzionali. I contenuti della documentazione restano nativi di WordPress e vengono gestiti dalla schermata dei contenuti Docs."
+
+#: src/Admin/SettingsPage.php:71 src/Admin/SettingsPage.php:75
+#: src/Admin/SettingsPage.php:91 src/Content/PostType.php:18
+#: src/Content/PostType.php:20 src/Frontend/Shortcodes.php:123
+#: src/Integration/Suite.php:33 src/Plugin.php:54
+msgid "Docs"
+msgstr "Docs"
+
+#: src/Admin/SettingsPage.php:84
 msgid "You do not have permission to access this page."
 msgstr "Non hai il permesso di accedere a questa pagina."
 
+#: src/Admin/SettingsPage.php:119
+msgid "Overview"
+msgstr "Panoramica"
+
+#: src/Admin/SettingsPage.php:120
+msgid "General"
+msgstr "Generale"
+
+#: src/Admin/SettingsPage.php:121
+msgid "Integrations"
+msgstr "Integrazioni"
+
+#: src/Admin/SettingsPage.php:161
+msgid "Docs sections"
+msgstr "Sezioni di Docs"
+
+#: src/Admin/SettingsPage.php:184
+msgid "Docs at a glance"
+msgstr "Docs a colpo d’occhio"
+
+#: src/Admin/SettingsPage.php:186
+msgid "Published Docs"
+msgstr "Docs pubblicati"
+
+#: src/Admin/SettingsPage.php:190
+msgid "Drafts"
+msgstr "Bozze"
+
+#: src/Admin/SettingsPage.php:194 src/Content/Taxonomies.php:28
+msgid "Categories"
+msgstr "Categorie"
+
+#: src/Admin/SettingsPage.php:198 src/Content/Taxonomies.php:61
+msgid "Tags"
+msgstr "Tag"
+
+#: src/Admin/SettingsPage.php:218
+msgid "URL base updated"
+msgstr "Base URL aggiornata"
+
+#: src/Admin/SettingsPage.php:219
+msgid ""
+"The new Docs URL base is active. WordPress rewrite rules were refreshed once "
+"after the new route was registered."
+msgstr ""
+"La nuova base URL di Docs è attiva. Le regole di riscrittura di WordPress "
+"sono state aggiornate una volta dopo la registrazione della nuova rotta."
+
+#: src/Admin/SettingsPage.php:226
+msgid "No changes needed"
+msgstr "Nessuna modifica necessaria"
+
+#: src/Admin/SettingsPage.php:227
+msgid ""
+"The Docs URL base already had this value, so no rewrite refresh was "
+"necessary."
+msgstr ""
+"La base URL di Docs aveva già questo valore, quindi non è stato necessario "
+"aggiornare le regole di riscrittura."
+
+#: src/Admin/SettingsPage.php:233
+msgid "Permalinks"
+msgstr "Permalink"
+
+#: src/Admin/SettingsPage.php:234
+msgid ""
+"Choose the URL base used by the Docs archive and every individual Doc. "
+"Changing this later changes public URLs, so existing external links may need "
+"redirects."
+msgstr ""
+"Scegli la base URL usata dall'archivio Docs e da ogni singolo Doc. "
+"Modificarla in seguito cambia gli URL pubblici, quindi i link esterni "
+"esistenti potrebbero richiedere reindirizzamenti."
+
+#: src/Admin/SettingsPage.php:241
+msgid "Docs URL base"
+msgstr "Base URL Docs"
+
+#: src/Admin/SettingsPage.php:245
+msgid ""
+"Use a slug such as docs, documentation or handleiding. Nested paths such as "
+"knowledge/docs are also supported. Empty or invalid input falls back to docs."
+msgstr ""
+"Usa uno slug come docs, documentazione o guida. Sono supportati anche "
+"percorsi annidati come knowledge/docs. Un valore vuoto o non valido torna a "
+"docs."
+
+#: src/Admin/SettingsPage.php:248
+msgid "Example:"
+msgstr "Esempio:"
+
+#: src/Admin/SettingsPage.php:252
+msgid "Save URL base"
+msgstr "Salva base URL"
+
+#: src/Admin/SettingsPage.php:269
+msgid "Copy"
+msgstr "Copia"
+
+#: src/Admin/SettingsPage.php:273
+msgid ""
+"Use these built-in shortcodes to place Docs content in WordPress content "
+"areas. Copy a shortcode and add optional attributes where needed."
+msgstr ""
+"Usa questi shortcode integrati per inserire contenuti Docs nelle aree di "
+"contenuto WordPress. Copia uno shortcode e aggiungi gli attributi opzionali "
+"dove necessario."
+
+#: src/Admin/SettingsPage.php:275
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: src/Admin/SettingsPage.php:276
+msgid "Purpose"
+msgstr "Scopo"
+
+#: src/Admin/SettingsPage.php:277
+msgid "Optional attributes"
+msgstr "Attributi opzionali"
+
+#: src/Admin/SettingsPage.php:278
+msgid "Action"
+msgstr "Azione"
+
+#: src/Admin/SettingsPage.php:282
+msgid "Shortcodes"
+msgstr "Shortcode"
+
+#: src/Admin/SettingsPage.php:292
+msgid "Lists published Docs ordered by menu order and title."
+msgstr "Elenca i Docs pubblicati ordinati per ordine di menu e titolo."
+
+#: src/Admin/SettingsPage.php:297
+msgid "Renders the hierarchical Doc Category tree with its published Docs."
+msgstr ""
+"Mostra l'albero gerarchico delle categorie Doc con i relativi Docs "
+"pubblicati."
+
+#: src/Admin/SettingsPage.php:302
+msgid "Renders a documentation search form with scoped Docs results."
+msgstr ""
+"Mostra un modulo di ricerca della documentazione con risultati limitati a "
+"Docs."
+
+#: src/Admin/SettingsPage.php:307
+msgid ""
+"Renders archive, category and single-document breadcrumbs in Docs contexts."
+msgstr ""
+"Mostra breadcrumb di archivio, categoria e singolo documento nei contesti "
+"Docs."
+
+#: src/Admin/SettingsPage.php:312
+msgid ""
+"Renders documentation metadata for the current Doc or a specific Doc ID."
+msgstr ""
+"Mostra i metadati della documentazione per il Doc corrente o per uno "
+"specifico ID Doc."
+
+#: src/Content/Meta.php:110
+msgid "Current"
+msgstr "Corrente"
+
+#: src/Content/Meta.php:111
+msgid "Deprecated"
+msgstr "Obsoleto"
+
+#: src/Content/PostType.php:19 src/Content/PostType.php:21
+msgid "Doc"
+msgstr "Doc"
+
+#: src/Content/PostType.php:22
+msgid "Add New"
+msgstr "Aggiungi nuovo"
+
+#: src/Content/PostType.php:23
+msgid "Add New Doc"
+msgstr "Aggiungi nuovo Doc"
+
+#: src/Content/PostType.php:24
+msgid "New Doc"
+msgstr "Nuovo Doc"
+
+#: src/Content/PostType.php:25
+msgid "Edit Doc"
+msgstr "Modifica Doc"
+
+#: src/Content/PostType.php:26
+msgid "View Doc"
+msgstr "Visualizza Doc"
+
+#: src/Content/PostType.php:27
+msgid "View Docs"
+msgstr "Visualizza Docs"
+
+#: src/Content/PostType.php:28
+msgid "All Docs"
+msgstr "Tutti i Docs"
+
+#: src/Content/PostType.php:29
+msgid "Search Docs"
+msgstr "Cerca Docs"
+
+#: src/Content/PostType.php:30
+msgid "Parent Doc:"
+msgstr "Doc genitore:"
+
+#: src/Content/PostType.php:31
+msgid "No docs found."
+msgstr "Nessun Doc trovato."
+
+#: src/Content/PostType.php:32
+msgid "No docs found in Trash."
+msgstr "Nessun Doc trovato nel cestino."
+
+#: src/Content/PostType.php:33
+msgid "Docs Archives"
+msgstr "Archivi Docs"
+
+#: src/Content/PostType.php:34
+msgid "Doc Attributes"
+msgstr "Attributi Doc"
+
+#: src/Content/PostType.php:35
+msgid "Featured image"
+msgstr "Immagine in evidenza"
+
+#: src/Content/PostType.php:36
+msgid "Set featured image"
+msgstr "Imposta immagine in evidenza"
+
+#: src/Content/PostType.php:37
+msgid "Remove featured image"
+msgstr "Rimuovi immagine in evidenza"
+
+#: src/Content/PostType.php:38
+msgid "Use as featured image"
+msgstr "Usa come immagine in evidenza"
+
+#: src/Content/PostType.php:39
+msgid "Filter docs list"
+msgstr "Filtra elenco Docs"
+
+#: src/Content/PostType.php:40
+msgid "Docs list navigation"
+msgstr "Navigazione elenco Docs"
+
+#: src/Content/PostType.php:41
+msgid "Docs list"
+msgstr "Elenco Docs"
+
+#: src/Content/PostType.php:42
+msgid "Doc published."
+msgstr "Doc pubblicato."
+
+#: src/Content/PostType.php:43
+msgid "Doc published privately."
+msgstr "Doc pubblicato privatamente."
+
+#: src/Content/PostType.php:44
+msgid "Doc reverted to draft."
+msgstr "Doc ripristinato come bozza."
+
+#: src/Content/PostType.php:45
+msgid "Doc scheduled."
+msgstr "Doc programmato."
+
+#: src/Content/PostType.php:46
+msgid "Doc updated."
+msgstr "Doc aggiornato."
+
+#: src/Content/PostType.php:48
+msgid "Documentation articles managed by Core Blueprint Docs."
+msgstr "Articoli di documentazione gestiti da Core Blueprint Docs."
+
+#: src/Content/Taxonomies.php:18
+msgid "Doc Categories"
+msgstr "Categorie Doc"
+
+#: src/Content/Taxonomies.php:19
+msgid "Doc Category"
+msgstr "Categoria Doc"
+
+#: src/Content/Taxonomies.php:20
+msgid "Search Doc Categories"
+msgstr "Cerca categorie Doc"
+
+#: src/Content/Taxonomies.php:21
+msgid "All Doc Categories"
+msgstr "Tutte le categorie Doc"
+
+#: src/Content/Taxonomies.php:22
+msgid "Parent Doc Category"
+msgstr "Categoria Doc genitore"
+
+#: src/Content/Taxonomies.php:23
+msgid "Parent Doc Category:"
+msgstr "Categoria Doc genitore:"
+
+#: src/Content/Taxonomies.php:24
+msgid "Edit Doc Category"
+msgstr "Modifica categoria Doc"
+
+#: src/Content/Taxonomies.php:25
+msgid "Update Doc Category"
+msgstr "Aggiorna categoria Doc"
+
+#: src/Content/Taxonomies.php:26
+msgid "Add New Doc Category"
+msgstr "Aggiungi nuova categoria Doc"
+
+#: src/Content/Taxonomies.php:27
+msgid "New Doc Category Name"
+msgstr "Nome nuova categoria Doc"
+
+#: src/Content/Taxonomies.php:49
+msgid "Doc Tags"
+msgstr "Tag Doc"
+
+#: src/Content/Taxonomies.php:50
+msgid "Doc Tag"
+msgstr "Tag Doc"
+
+#: src/Content/Taxonomies.php:51
+msgid "Search Doc Tags"
+msgstr "Cerca tag Doc"
+
+#: src/Content/Taxonomies.php:52
+msgid "Popular Doc Tags"
+msgstr "Tag Doc popolari"
+
+#: src/Content/Taxonomies.php:53
+msgid "All Doc Tags"
+msgstr "Tutti i tag Doc"
+
+#: src/Content/Taxonomies.php:54
+msgid "Edit Doc Tag"
+msgstr "Modifica tag Doc"
+
+#: src/Content/Taxonomies.php:55
+msgid "Update Doc Tag"
+msgstr "Aggiorna tag Doc"
+
+#: src/Content/Taxonomies.php:56
+msgid "Add New Doc Tag"
+msgstr "Aggiungi nuovo tag Doc"
+
+#: src/Content/Taxonomies.php:57
+msgid "New Doc Tag Name"
+msgstr "Nome nuovo tag Doc"
+
+#: src/Content/Taxonomies.php:58
+msgid "Separate doc tags with commas"
+msgstr "Separa i tag Doc con virgole"
+
+#: src/Content/Taxonomies.php:59
+msgid "Add or remove doc tags"
+msgstr "Aggiungi o rimuovi tag Doc"
+
+#: src/Content/Taxonomies.php:60
+msgid "Choose from the most used doc tags"
+msgstr "Scegli tra i tag Doc più usati"
+
+#: src/Frontend/Components/Search.php:33 src/Frontend/Shortcodes.php:95
+#: src/Integration/Builders/Bricks/Elements/Search.php:57
+#: src/Integration/Builders/Bricks/Elements/Search.php:211
+msgid "Search documentation…"
+msgstr "Cerca nella documentazione…"
+
+#: src/Frontend/Components/Search.php:70
+msgid "Searching…"
+msgstr "Ricerca…"
+
+#: src/Frontend/Components/Search.php:71 src/Frontend/Components/Search.php:100
+msgid "No matching documentation found."
+msgstr "Nessuna documentazione corrispondente trovata."
+
+#: src/Frontend/Components/Search.php:72
+msgid "Live search is temporarily unavailable. Submit the form to search."
+msgstr "La ricerca in tempo reale è temporaneamente non disponibile. Invia il modulo per effettuare la ricerca."
+
+#: src/Frontend/Components/Search.php:78
+msgid "Search documentation"
+msgstr "Cerca nella documentazione"
+
+#: src/Frontend/Components/Search.php:81
+#: src/Integration/Builders/Bricks/Elements/Search.php:28
+msgid "Search"
+msgstr "Cerca"
+
+#: src/Frontend/Data/Document.php:125 src/Frontend/Shortcodes.php:41
+#: src/Frontend/Shortcodes.php:64
+msgid "No documentation found."
+msgstr "Nessuna documentazione trovata."
+
+#: src/Frontend/Shortcodes.php:73
+msgid "Documentation category not found."
+msgstr "Categoria della documentazione non trovata."
+
+#: src/Frontend/Shortcodes.php:88
+msgid "Documentation navigation"
+msgstr "Navigazione documentazione"
+
+#: src/Frontend/Shortcodes.php:89
+msgid "No documentation navigation is available."
+msgstr "Nessuna navigazione della documentazione disponibile."
+
+#: src/Frontend/Shortcodes.php:149
+msgid "Breadcrumbs"
+msgstr "Breadcrumb"
+
+#: src/Frontend/Shortcodes.php:185
+msgid "Author"
+msgstr "Autore"
+
+#: src/Frontend/Shortcodes.php:186
+msgid "Published"
+msgstr "Pubblicato"
+
+#: src/Frontend/Shortcodes.php:187
+msgid "Updated"
+msgstr "Aggiornato"
+
+#: src/Frontend/Shortcodes.php:188
+msgid "Status"
+msgstr "Stato"
+
+#: src/Governance/Events.php:44
+msgid "Docs document created"
+msgstr "Documento Docs creato"
+
+#: src/Governance/Events.php:45
+msgid "Docs document published"
+msgstr "Documento Docs pubblicato"
+
+#: src/Governance/Events.php:46
+msgid "Docs document updated"
+msgstr "Documento Docs aggiornato"
+
+#: src/Governance/Events.php:47
+msgid "Docs document trashed"
+msgstr "Documento Docs spostato nel cestino"
+
+#: src/Governance/Events.php:48
+msgid "Docs document restored"
+msgstr "Documento Docs ripristinato"
+
+#: src/Governance/Events.php:49
+msgid "Docs document permanently deleted"
+msgstr "Documento Docs eliminato definitivamente"
+
+#: src/Governance/Events.php:50
+msgid "Docs settings updated"
+msgstr "Impostazioni Docs aggiornate"
+
+#: src/Integration/Builders/Bricks/Conditions.php:36
+msgid "Current item is a Doc"
+msgstr "L'elemento corrente è un Doc"
+
+#: src/Integration/Builders/Bricks/Conditions.php:41
+msgid "User can read current Doc"
+msgstr "L'utente può leggere il Doc corrente"
+
+#: src/Integration/Builders/Bricks/Conditions.php:46
+msgid "Doc category"
+msgstr "Categoria Doc"
+
+#: src/Integration/Builders/Bricks/Conditions.php:47
+msgid "Category slug or ID"
+msgstr "Slug o ID categoria"
+
+#: src/Integration/Builders/Bricks/Conditions.php:51
+msgid "Doc tag"
+msgstr "Tag Doc"
+
+#: src/Integration/Builders/Bricks/Conditions.php:52
+msgid "Tag slug or ID"
+msgstr "Slug o ID tag"
+
+#: src/Integration/Builders/Bricks/Conditions.php:100
+#: src/Integration/Builders/Bricks/Conditions.php:103
+msgid "is"
+msgstr "è"
+
+#: src/Integration/Builders/Bricks/Conditions.php:101
+msgid "is not"
+msgstr "non è"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:83
+msgid "Doc ID"
+msgstr "ID Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:84
+msgid "Doc title"
+msgstr "Titolo Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:85
+msgid "Doc URL"
+msgstr "URL Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:86
+msgid "Doc excerpt"
+msgstr "Riassunto Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:87
+msgid "Doc content"
+msgstr "Contenuto Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:88
+msgid "Doc categories"
+msgstr "Categorie Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:89
+msgid "Doc tags"
+msgstr "Tag Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:90
+msgid "Doc subtitle"
+msgstr "Sottotitolo Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:92
+msgid "Doc version"
+msgstr "Versione Doc"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:94
+msgid "Featured Doc"
+msgstr "Doc in evidenza"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:18
+msgid "Docs Search"
+msgstr "Ricerca Docs"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:32
+msgid "Input"
+msgstr "Campo di input"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:36
+msgid "Button"
+msgstr "Pulsante"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:40
+msgid "Results"
+msgstr "Risultati"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:50
+msgid ""
+"Live search is powered by the builder-neutral Core Blueprint Docs search "
+"service. Bricks only controls presentation."
+msgstr "La ricerca in tempo reale è gestita dal servizio di ricerca di Core Blueprint Docs, indipendente dal builder. Bricks controlla solo la presentazione."
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:55
+msgid "Placeholder"
+msgstr "Segnaposto"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:62
+msgid "Result limit"
+msgstr "Limite risultati"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:72
+msgid "Minimum characters"
+msgstr "Numero minimo di caratteri"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:78
+msgid "Live search starts after this many characters."
+msgstr "La ricerca in tempo reale inizia dopo questo numero di caratteri."
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:83
+msgid "Show excerpts"
+msgstr "Mostra estratti"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:90
+msgid "Show category"
+msgstr "Mostra categoria"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:97
+msgid "Category slug"
+msgstr "Slug categoria"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:99
+msgid "Optional. Limit search to one Docs category."
+msgstr "Facoltativo. Limita la ricerca a una categoria Docs."
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:104
+msgid "Tag slug"
+msgstr "Slug tag"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:106
+msgid "Optional. Limit search to one Docs tag."
+msgstr "Facoltativo. Limita la ricerca a un tag Docs."
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:112
+#: src/Integration/Builders/Bricks/Elements/Search.php:141
+msgid "Typography"
+msgstr "Tipografia"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:119
+#: src/Integration/Builders/Bricks/Elements/Search.php:148
+#: src/Integration/Builders/Bricks/Elements/Search.php:170
+msgid "Background"
+msgstr "Sfondo"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:126
+#: src/Integration/Builders/Bricks/Elements/Search.php:155
+#: src/Integration/Builders/Bricks/Elements/Search.php:177
+msgid "Border"
+msgstr "Bordo"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:133
+#: src/Integration/Builders/Bricks/Elements/Search.php:162
+msgid "Padding"
+msgstr "Spaziatura interna"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:184
+msgid "Title typography"
+msgstr "Tipografia del titolo"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:191
+msgid "Category typography"
+msgstr "Tipografia della categoria"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php:198
+msgid "Excerpt typography"
+msgstr "Tipografia dell’estratto"
+
+#: src/Integration/Builders/Bricks/Queries.php:27
+msgid "Docs: Documents"
+msgstr "Docs: Documenti"
+
+#: src/Integration/Builders/Bricks/Queries.php:28
+msgid "Docs: Search Results"
+msgstr "Docs: Risultati di ricerca"
+
+#. translators: 1: published docs, 2: draft docs.
+#: src/Integration/Suite.php:46
+#, php-format
+msgid "%1$d published · %2$d drafts"
+msgstr "%1$d pubblicati · %2$d bozze"
+
+#: src/Plugin.php:59
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: src/Settings.php:56
 msgid "You do not have permission to change Docs settings."
 msgstr "Non hai il permesso di modificare le impostazioni di Docs."
+
+#. translators: 1: required PHP version, 2: current PHP version.
+#: src/Support/Requirements.php:74
+#, php-format
+msgid "PHP %1$s or newer is required. This server runs PHP %2$s."
+msgstr "È richiesto PHP %1$s o una versione successiva. Questo server utilizza PHP %2$s."
+
+#: src/Support/Requirements.php:79
+msgid "Core Blueprint must be installed and active."
+msgstr "Core Blueprint deve essere installato e attivo."
+
+#. translators: 1: required Core API version, 2: available Core API version.
+#: src/Support/Requirements.php:83
+#, php-format
+msgid ""
+"Core API %1$s or a newer compatible minor version is required. Available "
+"Core API: %2$s."
+msgstr "È richiesta Core API %1$s o una versione minor compatibile più recente. Core API disponibile: %2$s."

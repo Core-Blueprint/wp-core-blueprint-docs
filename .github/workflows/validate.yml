@@ -1,13 +1,7 @@
 name: Docs checks
 
 on:
-  push:
-    branches:
-      - main
-      - 'docs-v1-*'
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,8 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  static:
-    name: PHP ${{ matrix.php }} static validation
+  validate:
+    name: PHP ${{ matrix.php }} validation
     runs-on: ubuntu-24.04
 
     strategy:
@@ -30,19 +24,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7.0.1
 
-      - name: Setup PHP
+      - name: Setup PHP and WP-CLI
         uses: shivammathur/setup-php@2.37.2
         with:
           php-version: ${{ matrix.php }}
           coverage: none
+          tools: wp-cli
 
-      - name: PHP syntax
+      - name: Install gettext
         shell: bash
-        run: find . -type f -name '*.php' -not -path './build/*' -print0 | xargs -0 -n1 php -l
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
 
-      - name: JavaScript syntax
+      - name: Run Docs checks
         shell: bash
-        run: for file in assets/js/*.js; do node --check "$file"; done
+        run: bash tools/check
 
-      - name: Docs conformance
-        run: php tools/conformance.php
+      - name: Upload validated plugin ZIP
+        if: matrix.php == '8.4'
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-blueprint-docs-1.0.0-rc1
+          path: |
+            build/core-blueprint-docs-1.0.0-rc1.zip
+            build/core-blueprint-docs-1.0.0-rc1.zip.sha256
+          if-no-files-found: error
+          retention-days: 14

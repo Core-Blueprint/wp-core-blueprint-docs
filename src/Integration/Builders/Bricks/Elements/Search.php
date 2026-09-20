@@ -5,11 +5,12 @@ namespace CB\Docs\Integration\Builders\Bricks\Elements;
 
 use CB\Docs\Frontend\Assets;
 use CB\Docs\Frontend\Components\Search as SearchComponent;
+use CB\Docs\Integration\Builders\Bricks\ElementRegistry;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Search extends \Bricks\Element {
-	public $category = 'core-blueprint-docs';
+	public $category = ElementRegistry::CATEGORY;
 	public $name     = 'cb-docs-search';
 	public $icon     = 'ti-search';
 
