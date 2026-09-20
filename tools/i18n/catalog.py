@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import tempfile
 
-I18N_TOOLING_VERSION = "1.1.1"
+I18N_TOOLING_VERSION = "1.1.2"
 LOCALES = ("nl_NL", "de_DE", "fr_FR", "es_ES", "it_IT", "pt_PT")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -306,6 +306,15 @@ def apply_shared_translations(po_path: Path, locale: str, pot_keys: set[str]) ->
             fail(f"{locale} PO missing shared translation target: {msgid}")
         current[by_msgid[msgid]] = replace_singular_translation(
             current[by_msgid[msgid]], translations[locale]
+        )
+
+    for msgid in sorted(pot_keys):
+        if not re.fullmatch(r"https?://\\S+", msgid):
+            continue
+        if msgid not in by_msgid:
+            fail(f"{locale} PO missing URL identity translation target: {msgid}")
+        current[by_msgid[msgid]] = replace_singular_translation(
+            current[by_msgid[msgid]], msgid
         )
 
     po_path.write_text("\n\n".join(current).rstrip() + "\n", encoding="utf-8")
