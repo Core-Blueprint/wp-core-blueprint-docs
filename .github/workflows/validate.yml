@@ -1,13 +1,6 @@
 name: Docs checks
 
 on:
-  push:
-    branches:
-      - main
-      - 'docs-v1-*'
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
