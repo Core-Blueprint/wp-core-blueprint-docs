@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import tempfile
 
-I18N_TOOLING_VERSION = "1.1.4"
+I18N_TOOLING_VERSION = "1.1.5"
 LOCALES = ("nl_NL", "de_DE", "fr_FR", "es_ES", "it_IT", "pt_PT")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -26,6 +26,14 @@ SHARED_TRANSLATIONS = {
         "es_ES": "Core Blueprint",
         "it_IT": "Core Blueprint",
         "pt_PT": "Core Blueprint",
+    },
+    "Bricks Builder": {
+        "nl_NL": "Bricks Builder",
+        "de_DE": "Bricks Builder",
+        "fr_FR": "Bricks Builder",
+        "es_ES": "Bricks Builder",
+        "it_IT": "Bricks Builder",
+        "pt_PT": "Bricks Builder",
     },
     "Lightweight builder-agnostic documentation with native WordPress content, taxonomies and metadata.": {
         "nl_NL": "Lichtgewicht builder-agnostische documentatie met native WordPress-content, taxonomieën en metadata.",
