@@ -134,12 +134,14 @@ If Base is missing or incompatible, Docs remains inert. Interactive activation i
 
 ## Development checks
 
+Run the canonical local validation gate from the repository root:
+
 ```bash
-php tools/conformance.php
-find . -type f -name '*.php' -not -path './build/*' -print0 | xargs -0 -n1 php -l
-for file in assets/js/*.js; do node --check "$file"; done
-python3 tools/sync-i18n.py
-bash tools/build-release
+bash tools/check
 ```
+
+The gate validates PHP and JavaScript syntax, localization, product conformance, focused smoke contracts and deterministic release packaging.
+
+When translatable runtime strings change, run `tools/i18n/update`, review the catalog changes, then run `bash tools/check` again.
 
 Release tooling is documented in [`tools/README.md`](tools/README.md).

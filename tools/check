@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+VERSION="$(php -r '$source=file_get_contents($argv[1]); preg_match("/^ \\* Version:\\s+([^\\s]+)$/m", $source, $m); echo $m[1] ?? "";' "$ROOT/core-blueprint-docs.php")"
+CONSTANT_VERSION="$(php -r '$source=file_get_contents($argv[1]); preg_match("/define\\(\\s*'\''CB_DOCS_VERSION'\''\\s*,\\s*'\''([^'\'']+)'\''\\s*\\);/", $source, $m); echo $m[1] ?? "";' "$ROOT/core-blueprint-docs.php")"
+README_VERSION="$(awk '/^Stable tag:/ {print $3; exit}' "$ROOT/readme.txt")"
+
+if [[ -z "$VERSION" || "$VERSION" != "$CONSTANT_VERSION" || "$VERSION" != "$README_VERSION" ]]; then
+  echo "ERROR: Docs release identity drift: header=$VERSION constant=$CONSTANT_VERSION readme=$README_VERSION." >&2
+  exit 1
+fi
+
+for command in php python3 git wp msgmerge msgattrib msgfmt node zip unzip sha256sum; do
+  if ! command -v "$command" >/dev/null 2>&1; then
+    echo "ERROR: $command is required." >&2
+    exit 1
+  fi
+done
+
+php -r 'exit(version_compare(PHP_VERSION, "8.4", ">=") ? 0 : 1);' || {
+  echo "ERROR: PHP 8.4 or newer is required." >&2
+  exit 1
+}
+
+while IFS= read -r -d '' file; do
+  php -l "$file" >/dev/null
+done < <(find "$ROOT" -type f -name '*.php' -not -path "$ROOT/build/*" -not -path "$ROOT/dist/*" -print0)
+
+while IFS= read -r -d '' file; do
+  node --check "$file" >/dev/null
+done < <(find "$ROOT/assets" -type f -name '*.js' -print0)
+
+"$ROOT/tools/i18n/check"
+php "$ROOT/tools/conformance.php"
+
+for test in \
+  bootstrap-v1-smoke.php \
+  content-model-smoke.php \
+  frontend-read-policy-smoke.php \
+  bricks-adapter-smoke.php; do
+  php "$ROOT/tests/$test"
+done
+
+bash "$ROOT/tools/build-release" >/dev/null
+PACKAGE="$ROOT/build/core-blueprint-docs-$VERSION.zip"
+FIRST_PACKAGE_SHA="$(sha256sum "$PACKAGE" | awk '{print $1}')"
+bash "$ROOT/tools/build-release" >/dev/null
+SECOND_PACKAGE_SHA="$(sha256sum "$PACKAGE" | awk '{print $1}')"
+
+if [[ "$FIRST_PACKAGE_SHA" != "$SECOND_PACKAGE_SHA" ]]; then
+  echo "ERROR: Docs deterministic package smoke failed." >&2
+  exit 1
+fi
+
+echo "Core Blueprint Docs checks passed."

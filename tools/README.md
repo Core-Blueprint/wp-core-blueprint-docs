@@ -4,6 +4,16 @@
 
 `tools/build-release` creates the canonical installable Core Blueprint Docs release package. It is fail-closed: version drift, incomplete localization, syntax errors, conformance failures, package-boundary leaks or checksum failures stop the build.
 
+## Canonical local check
+
+Run the complete repository-owned closure gate with:
+
+```bash
+bash tools/check
+```
+
+This gate validates source syntax, canonical localization, product conformance, focused smoke contracts and deterministic release packaging. It is the preferred local check before a release branch or pull request is considered stable.
+
 ## Requirements
 
 - Bash
