@@ -1,6 +1,6 @@
 {
   "implementation": "core-blueprint-first-party-i18n",
-  "version": "1.1.5",
-  "catalog_git_blob": "a50dfd47d5b9fe5023a1047ba06dc47a6dd47e0b",
-  "catalog_sha256": "efb2f98703109cc45fcc7b1188dd3da1a148976775dfa2402210db9f171ac746"
+  "version": "1.1.6",
+  "catalog_git_blob": "021172115f2aa2e05f8f4d647b2f30d44e490296",
+  "catalog_sha256": "019ccff74e369adbe68b14f047fed261114ea4e2d6d7a3e32ce33054a5b364a4"
 }
