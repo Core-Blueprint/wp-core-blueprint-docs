@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import tempfile
 
-I18N_TOOLING_VERSION = "1.1.3"
+I18N_TOOLING_VERSION = "1.1.4"
 LOCALES = ("nl_NL", "de_DE", "fr_FR", "es_ES", "it_IT", "pt_PT")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -19,6 +19,22 @@ ROOT = SCRIPT_DIR.parents[1]
 DEFAULT_CONFIG_PATH = SCRIPT_DIR / "config.json"
 
 SHARED_TRANSLATIONS = {
+    "Core Blueprint": {
+        "nl_NL": "Core Blueprint",
+        "de_DE": "Core Blueprint",
+        "fr_FR": "Core Blueprint",
+        "es_ES": "Core Blueprint",
+        "it_IT": "Core Blueprint",
+        "pt_PT": "Core Blueprint",
+    },
+    "Lightweight builder-agnostic documentation with native WordPress content, taxonomies and metadata.": {
+        "nl_NL": "Lichtgewicht builder-agnostische documentatie met native WordPress-content, taxonomieën en metadata.",
+        "de_DE": "Leichtgewichtige, Builder-unabhängige Dokumentation mit nativen WordPress-Inhalten, Taxonomien und Metadaten.",
+        "fr_FR": "Documentation légère et indépendante du builder, basée sur le contenu, les taxonomies et les métadonnées natifs de WordPress.",
+        "es_ES": "Documentación ligera e independiente del maquetador con contenido, taxonomías y metadatos nativos de WordPress.",
+        "it_IT": "Documentazione leggera e indipendente dal builder con contenuti, tassonomie e metadati nativi di WordPress.",
+        "pt_PT": "Documentação leve e independente do builder com conteúdos, taxonomias e metadados nativos do WordPress.",
+    },
     "PHP %1$s or newer is required. This server runs PHP %2$s.": {
         "nl_NL": "PHP %1$s of nieuwer is vereist. Deze server draait PHP %2$s.",
         "de_DE": "PHP %1$s oder neuer ist erforderlich. Auf diesem Server läuft PHP %2$s.",
