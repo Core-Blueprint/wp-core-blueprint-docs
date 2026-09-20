@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import tempfile
 
-I18N_TOOLING_VERSION = "1.1.0"
+I18N_TOOLING_VERSION = "1.1.1"
 LOCALES = ("nl_NL", "de_DE", "fr_FR", "es_ES", "it_IT", "pt_PT")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
