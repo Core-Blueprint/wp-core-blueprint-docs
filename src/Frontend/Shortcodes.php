@@ -42,23 +42,26 @@ final class Shortcodes {
 		}
 
 		$show_excerpt = filter_var( $atts['excerpt'], FILTER_VALIDATE_BOOLEAN );
-		$html = '<div class="cb-docs-list">';
+		$items = '';
 		foreach ( $query->posts as $doc ) {
-			if ( ! $doc instanceof \WP_Post ) {
+			if ( ! $doc instanceof \WP_Post || ! DocumentAccess::protected_content_allowed( $doc ) ) {
 				continue;
 			}
-			$html .= '<article class="cb-docs-list__item">';
-			$html .= '<h3 class="cb-docs-list__title"><a href="' . esc_url( get_permalink( $doc ) ) . '">' . esc_html( get_the_title( $doc ) ) . '</a></h3>';
+			$items .= '<article class="cb-docs-list__item">';
+			$items .= '<h3 class="cb-docs-list__title"><a href="' . esc_url( get_permalink( $doc ) ) . '">' . esc_html( get_the_title( $doc ) ) . '</a></h3>';
 			if ( $show_excerpt ) {
 				$excerpt = get_the_excerpt( $doc );
 				if ( '' !== trim( $excerpt ) ) {
-					$html .= '<p class="cb-docs-list__excerpt">' . esc_html( $excerpt ) . '</p>';
+					$items .= '<p class="cb-docs-list__excerpt">' . esc_html( $excerpt ) . '</p>';
 				}
 			}
-			$html .= '</article>';
+			$items .= '</article>';
 		}
 		wp_reset_postdata();
-		return $html . '</div>';
+
+		return '' !== $items
+			? '<div class="cb-docs-list">' . $items . '</div>'
+			: self::state( 'empty', __( 'No documentation found.', 'core-blueprint-docs' ) );
 	}
 
 	public static function navigation_shortcode( array|string $atts = [] ): string {
@@ -259,7 +262,7 @@ final class Shortcodes {
 
 		$doc_ids = [];
 		foreach ( $query->posts as $doc ) {
-			if ( $doc instanceof \WP_Post ) {
+			if ( $doc instanceof \WP_Post && DocumentAccess::protected_content_allowed( $doc ) ) {
 				$doc_ids[] = (int) $doc->ID;
 			}
 		}
@@ -289,7 +292,7 @@ final class Shortcodes {
 
 		$docs_by_term = [];
 		foreach ( $query->posts as $doc ) {
-			if ( ! $doc instanceof \WP_Post ) {
+			if ( ! $doc instanceof \WP_Post || ! DocumentAccess::protected_content_allowed( $doc ) ) {
 				continue;
 			}
 			foreach ( array_unique( $doc_terms[ (int) $doc->ID ] ?? [] ) as $term_id ) {

@@ -18,8 +18,10 @@ final class Queries {
 			'post_status'      => 'publish',
 			'posts_per_page'   => 20,
 			'orderby'          => [ 'menu_order' => 'ASC', 'title' => 'ASC' ],
-			'order'            => 'ASC',
-			'suppress_filters' => false,
+			'order'               => 'ASC',
+			'perm'                => 'readable',
+			'suppress_filters'    => false,
+			'ignore_sticky_posts' => true,
 		];
 
 		return new \WP_Query( wp_parse_args( $args, $defaults ) );
