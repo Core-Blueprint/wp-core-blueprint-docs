@@ -82,7 +82,7 @@ final class Requirements {
 					/* translators: 1: required Core API version, 2: available Core API version. */
 					__( 'Core API %1$s or a newer compatible minor version is required. Available Core API: %2$s.', 'core-blueprint-docs' ),
 					CB_DOCS_REQUIRED_API,
-					defined( 'CB_CORE_API_VERSION' ) ? (string) CB_CORE_API_VERSION : __( 'none', 'core-blueprint-docs' )
+					defined( 'CB_CORE_API_VERSION' ) ? (string) CB_CORE_API_VERSION : 'none'
 				);
 			default:
 				return __( 'Ready', 'core-blueprint-docs' );
