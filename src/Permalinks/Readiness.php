@@ -28,6 +28,7 @@ final class Readiness {
 			'invalid_category_paths'       => (int) ( $readiness['invalid_category_paths'] ?? 0 ),
 			'document_category_collisions' => (int) ( $readiness['document_category_collisions'] ?? 0 ),
 			'duplicate_document_paths'     => (int) ( $readiness['duplicate_document_paths'] ?? 0 ),
+			'duplicate_legacy_document_slugs' => (int) ( $readiness['duplicate_legacy_document_slugs'] ?? 0 ),
 			'legacy_simple_collisions'     => (int) ( $readiness['legacy_simple_collisions'] ?? 0 ),
 			'unassigned'                   => (int) ( $readiness['unassigned'] ?? 0 ),
 			'ambiguous'                    => (int) ( $readiness['ambiguous'] ?? 0 ),
