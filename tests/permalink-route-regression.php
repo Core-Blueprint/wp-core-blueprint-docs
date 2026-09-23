@@ -91,6 +91,20 @@ $legacy_collision = RouteIndex::build(
 $assert( 1 === $legacy_collision['readiness']['legacy_simple_collisions'], 'legacy simple URL collision is blocking' );
 $assert( 1 === $legacy_collision['readiness']['blocking'], 'legacy simple collision contributes to blocking total' );
 
+$duplicate_legacy = RouteIndex::build(
+	[
+		[ 'id' => 1, 'parent' => 0, 'slug' => 'base-a' ],
+		[ 'id' => 2, 'parent' => 0, 'slug' => 'base-b' ],
+	],
+	[
+		[ 'id' => 310, 'slug' => 'same-slug', 'structural_category_id' => 1, 'public' => true ],
+		[ 'id' => 311, 'slug' => 'same-slug', 'structural_category_id' => 2, 'public' => true ],
+	]
+);
+$assert( 1 === $duplicate_legacy['readiness']['duplicate_legacy_document_slugs'], 'duplicate legacy document slug is detected' );
+$assert( 1 === $duplicate_legacy['readiness']['blocking'], 'ambiguous legacy document slug blocks hierarchy activation' );
+
+
 $ambiguous = RouteIndex::build(
 	$categories,
 	[
