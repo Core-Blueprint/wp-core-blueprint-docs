@@ -184,6 +184,7 @@ final class OrganizerPage {
 		?>
 		<div
 			class="cb-docs-organizer__term-list<?php echo 0 === $parent ? ' cb-docs-organizer__term-list--root' : ''; ?>"
+			data-cb-docs-empty="<?php echo empty( $terms[ $parent ] ?? [] ) ? '1' : '0'; ?>"
 			data-cb-core-reorder-list="<?php echo esc_attr( $list_id ); ?>"
 			data-cb-core-reorder-list-label="<?php echo esc_attr( $label ); ?>"
 			data-empty-label="<?php echo esc_attr__( 'No categories at this level.', 'core-blueprint-docs' ); ?>"
@@ -204,7 +205,9 @@ final class OrganizerPage {
 	private static function render_term( array $term, array $terms, array $docs_by_term, array $all_terms ): void {
 		$term_id = (int) $term['id'];
 		$parent_id = (int) $term['parent'];
-		$can_manage = current_user_can( 'manage_categories' );
+		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
+		$manage_cap = $taxonomy && isset( $taxonomy->cap->manage_terms ) ? (string) $taxonomy->cap->manage_terms : 'manage_categories';
+		$can_manage = current_user_can( $manage_cap );
 		$edit_link = get_edit_term_link( $term_id, Taxonomies::CATEGORY, PostType::TYPE );
 		?>
 		<section
@@ -246,6 +249,7 @@ final class OrganizerPage {
 		?>
 		<div
 			class="cb-docs-organizer__docs"
+			data-cb-docs-empty="<?php echo empty( $documents ) ? '1' : '0'; ?>"
 			data-cb-core-reorder-list="docs:<?php echo esc_attr( (string) $term_id ); ?>"
 			data-cb-core-reorder-list-label="<?php echo esc_attr__( 'Documentation articles', 'core-blueprint-docs' ); ?>"
 			data-empty-label="<?php echo esc_attr__( 'No documents in this category.', 'core-blueprint-docs' ); ?>"
@@ -321,6 +325,7 @@ final class OrganizerPage {
 			<p><?php echo esc_html( $description ); ?></p>
 			<div
 				class="cb-docs-organizer__docs"
+				data-cb-docs-empty="<?php echo empty( $documents ) ? '1' : '0'; ?>"
 				data-cb-core-reorder-list="attention:<?php echo esc_attr( $key ); ?>"
 				data-cb-core-reorder-list-label="<?php echo esc_attr( $title ); ?>"
 				data-empty-label="<?php echo esc_attr__( 'Nothing needs attention.', 'core-blueprint-docs' ); ?>"
