@@ -27,6 +27,7 @@ final class RouteIndex {
 	 *     warnings:int,
 	 *     reserved_categories:int,
 	 *     duplicate_category_paths:int,
+ *     invalid_category_paths:int,
 	 *     document_category_collisions:int,
 	 *     duplicate_document_paths:int,
 	 *     legacy_simple_collisions:int,
@@ -41,10 +42,12 @@ final class RouteIndex {
 		$path_owner = [];
 		$reserved_categories = 0;
 		$duplicate_category_paths = 0;
+		$invalid_category_paths = 0;
 
 		foreach ( array_keys( $category_rows ) as $term_id ) {
 			$path = self::category_path( $term_id, $category_rows );
 			if ( null === $path ) {
+				++$invalid_category_paths;
 				continue;
 			}
 
@@ -119,6 +122,7 @@ final class RouteIndex {
 
 		$blocking = $reserved_categories
 			+ $duplicate_category_paths
+			+ $invalid_category_paths
 			+ $duplicate_document_paths
 			+ $legacy_simple_collisions;
 		$warnings = $document_category_collisions + $unassigned + $ambiguous;
@@ -133,6 +137,7 @@ final class RouteIndex {
 				'warnings'                     => $warnings,
 				'reserved_categories'          => $reserved_categories,
 				'duplicate_category_paths'     => $duplicate_category_paths,
+				'invalid_category_paths'       => $invalid_category_paths,
 				'document_category_collisions' => $document_category_collisions,
 				'duplicate_document_paths'     => $duplicate_document_paths,
 				'legacy_simple_collisions'     => $legacy_simple_collisions,
