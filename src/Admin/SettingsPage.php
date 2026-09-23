@@ -208,7 +208,7 @@ final class SettingsPage {
 	private static function render_general(): void {
 		$rewrite_base = Settings::rewrite_base();
 		$url_structure = Settings::url_structure();
-		$readiness = Readiness::analyze();
+		$readiness = Readiness::analyze( $rewrite_base );
 		$simple_example = home_url( '/' . $rewrite_base . '/example-doc/' );
 		$hierarchy_example = home_url( '/' . $rewrite_base . '/wp-suite/core-blueprint-base/example-doc/' );
 		$updated = isset( $_GET['cb_docs_updated'] )
@@ -283,6 +283,7 @@ final class SettingsPage {
 						<p><strong><?php esc_html_e( 'Action required', 'core-blueprint-docs' ); ?></strong> — <?php echo esc_html( sprintf( _n( '%d blocking URL conflict was detected.', '%d blocking URL conflicts were detected.', $readiness['blocking'], 'core-blueprint-docs' ), $readiness['blocking'] ) ); ?></p>
 					<?php endif; ?>
 					<ul>
+						<li><?php echo esc_html( sprintf( __( 'Reserved Docs URL base conflicts: %d', 'core-blueprint-docs' ), $readiness['reserved_base'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Reserved top-level category slugs: %d', 'core-blueprint-docs' ), $readiness['reserved_categories'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Duplicate category paths: %d', 'core-blueprint-docs' ), $readiness['duplicate_category_paths'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Invalid category hierarchy paths: %d', 'core-blueprint-docs' ), $readiness['invalid_category_paths'] ) ); ?></li>
