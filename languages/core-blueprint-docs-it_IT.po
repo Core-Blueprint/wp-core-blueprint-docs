@@ -102,10 +102,6 @@ msgid ""
 "content, shortcodes and builder-neutral frontend contracts."
 msgstr "Bricks è opzionale. Docs funziona senza builder tramite contenuti WordPress nativi, shortcode e contratti frontend indipendenti dal builder."
 
-#: src/Admin/IntegrationReadiness.php:35 src/Support/Requirements.php:88
-msgid "Ready"
-msgstr "Pronto"
-
 #: src/Admin/IntegrationReadiness.php:36
 msgid "Not active"
 msgstr "Non attivo"
@@ -164,64 +160,17 @@ msgstr "Categorie"
 msgid "Tags"
 msgstr "Tag"
 
-#: src/Admin/SettingsPage.php:218
-msgid "URL base updated"
-msgstr "Base URL aggiornata"
-
-#: src/Admin/SettingsPage.php:219
-msgid ""
-"The new Docs URL base is active. WordPress rewrite rules were refreshed once "
-"after the new route was registered."
-msgstr ""
-"La nuova base URL di Docs è attiva. Le regole di riscrittura di WordPress "
-"sono state aggiornate una volta dopo la registrazione della nuova rotta."
-
 #: src/Admin/SettingsPage.php:226
 msgid "No changes needed"
 msgstr "Nessuna modifica necessaria"
-
-#: src/Admin/SettingsPage.php:227
-msgid ""
-"The Docs URL base already had this value, so no rewrite refresh was "
-"necessary."
-msgstr ""
-"La base URL di Docs aveva già questo valore, quindi non è stato necessario "
-"aggiornare le regole di riscrittura."
 
 #: src/Admin/SettingsPage.php:233
 msgid "Permalinks"
 msgstr "Permalink"
 
-#: src/Admin/SettingsPage.php:234
-msgid ""
-"Choose the URL base used by the Docs archive and every individual Doc. "
-"Changing this later changes public URLs, so existing external links may need "
-"redirects."
-msgstr ""
-"Scegli la base URL usata dall'archivio Docs e da ogni singolo Doc. "
-"Modificarla in seguito cambia gli URL pubblici, quindi i link esterni "
-"esistenti potrebbero richiedere reindirizzamenti."
-
 #: src/Admin/SettingsPage.php:241
 msgid "Docs URL base"
 msgstr "Base URL Docs"
-
-#: src/Admin/SettingsPage.php:245
-msgid ""
-"Use a slug such as docs, documentation or handleiding. Nested paths such as "
-"knowledge/docs are also supported. Empty or invalid input falls back to docs."
-msgstr ""
-"Usa uno slug come docs, documentazione o guida. Sono supportati anche "
-"percorsi annidati come knowledge/docs. Un valore vuoto o non valido torna a "
-"docs."
-
-#: src/Admin/SettingsPage.php:248
-msgid "Example:"
-msgstr "Esempio:"
-
-#: src/Admin/SettingsPage.php:252
-msgid "Save URL base"
-msgstr "Salva base URL"
 
 #: src/Admin/SettingsPage.php:269
 msgid "Copy"
@@ -911,3 +860,111 @@ msgstr "Comprimi tutto"
 #: src/Admin/OrganizerPage.php
 msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
 msgstr "Questi documenti sono assegnati a categorie della documentazione in rami diversi della gerarchia. Spostali in un unico ramo strutturale per risolvere il problema."
+
+#: src/Admin/SettingsPage.php
+msgid "Action required"
+msgstr "Azione richiesta"
+
+#: src/Admin/SettingsPage.php
+msgid "Blocking URL conflicts: %d"
+msgstr "Conflitti URL bloccanti: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy"
+msgstr "Gerarchia delle categorie"
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy readiness"
+msgstr "Stato di preparazione della gerarchia delle categorie"
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy uses the same structural category resolution as the Documentation Organizer. Safe parent categories are included automatically; unresolved or colliding documents use the reserved document/ fail-safe route."
+msgstr "La gerarchia delle categorie usa la stessa risoluzione strutturale delle categorie del Documentation Organizer. Le categorie principali sicure vengono incluse automaticamente; i documenti non risolti o con collisioni usano il percorso di fallback riservato document/."
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy was not enabled."
+msgstr "La gerarchia delle categorie non è stata attivata."
+
+#: src/Admin/SettingsPage.php
+msgid "Configure the public Docs namespace and choose whether document URLs stay simple or include the resolved Doc Category hierarchy."
+msgstr "Configura lo spazio dei nomi pubblico di Docs e scegli se gli URL dei documenti devono restare semplici o includere la gerarchia risolta delle Doc Categories."
+
+#: src/Admin/SettingsPage.php
+msgid "Document URL structure"
+msgstr "Struttura URL dei documenti"
+
+#: src/Admin/SettingsPage.php
+msgid "Documents that need structural review: %d"
+msgstr "Documenti che richiedono una revisione strutturale: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Documents using the fail-safe route because of a category collision: %d"
+msgstr "Documenti che usano il percorso di fallback a causa di una collisione di categoria: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate category paths: %d"
+msgstr "Percorsi categoria duplicati: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate document routes: %d"
+msgstr "Percorsi documento duplicati: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Invalid category hierarchy paths: %d"
+msgstr "Percorsi della gerarchia delle categorie non validi: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Legacy Simple URL collisions: %d"
+msgstr "Collisioni con URL Simple legacy: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "No blocking URL conflicts were detected."
+msgstr "Nessun conflitto URL bloccante rilevato."
+
+#: src/Admin/SettingsPage.php
+msgid "Permalink settings updated"
+msgstr "Impostazioni permalink aggiornate"
+
+#: src/Admin/SettingsPage.php
+msgid "Ready"
+msgstr "Pronto"
+
+#: src/Admin/SettingsPage.php
+msgid "Reserved Docs URL base conflicts: %d"
+msgstr "Conflitti con basi URL Docs riservate: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Reserved top-level category slugs: %d"
+msgstr "Slug riservati delle categorie di primo livello: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Resolve the blocking URL conflicts shown below and save the permalink settings again."
+msgstr "Risolvi i conflitti URL bloccanti mostrati di seguito e salva nuovamente le impostazioni dei permalink."
+
+#: src/Admin/SettingsPage.php
+msgid "Save permalinks"
+msgstr "Salva permalink"
+
+#: src/Admin/SettingsPage.php
+msgid "Simple"
+msgstr "Semplice"
+
+#: src/Admin/SettingsPage.php
+msgid "The Docs URL settings are active. WordPress rewrite rules were refreshed once after the new routes were registered."
+msgstr "Le impostazioni URL di Docs sono attive. Le regole di riscrittura di WordPress sono state aggiornate una volta dopo la registrazione delle nuove route."
+
+#: src/Admin/SettingsPage.php
+msgid "The Docs permalink settings already had these values, so no rewrite refresh was necessary."
+msgstr "Le impostazioni dei permalink di Docs avevano già questi valori, quindi non è stato necessario aggiornare le regole di riscrittura."
+
+#: src/Permalinks/ReservedSlugGuard.php
+msgid "This top-level Doc Category slug is reserved by the active Docs URL structure."
+msgstr "Questo slug di Doc Category di primo livello è riservato dalla struttura URL di Docs attiva."
+
+#: src/Admin/SettingsPage.php
+msgid "Unassigned documents using the fail-safe route: %d"
+msgstr "Documenti non assegnati che usano il percorso di fallback: %d"
+
+#: src/Admin/SettingsPage.php
+msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
+msgstr "Usato per l’archivio Docs e, in modalità Gerarchia delle categorie, per i percorsi di categorie, tag e documenti. Sono supportate basi annidate come knowledge/docs."
