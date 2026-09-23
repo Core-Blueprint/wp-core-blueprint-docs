@@ -288,6 +288,7 @@ final class SettingsPage {
 						<li><?php echo esc_html( sprintf( __( 'Duplicate category paths: %d', 'core-blueprint-docs' ), $readiness['duplicate_category_paths'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Invalid category hierarchy paths: %d', 'core-blueprint-docs' ), $readiness['invalid_category_paths'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Duplicate document routes: %d', 'core-blueprint-docs' ), $readiness['duplicate_document_paths'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Duplicate legacy document slugs: %d', 'core-blueprint-docs' ), $readiness['duplicate_legacy_document_slugs'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Legacy Simple URL collisions: %d', 'core-blueprint-docs' ), $readiness['legacy_simple_collisions'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Documents using the fail-safe route because of a category collision: %d', 'core-blueprint-docs' ), $readiness['document_category_collisions'] ) ); ?></li>
 						<li><?php echo esc_html( sprintf( __( 'Unassigned documents using the fail-safe route: %d', 'core-blueprint-docs' ), $readiness['unassigned'] ) ); ?></li>
