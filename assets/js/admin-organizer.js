@@ -40,6 +40,16 @@ const request = async (endpoint, payload) => {
 
 const itemKind = (itemId) => String(itemId || '').split(':', 1)[0];
 
+const syncMoveToControl = (row, targetTermId) => {
+	const select = row?.querySelector?.('[data-cb-docs-move-to]');
+	if (!select) return;
+
+	Array.from(select.options).forEach((option) => {
+		const optionTermId = Number.parseInt(option.value, 10);
+		option.disabled = Number.isInteger(optionTermId) && optionTermId === targetTermId;
+	});
+};
+
 const syncEmptyStates = () => {
 	if (!root) return;
 	root.querySelectorAll('[data-cb-core-reorder-list]').forEach((list) => {
@@ -93,7 +103,10 @@ if (root && reorder?.enhance) {
 				});
 				root.dataset.revision = result.revision || revision;
 				const row = root.querySelector(`[data-cb-core-reorder-item="doc:${documentId}"]`);
-				if (row) row.dataset.currentTerm = String(targetTermId);
+				if (row) {
+					row.dataset.currentTerm = String(targetTermId);
+					syncMoveToControl(row, targetTermId);
+				}
 				return true;
 			}
 
