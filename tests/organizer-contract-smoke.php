@@ -18,6 +18,7 @@ foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'events', 'revision', '
 
 $required_files = [
 	'src/Structure/Order.php',
+	'src/Structure/StructuralCategory.php',
 	'src/Structure/CategoryOrder.php',
 	'src/Structure/Snapshot.php',
 	'src/Structure/Revision.php',
@@ -39,6 +40,8 @@ foreach ( $required_files as $file ) {
 $organizer = file_get_contents( $root . '/src/Admin/OrganizerPage.php' );
 $rest = file_get_contents( $root . '/src/Admin/OrganizerRest.php' );
 $mutation = file_get_contents( $root . '/src/Structure/Mutation.php' );
+$snapshot = file_get_contents( $root . '/src/Structure/Snapshot.php' );
+$organizer_css = file_get_contents( $root . '/assets/css/admin-organizer.css' );
 $category_order = file_get_contents( $root . '/src/Structure/CategoryOrder.php' );
 $runtime = file_get_contents( $root . '/assets/js/admin-organizer.js' );
 
@@ -49,6 +52,9 @@ $checks = [
 	'category order is native registered term metadata' => str_contains( (string) $category_order, 'register_term_meta' ) && str_contains( (string) $category_order, 'cb_docs_order' ),
 	'category order metadata is not a public REST write surface' => str_contains( (string) $category_order, "'show_in_rest'      => false" ),
 	'document ordering continues to use menu_order' => str_contains( (string) $mutation, "'menu_order'" ),
+	'Organizer resolves one hierarchy path to its deepest assigned category' => str_contains( (string) $snapshot, 'StructuralCategory::resolve' ),
+	'document moves use the same structural category resolver' => str_contains( (string) $mutation, 'StructuralCategory::resolve' ),
+	'Organizer presentation consumes Admin Theme tokens with WP-native fallbacks' => str_contains( (string) $organizer_css, 'var(--cb-surface-1, #fff)' ) && str_contains( (string) $organizer_css, 'var(--cb-border, #c3c4c7)' ) && ! str_contains( (string) $organizer_css, 'background: #fff;' ),
 	'same-category reorder avoids taxonomy writes in commit and rollback paths' => substr_count( (string) $mutation, 'if ( ! $same_structural_category )' ) >= 2,
 	'mutations require expected structure revision' => str_contains( (string) $mutation, 'expected_revision' ) && str_contains( (string) $mutation, 'stale' ),
 	'mutations are serialized behind Docs-owned lock' => str_contains( (string) $mutation, 'MutationLock::acquire' ),
