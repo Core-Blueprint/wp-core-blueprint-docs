@@ -14,7 +14,7 @@ final class Router {
 	private const QUERY_PATH  = 'cb_docs_route_path';
 
 	public static function init(): void {
-		add_action( 'init', [ __CLASS__, 'register_rules' ], 20 );
+		add_action( 'init', [ __CLASS__, 'register_rules' ], 15 );
 		add_filter( 'query_vars', [ __CLASS__, 'query_vars' ] );
 		add_filter( 'request', [ __CLASS__, 'resolve_request' ] );
 		add_filter( 'post_type_link', [ __CLASS__, 'document_link' ], 20, 2 );
