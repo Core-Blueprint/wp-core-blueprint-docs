@@ -96,11 +96,6 @@ msgstr ""
 msgid "Bricks is optional. Docs works without a builder through native WordPress content, shortcodes and builder-neutral frontend contracts."
 msgstr ""
 
-#: src/Admin/IntegrationReadiness.php:35
-#: src/Support/Requirements.php:88
-msgid "Ready"
-msgstr ""
-
 #: src/Admin/IntegrationReadiness.php:36
 msgid "Not active"
 msgstr ""
@@ -163,44 +158,16 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:218
-msgid "URL base updated"
-msgstr ""
-
-#: src/Admin/SettingsPage.php:219
-msgid "The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered."
-msgstr ""
-
 #: src/Admin/SettingsPage.php:226
 msgid "No changes needed"
-msgstr ""
-
-#: src/Admin/SettingsPage.php:227
-msgid "The Docs URL base already had this value, so no rewrite refresh was necessary."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:233
 msgid "Permalinks"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:234
-msgid "Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects."
-msgstr ""
-
 #: src/Admin/SettingsPage.php:241
 msgid "Docs URL base"
-msgstr ""
-
-#: src/Admin/SettingsPage.php:245
-msgid "Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs."
-msgstr ""
-
-#: src/Admin/SettingsPage.php:248
-msgid "Example:"
-msgstr ""
-
-#: src/Admin/SettingsPage.php:252
-msgid "Save URL base"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:269
@@ -875,4 +842,116 @@ msgstr ""
 
 #: src/Admin/OrganizerPage.php
 msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Action required"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Blocking URL conflicts: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy readiness"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy uses the same structural category resolution as the Documentation Organizer. Safe parent categories are included automatically; unresolved or colliding documents use the reserved document/ fail-safe route."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Category hierarchy was not enabled."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Configure the public Docs namespace and choose whether document URLs stay simple or include the resolved Doc Category hierarchy."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Document URL structure"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Documents that need structural review: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Documents using the fail-safe route because of a category collision: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate category paths: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate document routes: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Invalid category hierarchy paths: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Legacy Simple URL collisions: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "No blocking URL conflicts were detected."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Permalink settings updated"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Ready"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Reserved Docs URL base conflicts: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Reserved top-level category slugs: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Resolve the blocking URL conflicts shown below and save the permalink settings again."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Save permalinks"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Simple"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "The Docs URL settings are active. WordPress rewrite rules were refreshed once after the new routes were registered."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "The Docs permalink settings already had these values, so no rewrite refresh was necessary."
+msgstr ""
+
+#: src/Permalinks/ReservedSlugGuard.php
+msgid "This top-level Doc Category slug is reserved by the active Docs URL structure."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Unassigned documents using the fail-safe route: %d"
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
+msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
 msgstr ""

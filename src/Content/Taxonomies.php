@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace CB\Docs\Content;
 
+use CB\Docs\Settings;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Taxonomies {
@@ -10,6 +12,9 @@ final class Taxonomies {
 	public const TAG      = 'cb_doc_tag';
 
 	public static function register(): void {
+		$hierarchy = Settings::hierarchy_enabled();
+		$base = Settings::rewrite_base();
+
 		register_taxonomy(
 			self::CATEGORY,
 			[ PostType::TYPE ],
@@ -33,7 +38,7 @@ final class Taxonomies {
 				'show_admin_column' => true,
 				'show_in_rest'      => true,
 				'hierarchical'      => true,
-				'rewrite'           => [
+				'rewrite'           => $hierarchy ? false : [
 					'slug'         => 'docs-category',
 					'with_front'   => false,
 					'hierarchical' => true,
@@ -67,7 +72,7 @@ final class Taxonomies {
 				'show_in_rest'       => true,
 				'hierarchical'       => false,
 				'rewrite'            => [
-					'slug'       => 'docs-tag',
+					'slug'       => $hierarchy ? $base . '/tag' : 'docs-tag',
 					'with_front' => false,
 				],
 			]

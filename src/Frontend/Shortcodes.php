@@ -7,6 +7,7 @@ use CB\Docs\Content\Meta;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
 use CB\Docs\Structure\CategoryOrder;
+use CB\Docs\Structure\StructuralCategory;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -392,12 +393,29 @@ final class Shortcodes {
 			return null;
 		}
 
-		usort( $terms, static function ( \WP_Term $a, \WP_Term $b ): int {
-			$a_depth = count( get_ancestors( $a->term_id, Taxonomies::CATEGORY, 'taxonomy' ) );
-			$b_depth = count( get_ancestors( $b->term_id, Taxonomies::CATEGORY, 'taxonomy' ) );
-			return $b_depth <=> $a_depth ?: $a->term_id <=> $b->term_id;
-		} );
-		return $terms[0] instanceof \WP_Term ? $terms[0] : null;
+		$parents = [];
+		$term_ids = [];
+		foreach ( $terms as $term ) {
+			if ( ! $term instanceof \WP_Term ) {
+				continue;
+			}
+			$term_ids[] = (int) $term->term_id;
+			$parents[ (int) $term->term_id ] = (int) $term->parent;
+			foreach ( get_ancestors( $term->term_id, Taxonomies::CATEGORY, 'taxonomy' ) as $ancestor_id ) {
+				$ancestor = get_term( (int) $ancestor_id, Taxonomies::CATEGORY );
+				if ( $ancestor instanceof \WP_Term ) {
+					$parents[ (int) $ancestor->term_id ] = (int) $ancestor->parent;
+				}
+			}
+		}
+
+		$resolved_id = StructuralCategory::resolve( $term_ids, $parents );
+		if ( null === $resolved_id ) {
+			return null;
+		}
+
+		$resolved = get_term( $resolved_id, Taxonomies::CATEGORY );
+		return $resolved instanceof \WP_Term ? $resolved : null;
 	}
 
 	private static function state( string $state, string $message ): string {

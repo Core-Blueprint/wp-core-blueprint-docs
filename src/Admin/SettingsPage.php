@@ -10,6 +10,7 @@ use CB\Core\UI\Notice;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
 use CB\Docs\Integration\Suite;
+use CB\Docs\Permalinks\Readiness;
 use CB\Docs\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -206,8 +207,11 @@ final class SettingsPage {
 
 	private static function render_general(): void {
 		$rewrite_base = Settings::rewrite_base();
-		$example      = home_url( '/' . $rewrite_base . '/example-doc/' );
-		$updated      = isset( $_GET['cb_docs_updated'] )
+		$url_structure = Settings::url_structure();
+		$readiness = Readiness::analyze( $rewrite_base );
+		$simple_example = home_url( '/' . $rewrite_base . '/example-doc/' );
+		$hierarchy_example = home_url( '/' . $rewrite_base . '/wp-suite/core-blueprint-base/example-doc/' );
+		$updated = isset( $_GET['cb_docs_updated'] )
 			? sanitize_key( (string) wp_unslash( $_GET['cb_docs_updated'] ) )
 			: ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only redirect state.
 		?>
@@ -215,8 +219,8 @@ final class SettingsPage {
 			<?php
 			echo Notice::render( [
 				'variant' => Notice::SUCCESS,
-				'title'   => __( 'URL base updated', 'core-blueprint-docs' ),
-				'message' => __( 'The new Docs URL base is active. WordPress rewrite rules were refreshed once after the new route was registered.', 'core-blueprint-docs' ),
+				'title'   => __( 'Permalink settings updated', 'core-blueprint-docs' ),
+				'message' => __( 'The Docs URL settings are active. WordPress rewrite rules were refreshed once after the new routes were registered.', 'core-blueprint-docs' ),
 			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
 			?>
 		<?php elseif ( 'unchanged' === $updated ) : ?>
@@ -224,14 +228,19 @@ final class SettingsPage {
 			echo Notice::render( [
 				'variant' => Notice::INFO,
 				'title'   => __( 'No changes needed', 'core-blueprint-docs' ),
-				'message' => __( 'The Docs URL base already had this value, so no rewrite refresh was necessary.', 'core-blueprint-docs' ),
+				'message' => __( 'The Docs permalink settings already had these values, so no rewrite refresh was necessary.', 'core-blueprint-docs' ),
 			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
 			?>
+		<?php elseif ( 'blocked' === $updated ) : ?>
+			<div class="notice notice-error inline">
+				<p><strong><?php esc_html_e( 'Category hierarchy was not enabled.', 'core-blueprint-docs' ); ?></strong></p>
+				<p><?php esc_html_e( 'Resolve the blocking URL conflicts shown below and save the permalink settings again.', 'core-blueprint-docs' ); ?></p>
+			</div>
 		<?php endif; ?>
 
 		<section class="cb-core-panel">
 			<h2><?php esc_html_e( 'Permalinks', 'core-blueprint-docs' ); ?></h2>
-			<p><?php esc_html_e( 'Choose the URL base used by the Docs archive and every individual Doc. Changing this later changes public URLs, so existing external links may need redirects.', 'core-blueprint-docs' ); ?></p>
+			<p><?php esc_html_e( 'Configure the public Docs namespace and choose whether document URLs stay simple or include the resolved Doc Category hierarchy.', 'core-blueprint-docs' ); ?></p>
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="cb_docs_save_settings">
@@ -242,14 +251,52 @@ final class SettingsPage {
 					<input class="regular-text" type="text" id="cb_docs_rewrite_base" name="rewrite_base" value="<?php echo esc_attr( $rewrite_base ); ?>" placeholder="docs" autocomplete="off">
 				</p>
 				<p class="description">
-					<?php esc_html_e( 'Use a slug such as docs, documentation or handleiding. Nested paths such as knowledge/docs are also supported. Empty or invalid input falls back to docs.', 'core-blueprint-docs' ); ?>
-				</p>
-				<p class="description">
-					<strong><?php esc_html_e( 'Example:', 'core-blueprint-docs' ); ?></strong>
-					<code><?php echo esc_html( $example ); ?></code>
+					<?php esc_html_e( 'Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported.', 'core-blueprint-docs' ); ?>
 				</p>
 
-				<?php submit_button( __( 'Save URL base', 'core-blueprint-docs' ) ); ?>
+				<fieldset class="cb-docs-permalink-structure">
+					<legend><strong><?php esc_html_e( 'Document URL structure', 'core-blueprint-docs' ); ?></strong></legend>
+					<p>
+						<label>
+							<input type="radio" name="url_structure" value="<?php echo esc_attr( Settings::URL_STRUCTURE_SIMPLE ); ?>" <?php checked( Settings::URL_STRUCTURE_SIMPLE, $url_structure ); ?>>
+							<strong><?php esc_html_e( 'Simple', 'core-blueprint-docs' ); ?></strong>
+						</label><br>
+						<code><?php echo esc_html( $simple_example ); ?></code>
+					</p>
+					<p>
+						<label>
+							<input type="radio" name="url_structure" value="<?php echo esc_attr( Settings::URL_STRUCTURE_HIERARCHY ); ?>" <?php checked( Settings::URL_STRUCTURE_HIERARCHY, $url_structure ); ?>>
+							<strong><?php esc_html_e( 'Category hierarchy', 'core-blueprint-docs' ); ?></strong>
+						</label><br>
+						<code><?php echo esc_html( $hierarchy_example ); ?></code>
+					</p>
+					<p class="description">
+						<?php esc_html_e( 'Category hierarchy uses the same structural category resolution as the Documentation Organizer. Safe parent categories are included automatically; unresolved or colliding documents use the reserved document/ fail-safe route.', 'core-blueprint-docs' ); ?>
+					</p>
+				</fieldset>
+
+				<div class="cb-docs-readiness">
+					<h3><?php esc_html_e( 'Category hierarchy readiness', 'core-blueprint-docs' ); ?></h3>
+					<?php if ( 0 === $readiness['blocking'] ) : ?>
+						<p><strong><?php esc_html_e( 'Ready', 'core-blueprint-docs' ); ?></strong> — <?php esc_html_e( 'No blocking URL conflicts were detected.', 'core-blueprint-docs' ); ?></p>
+					<?php else : ?>
+						<p><strong><?php esc_html_e( 'Action required', 'core-blueprint-docs' ); ?></strong> — <?php echo esc_html( sprintf( __( 'Blocking URL conflicts: %d', 'core-blueprint-docs' ), $readiness['blocking'] ) ); ?></p>
+					<?php endif; ?>
+					<ul>
+						<li><?php echo esc_html( sprintf( __( 'Reserved Docs URL base conflicts: %d', 'core-blueprint-docs' ), $readiness['reserved_base'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Reserved top-level category slugs: %d', 'core-blueprint-docs' ), $readiness['reserved_categories'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Duplicate category paths: %d', 'core-blueprint-docs' ), $readiness['duplicate_category_paths'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Invalid category hierarchy paths: %d', 'core-blueprint-docs' ), $readiness['invalid_category_paths'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Duplicate document routes: %d', 'core-blueprint-docs' ), $readiness['duplicate_document_paths'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Duplicate legacy document slugs: %d', 'core-blueprint-docs' ), $readiness['duplicate_legacy_document_slugs'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Legacy Simple URL collisions: %d', 'core-blueprint-docs' ), $readiness['legacy_simple_collisions'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Documents using the fail-safe route because of a category collision: %d', 'core-blueprint-docs' ), $readiness['document_category_collisions'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Unassigned documents using the fail-safe route: %d', 'core-blueprint-docs' ), $readiness['unassigned'] ) ); ?></li>
+						<li><?php echo esc_html( sprintf( __( 'Documents that need structural review: %d', 'core-blueprint-docs' ), $readiness['ambiguous'] ) ); ?></li>
+					</ul>
+				</div>
+
+				<?php submit_button( __( 'Save permalinks', 'core-blueprint-docs' ) ); ?>
 			</form>
 		</section>
 		<?php

@@ -16,6 +16,9 @@ use CB\Docs\Frontend\Shortcodes;
 use CB\Docs\Governance\Events;
 use CB\Docs\Integration\Builders\Bootstrap as BuildersBootstrap;
 use CB\Docs\Integration\Suite;
+use CB\Docs\Permalinks\Catalog;
+use CB\Docs\Permalinks\ReservedSlugGuard;
+use CB\Docs\Permalinks\Router;
 use CB\Docs\Structure\CategoryOrder;
 
 defined( 'ABSPATH' ) || exit;
@@ -32,6 +35,9 @@ final class Plugin {
 		Suite::init();
 		Events::init();
 		Settings::init();
+		Catalog::init();
+		ReservedSlugGuard::init();
+		Router::init();
 		BuildersBootstrap::init();
 		RestSearch::init();
 		OrganizerRest::init();

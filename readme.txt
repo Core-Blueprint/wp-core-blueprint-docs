@@ -17,7 +17,7 @@ Docs are normal WordPress content and can be edited in Gutenberg, consumed throu
 
 Docs Search provides relevance-ordered live documentation search with keyboard support and a normal GET fallback. The same search component is available through `[cb_docs_search]` and the optional Bricks Docs Search element. Docs does not store search analytics or search histories.
 
-The Docs URL base is configurable under Core Blueprint > Docs > General. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported.
+The Docs URL base is configurable under Core Blueprint > Docs > General. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported. Simple URL structure remains the backward-compatible default. Category hierarchy mode can place category archives, tags and canonical document paths under the same Docs namespace after a route-readiness check.
 
 Docs > Organizer provides a visual structure view for ordering Doc Categories and articles while normal WordPress screens remain canonical for editing content and taxonomy details.
 
@@ -48,5 +48,5 @@ Core Blueprint Base with Core API 1.1 is required.
 * Added Golden Core Admin Overview, General and Integrations information architecture.
 * Added a visual Documentation Organizer using the public Core Blueprint Reorder Foundation.
 * Added builder-neutral data, query and condition contracts with an optional Bricks adapter.
-* Added configurable Docs URL base with safe deferred rewrite flushing.
+* Added configurable Docs URL base with Simple and readiness-gated Category hierarchy URL structures, canonical fail-safe document routes and deterministic legacy redirects.
 * Added reproducible conformance, localization and release packaging tooling.

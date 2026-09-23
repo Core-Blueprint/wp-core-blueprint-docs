@@ -40,6 +40,8 @@ for test in \
   content-model-smoke.php \
   organizer-order-regression.php \
   organizer-structure-regression.php \
+  permalink-route-regression.php \
+  permalink-contract-smoke.php \
   organizer-contract-smoke.php \
   frontend-read-policy-smoke.php \
   bricks-adapter-smoke.php; do
