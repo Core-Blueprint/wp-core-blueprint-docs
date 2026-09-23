@@ -409,9 +409,11 @@ final class OrganizerPage {
 				<?php if ( $can_edit ) : ?>
 					<button type="button" class="button-link cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), $title ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
 				<?php endif; ?>
-				<?php if ( $ordered && null !== $number && $number > 0 ) : ?>
-					<span class="cb-docs-organizer__doc-number" data-cb-docs-document-number><?php echo esc_html( (string) $number . '.' ); ?></span>
-				<?php endif; ?>
+				<span
+					class="cb-docs-organizer__doc-number"
+					data-cb-docs-document-number
+					<?php if ( ! $ordered ) : ?>hidden<?php endif; ?>
+				><?php echo $ordered && null !== $number && $number > 0 ? esc_html( (string) $number . '.' ) : ''; ?></span>
 				<span class="cb-docs-organizer__doc-title"><?php echo esc_html( $title ); ?></span>
 				<span class="cb-docs-organizer__status"><?php echo esc_html( $status_label ); ?></span>
 			</div>
