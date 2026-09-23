@@ -39,6 +39,7 @@ for test in \
   bootstrap-v1-smoke.php \
   content-model-smoke.php \
   organizer-order-regression.php \
+  organizer-structure-regression.php \
   organizer-contract-smoke.php \
   frontend-read-policy-smoke.php \
   bricks-adapter-smoke.php; do
