@@ -355,8 +355,8 @@ final class OrganizerPage {
 			data-cb-core-reorder-list-label="<?php echo esc_attr__( 'Documentation articles', 'core-blueprint-docs' ); ?>"
 			data-empty-label="<?php echo esc_attr__( 'No documents in this category.', 'core-blueprint-docs' ); ?>"
 		>
-			<?php foreach ( $documents as $document ) : ?>
-				<?php self::render_document( $document, $all_terms, $term_id, true ); ?>
+			<?php foreach ( array_values( $documents ) as $index => $document ) : ?>
+				<?php self::render_document( $document, $all_terms, $term_id, true, $index + 1 ); ?>
 			<?php endforeach; ?>
 		</div>
 		<?php
@@ -366,7 +366,7 @@ final class OrganizerPage {
 	 * @param array<string,mixed> $document
 	 * @param array<int,array{id:int,label:string}> $all_terms
 	 */
-	private static function render_document( array $document, array $all_terms, int $current_term_id, bool $ordered ): void {
+	private static function render_document( array $document, array $all_terms, int $current_term_id, bool $ordered, ?int $number = null ): void {
 		$document_id = (int) ( $document['id'] ?? 0 );
 		if ( $document_id <= 0 ) {
 			return;
@@ -408,6 +408,9 @@ final class OrganizerPage {
 			<div class="cb-docs-organizer__doc-main">
 				<?php if ( $can_edit ) : ?>
 					<button type="button" class="button-link cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), $title ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
+				<?php endif; ?>
+				<?php if ( $ordered && null !== $number && $number > 0 ) : ?>
+					<span class="cb-docs-organizer__doc-number" data-cb-docs-document-number><?php echo esc_html( (string) $number . '.' ); ?></span>
 				<?php endif; ?>
 				<span class="cb-docs-organizer__doc-title"><?php echo esc_html( $title ); ?></span>
 				<span class="cb-docs-organizer__status"><?php echo esc_html( $status_label ); ?></span>
