@@ -28,7 +28,7 @@ if ( defined( 'CB_DOCS_FILE' ) ) {
 define( 'CB_DOCS_NAME',         'Core Blueprint Docs' );
 define( 'CB_DOCS_VERSION',      '1.0.0-rc1' );
 define( 'CB_DOCS_MIN_PHP',      '8.4' );
-define( 'CB_DOCS_REQUIRED_API', '1.0' );
+define( 'CB_DOCS_REQUIRED_API', '1.1' );
 define( 'CB_DOCS_FILE',         __FILE__ );
 define( 'CB_DOCS_DIR',          plugin_dir_path( __FILE__ ) );
 define( 'CB_DOCS_URL',          plugin_dir_url( __FILE__ ) );
@@ -96,6 +96,8 @@ function cb_docs_api_compatible( string $available, string $required ): bool {
 function cb_docs_base_contracts_ready(): bool {
 	return class_exists( '\\CB\\Core\\ExtensionRegistry' )
 		&& class_exists( '\\CB\\Core\\Admin\\SettingsRegistry' )
+		&& class_exists( '\\CB\\Core\\UI\\Assets' )
+		&& method_exists( '\\CB\\Core\\UI\\Assets', 'enqueue_reorder' )
 		&& class_exists( '\\CB\\Core\\UI\\Card' )
 		&& class_exists( '\\CB\\Core\\UI\\Notice' )
 		&& class_exists( '\\CB\\Core\\UI\\IntegrationGrid' )
