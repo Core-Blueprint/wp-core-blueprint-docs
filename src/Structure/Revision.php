@@ -30,7 +30,6 @@ final class Revision {
 			sort( $term_ids, SORT_NUMERIC );
 			$documents[] = [
 				'id'         => (int) ( $document['id'] ?? 0 ),
-				'status'     => sanitize_key( (string) ( $document['status'] ?? '' ) ),
 				'menu_order' => (int) ( $document['menu_order'] ?? 0 ),
 				'term_ids'   => $term_ids,
 			];
