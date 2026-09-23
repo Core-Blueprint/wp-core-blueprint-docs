@@ -63,23 +63,26 @@ final class Mutation {
 				);
 			}
 
-			$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
-			$assign_cap = $taxonomy && isset( $taxonomy->cap->assign_terms )
-				? (string) $taxonomy->cap->assign_terms
-				: 'edit_posts';
-			if ( ! current_user_can( $assign_cap ) ) {
-				return new \WP_Error(
-					'cb_docs_category_assign_forbidden',
-					__( 'You do not have permission to change documentation categories.', 'core-blueprint-docs' ),
-					[ 'status' => 403 ]
-				);
-			}
-
 			$old_term_ids = wp_get_object_terms( $document_id, Taxonomies::CATEGORY, [ 'fields' => 'ids' ] );
 			if ( is_wp_error( $old_term_ids ) ) {
 				return $old_term_ids;
 			}
 			$old_term_ids = array_values( array_unique( array_map( 'absint', $old_term_ids ) ) );
+			$same_structural_category = 1 === count( $old_term_ids ) && (int) $old_term_ids[0] === $target_term_id;
+
+			if ( ! $same_structural_category ) {
+				$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
+				$assign_cap = $taxonomy && isset( $taxonomy->cap->assign_terms )
+					? (string) $taxonomy->cap->assign_terms
+					: 'edit_posts';
+				if ( ! current_user_can( $assign_cap ) ) {
+					return new \WP_Error(
+						'cb_docs_category_assign_forbidden',
+						__( 'You do not have permission to change documentation categories.', 'core-blueprint-docs' ),
+						[ 'status' => 403 ]
+					);
+				}
+			}
 
 			$target_ids = self::document_ids_for_term( $snapshot, $target_term_id );
 			try {
@@ -115,11 +118,14 @@ final class Mutation {
 					$target_term_id,
 					$source_term_id,
 					$new_source_ids,
-					$new_target_ids
+					$new_target_ids,
+					$same_structural_category
 				): true|\WP_Error {
-					$assigned = wp_set_object_terms( $document_id, [ $target_term_id ], Taxonomies::CATEGORY, false );
-					if ( is_wp_error( $assigned ) ) {
-						return $assigned;
+					if ( ! $same_structural_category ) {
+						$assigned = wp_set_object_terms( $document_id, [ $target_term_id ], Taxonomies::CATEGORY, false );
+						if ( is_wp_error( $assigned ) ) {
+							return $assigned;
+						}
 					}
 
 					if ( $source_term_id > 0 && $source_term_id !== $target_term_id ) {
