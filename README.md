@@ -10,7 +10,8 @@ It provides a native WordPress documentation content model that can be edited wi
 - Configurable Docs URL base with `docs` as the default.
 - Golden Core Admin page with `Overview → General → Integrations`.
 - Gutenberg and standard WordPress support for title, content, excerpt, author, featured image, revisions, custom fields, comments and menu order.
-- Hierarchical `cb_doc_category` taxonomy.
+- Hierarchical `cb_doc_category` taxonomy with managed sibling ordering.
+- Visual Documentation Organizer for category and article order using the public Base Reorder Foundation.
 - Non-hierarchical `cb_doc_tag` taxonomy.
 - Registered native post meta:
   - `cb_docs_subtitle`
@@ -23,7 +24,7 @@ It provides a native WordPress documentation content model that can be edited wi
 - Relevance-ordered live Docs search with a read-only REST endpoint and normal GET fallback.
 - Builder-agnostic shortcodes.
 - Optional Bricks adapter for Dynamic Data, custom Queries, Conditions and a dedicated Docs Search element.
-- Hard dependency on the Core Blueprint Base public API `1.0` and the public Base contracts Docs consumes.
+- Hard dependency on the Core Blueprint Base public API `1.1` and the public Base contracts Docs consumes.
 - Canonical Core Blueprint ExtensionRegistry and health registration.
 - Canonical Governance events through `EventRegistry` and `Audit::record()`.
 - No direct Core Blueprint Access dependency.
@@ -40,7 +41,7 @@ Under **Core Blueprint → Docs**:
 - **General** owns site-wide Docs configuration such as the public URL base.
 - **Integrations** reports optional integration readiness through the Base `IntegrationGrid` contract.
 
-Actual Docs, Categories and Tags remain on their normal WordPress content screens.
+Actual Docs, Categories and Tags remain on their normal WordPress content screens. **Docs → Organizer** adds a focused structure view for ordering documentation sets, sections and articles without replacing normal WordPress editing.
 
 ## Permalinks
 
@@ -119,6 +120,7 @@ See [`docs/SHORTCODES.md`](docs/SHORTCODES.md).
 - `docs.document.restored`
 - `docs.document.deleted`
 - `docs.settings.updated`
+- `docs.structure.updated`
 
 Autosaves, revisions and auto-drafts are excluded. Multiple document-field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list. URL-base changes are recorded as settings Governance events.
 
@@ -128,7 +130,7 @@ Search requests do not create Governance events or analytics records.
 
 - WordPress 7.0+
 - PHP 8.4+
-- Core Blueprint Base with Core API `1.0` or a compatible newer `1.x` minor and the public Base contracts Docs consumes
+- Core Blueprint Base with Core API `1.1` or a compatible newer `1.x` minor and the public Base contracts Docs consumes
 
 If Base is missing or incompatible, Docs remains inert. Interactive activation is refused rather than creating a standalone fallback runtime.
 

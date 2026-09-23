@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-20 13:32+0000\n"
+"POT-Creation-Date: 2026-09-23 13:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-blueprint-docs\n"
@@ -754,4 +754,125 @@ msgstr ""
 #: src/Support/Requirements.php:83
 #, php-format
 msgid "Core API %1$s or a newer compatible minor version is required. Available Core API: %2$s."
+msgstr ""
+
+msgid "A documentation article in the requested order no longer exists."
+msgstr ""
+
+msgid "A documentation category in the requested order no longer exists."
+msgstr ""
+
+msgid "Docs structure updated"
+msgstr ""
+
+msgid "Documentation articles"
+msgstr ""
+
+msgid "Documentation Organizer"
+msgstr ""
+
+msgid "Documentation sections"
+msgstr ""
+
+msgid "Documentation sets"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "Drag documentation sets, sections and articles into their intended order. Category hierarchy remains managed from the normal Categories screen."
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit category"
+msgstr ""
+
+msgid "Move to category"
+msgstr ""
+
+msgid "Move to…"
+msgstr ""
+
+msgid "Needs review"
+msgstr ""
+
+msgid "No categories at this level."
+msgstr ""
+
+msgid "No documents in this category."
+msgstr ""
+
+msgid "Nothing needs attention."
+msgstr ""
+
+msgid "Organizer"
+msgstr ""
+
+#, php-format
+msgid "Reorder %s"
+msgstr ""
+
+msgid "The documentation article no longer exists."
+msgstr ""
+
+msgid "The documentation category no longer exists."
+msgstr ""
+
+msgid "The documentation category order could not be saved."
+msgstr ""
+
+msgid "The documentation structure changed. Reload the Organizer before continuing."
+msgstr ""
+
+msgid "The documentation structure contains too many categories for the Organizer."
+msgstr ""
+
+msgid "The documentation structure contains too many documents for the Organizer."
+msgstr ""
+
+msgid "The documentation structure could not be saved because the request failed."
+msgstr ""
+
+msgid "The documentation structure could not be saved."
+msgstr ""
+
+msgid "The documentation structure revision is invalid."
+msgstr ""
+
+msgid "The target documentation category no longer exists."
+msgstr ""
+
+msgid "These documents do not have a structural Doc Category yet."
+msgstr ""
+
+msgid "Unassigned"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "You do not have permission to change documentation categories."
+msgstr ""
+
+msgid "You do not have permission to move this documentation article."
+msgstr ""
+
+msgid "You do not have permission to organize documentation."
+msgstr ""
+
+msgid "You do not have permission to reorder documentation categories."
+msgstr ""
+
+#: src/Admin/OrganizerPage.php
+msgid "Expand all"
+msgstr ""
+
+#: src/Admin/OrganizerPage.php
+msgid "Collapse all"
+msgstr ""
+
+#: src/Admin/OrganizerPage.php
+msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
 msgstr ""

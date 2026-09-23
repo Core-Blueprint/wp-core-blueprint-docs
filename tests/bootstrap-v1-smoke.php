@@ -22,15 +22,15 @@ if ( ! defined( 'CB_DOCS_MIN_PHP' ) ) {
 	define( 'CB_DOCS_MIN_PHP', '8.4' );
 }
 if ( ! defined( 'CB_DOCS_REQUIRED_API' ) ) {
-	define( 'CB_DOCS_REQUIRED_API', '1.0' );
+	define( 'CB_DOCS_REQUIRED_API', '1.1' );
 }
 require_once $root . '/src/Support/Requirements.php';
 
-$compatible = \CB\Docs\Support\Requirements::api_compatible( '1.0', '1.0' )
+$compatible = \CB\Docs\Support\Requirements::api_compatible( '1.1', '1.1' )
 	&& \CB\Docs\Support\Requirements::api_compatible( '1.8', '1.2' )
-	&& ! \CB\Docs\Support\Requirements::api_compatible( '2.0', '1.0' )
+	&& ! \CB\Docs\Support\Requirements::api_compatible( '2.0', '1.1' )
 	&& ! \CB\Docs\Support\Requirements::api_compatible( '1.0', '1.1' )
-	&& ! \CB\Docs\Support\Requirements::api_compatible( 'garbage', '1.0' );
+	&& ! \CB\Docs\Support\Requirements::api_compatible( 'garbage', '1.1' );
 
 $php_gate = strpos( (string) $entry, "version_compare( PHP_VERSION, CB_DOCS_MIN_PHP, '<' )" );
 $autoload = strpos( (string) $entry, 'spl_autoload_register' );
@@ -40,7 +40,7 @@ $checks = [
 	'API compatibility uses same-major sufficient-minor semantics' => $compatible,
 	'PHP floor gate runs before the product autoloader' => false !== $php_gate && false !== $autoload && $php_gate < $autoload,
 	'pre-v1 readiness alias is absent' => ! str_contains( (string) $entry, 'function cb_docs_base_ready' ),
-	'Base product contracts are checked explicitly' => str_contains( (string) $entry, 'function cb_docs_base_contracts_ready(): bool' ) && str_contains( (string) $entry, 'Governance' ) && str_contains( (string) $entry, 'Audit' ),
+	'Base product contracts are checked explicitly' => str_contains( (string) $entry, 'function cb_docs_base_contracts_ready(): bool' ) && str_contains( (string) $entry, "method_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )" ) && str_contains( (string) $entry, 'Governance' ) && str_contains( (string) $entry, 'Audit' ),
 	'activation registers content before rewrite flush' => str_contains( (string) $install, 'PostType::register();' ) && str_contains( (string) $install, 'Taxonomies::register();' ) && str_contains( (string) $install, 'flush_rewrite_rules();' ),
 	'plugin boot preserves builder-neutral ordering' => str_contains( (string) $plugin, 'BuildersBootstrap::init();' ) && str_contains( (string) $plugin, 'RestSearch::init();' ),
 	'bootstrap smoke is wired into tools/check' => str_contains( (string) $tools, 'bootstrap-v1-smoke.php' ),

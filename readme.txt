@@ -19,7 +19,9 @@ Docs Search provides relevance-ordered live documentation search with keyboard s
 
 The Docs URL base is configurable under Core Blueprint > Docs > General. The default is `docs`; alternatives such as `documentation`, `handleiding` and nested paths such as `knowledge/docs` are supported.
 
-Core Blueprint Base with Core API 1.0 is required.
+Docs > Organizer provides a visual structure view for ordering Doc Categories and articles while normal WordPress screens remain canonical for editing content and taxonomy details.
+
+Core Blueprint Base with Core API 1.1 is required.
 
 == Installation ==
 
@@ -44,6 +46,7 @@ Core Blueprint Base with Core API 1.0 is required.
 * Added native Docs content, taxonomies, metadata, shortcodes and Governance lifecycle auditing.
 * Added live relevance-ordered Docs search with progressive GET fallback and an optional Bricks Docs Search element.
 * Added Golden Core Admin Overview, General and Integrations information architecture.
+* Added a visual Documentation Organizer using the public Core Blueprint Reorder Foundation.
 * Added builder-neutral data, query and condition contracts with an optional Bricks adapter.
 * Added configurable Docs URL base with safe deferred rewrite flushing.
 * Added reproducible conformance, localization and release packaging tooling.

@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Core Blueprint Docs 1.0.0-rc1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-core-blueprint-"
 "docs\n"
-"POT-Creation-Date: 2026-09-20 13:32+0000\n"
-"PO-Revision-Date: 2026-09-20 13:32+0000\n"
+"POT-Creation-Date: 2026-09-23 13:13+0000\n"
+"PO-Revision-Date: 2026-09-23 13:13+0000\n"
 "Last-Translator: Core Blueprint\n"
 "Language-Team: fr_FR\n"
 "Language: fr_FR\n"
@@ -790,3 +790,124 @@ msgid ""
 "Core API %1$s or a newer compatible minor version is required. Available "
 "Core API: %2$s."
 msgstr "Core API %1$s ou une version mineure compatible plus récente est requise. Core API disponible : %2$s."
+
+msgid "A documentation article in the requested order no longer exists."
+msgstr "Un article de documentation présent dans l’ordre demandé n’existe plus."
+
+msgid "A documentation category in the requested order no longer exists."
+msgstr "Une catégorie de documentation présente dans l’ordre demandé n’existe plus."
+
+msgid "Docs structure updated"
+msgstr "Structure de Docs mise à jour"
+
+msgid "Documentation articles"
+msgstr "Articles de documentation"
+
+msgid "Documentation Organizer"
+msgstr "Organisateur de documentation"
+
+msgid "Documentation sections"
+msgstr "Sections de documentation"
+
+msgid "Documentation sets"
+msgstr "Ensembles de documentation"
+
+msgid "Down"
+msgstr "Descendre"
+
+msgid "Drag documentation sets, sections and articles into their intended order. Category hierarchy remains managed from the normal Categories screen."
+msgstr "Faites glisser les ensembles de documentation, les sections et les articles dans l’ordre souhaité. La hiérarchie des catégories reste gérée depuis l’écran Catégories standard."
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Edit category"
+msgstr "Modifier la catégorie"
+
+msgid "Move to category"
+msgstr "Déplacer vers une catégorie"
+
+msgid "Move to…"
+msgstr "Déplacer vers…"
+
+msgid "Needs review"
+msgstr "À vérifier"
+
+msgid "No categories at this level."
+msgstr "Aucune catégorie à ce niveau."
+
+msgid "No documents in this category."
+msgstr "Aucun document dans cette catégorie."
+
+msgid "Nothing needs attention."
+msgstr "Aucun élément ne nécessite d’attention."
+
+msgid "Organizer"
+msgstr "Organisateur"
+
+#, php-format
+msgid "Reorder %s"
+msgstr "Réorganiser %s"
+
+msgid "The documentation article no longer exists."
+msgstr "L’article de documentation n’existe plus."
+
+msgid "The documentation category no longer exists."
+msgstr "La catégorie de documentation n’existe plus."
+
+msgid "The documentation category order could not be saved."
+msgstr "L’ordre des catégories de documentation n’a pas pu être enregistré."
+
+msgid "The documentation structure changed. Reload the Organizer before continuing."
+msgstr "La structure de la documentation a changé. Rechargez l’Organisateur avant de continuer."
+
+msgid "The documentation structure contains too many categories for the Organizer."
+msgstr "La structure de la documentation contient trop de catégories pour l’Organisateur."
+
+msgid "The documentation structure contains too many documents for the Organizer."
+msgstr "La structure de la documentation contient trop de documents pour l’Organisateur."
+
+msgid "The documentation structure could not be saved because the request failed."
+msgstr "La structure de la documentation n’a pas pu être enregistrée car la requête a échoué."
+
+msgid "The documentation structure could not be saved."
+msgstr "La structure de la documentation n’a pas pu être enregistrée."
+
+msgid "The documentation structure revision is invalid."
+msgstr "La révision de la structure de la documentation n’est pas valide."
+
+msgid "The target documentation category no longer exists."
+msgstr "La catégorie de documentation cible n’existe plus."
+
+msgid "These documents do not have a structural Doc Category yet."
+msgstr "Ces documents n’ont pas encore de catégorie Docs structurelle."
+
+msgid "Unassigned"
+msgstr "Non attribués"
+
+msgid "Up"
+msgstr "Monter"
+
+msgid "You do not have permission to change documentation categories."
+msgstr "Vous n’avez pas l’autorisation de modifier les catégories de documentation."
+
+msgid "You do not have permission to move this documentation article."
+msgstr "Vous n’avez pas l’autorisation de déplacer cet article de documentation."
+
+msgid "You do not have permission to organize documentation."
+msgstr "Vous n’avez pas l’autorisation d’organiser la documentation."
+
+msgid "You do not have permission to reorder documentation categories."
+msgstr "Vous n’avez pas l’autorisation de réorganiser les catégories de documentation."
+
+#: src/Admin/OrganizerPage.php
+msgid "Expand all"
+msgstr "Tout développer"
+
+#: src/Admin/OrganizerPage.php
+msgid "Collapse all"
+msgstr "Tout réduire"
+
+#: src/Admin/OrganizerPage.php
+msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
+msgstr "Ces documents sont attribués à des catégories de documentation situées dans différentes branches de la hiérarchie. Déplacez-les vers une seule branche structurelle pour résoudre le problème."

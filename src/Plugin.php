@@ -5,6 +5,8 @@ namespace CB\Docs;
 
 use CB\Core\Admin\SettingsRegistry;
 use CB\Docs\Admin\DocDetails;
+use CB\Docs\Admin\OrganizerPage;
+use CB\Docs\Admin\OrganizerRest;
 use CB\Docs\Admin\SettingsPage;
 use CB\Docs\Content\Meta;
 use CB\Docs\Content\PostType;
@@ -14,6 +16,7 @@ use CB\Docs\Frontend\Shortcodes;
 use CB\Docs\Governance\Events;
 use CB\Docs\Integration\Builders\Bootstrap as BuildersBootstrap;
 use CB\Docs\Integration\Suite;
+use CB\Docs\Structure\CategoryOrder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,15 +34,18 @@ final class Plugin {
 		Settings::init();
 		BuildersBootstrap::init();
 		RestSearch::init();
+		OrganizerRest::init();
 
 		add_action( 'init', [ PostType::class, 'register' ], 5 );
 		add_action( 'init', [ Taxonomies::class, 'register' ], 6 );
 		add_action( 'init', [ Meta::class, 'register' ], 7 );
+		add_action( 'init', [ CategoryOrder::class, 'register' ], 8 );
 
 		Shortcodes::init();
 
 		if ( is_admin() ) {
 			DocDetails::init();
+			OrganizerPage::init();
 			SettingsPage::init();
 		}
 

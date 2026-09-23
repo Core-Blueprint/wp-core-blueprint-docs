@@ -34,6 +34,14 @@ $expected = [
 	'src/Admin/DocDetails.php',
 	'src/Admin/SettingsPage.php',
 	'src/Admin/IntegrationReadiness.php',
+	'src/Admin/OrganizerPage.php',
+	'src/Admin/OrganizerRest.php',
+	'src/Structure/Order.php',
+	'src/Structure/CategoryOrder.php',
+	'src/Structure/Snapshot.php',
+	'src/Structure/Revision.php',
+	'src/Structure/Mutation.php',
+	'src/Structure/MutationLock.php',
 	'src/Frontend/Queries.php',
 	'src/Frontend/Shortcodes.php',
 	'src/Frontend/DocumentAccess.php',
@@ -54,6 +62,7 @@ $expected = [
 	'docs/INTEGRATION-API.md',
 	'docs/BRICKS.md',
 	'assets/js/admin-shortcodes.js',
+	'assets/js/admin-organizer.js',
 ];
 foreach ( $expected as $path ) {
 	if ( ! is_file( $root . '/' . $path ) ) {
@@ -86,8 +95,8 @@ $bootstrap = (string) file_get_contents( $root . '/core-blueprint-docs.php' );
 if ( ! str_contains( $bootstrap, 'Requires Plugins: core-blueprint' ) ) {
 	$failures[] = 'Bootstrap is missing the canonical native Base dependency header.';
 }
-if ( ! str_contains( $bootstrap, "define( 'CB_DOCS_REQUIRED_API', '1.0' );" ) ) {
-	$failures[] = 'Bootstrap is missing the canonical Core API 1.0 requirement.';
+if ( ! str_contains( $bootstrap, "define( 'CB_DOCS_REQUIRED_API', '1.1' );" ) ) {
+	$failures[] = 'Bootstrap is missing the canonical Core API 1.1 requirement.';
 }
 if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
 	$failures[] = 'Bootstrap retains the obsolete pre-v1 readiness compatibility helper.';
@@ -95,6 +104,8 @@ if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
 foreach ( [
 	"class_exists( '\\\\CB\\\\Core\\\\ExtensionRegistry' )",
 	"class_exists( '\\\\CB\\\\Core\\\\Admin\\\\SettingsRegistry' )",
+	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets' )",
+	"method_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Notice' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\IntegrationGrid' )",
@@ -216,7 +227,7 @@ foreach ( [ 'navigator.clipboard', 'execCommand', 'document.createElement( \'tex
 }
 
 $events = (string) file_get_contents( $root . '/src/Governance/Events.php' );
-foreach ( [ 'EventRegistry::register', 'Audit::record', 'docs.settings.updated' ] as $required ) {
+foreach ( [ 'EventRegistry::register', 'Audit::record', 'docs.settings.updated', 'docs.structure.updated' ] as $required ) {
 	if ( ! str_contains( $events, $required ) ) {
 		$failures[] = 'Governance contract is missing ' . $required . '.';
 	}
@@ -258,13 +269,30 @@ foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $requi
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
-foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )' ] as $required ) {
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()' ] as $required ) {
 	if ( ! str_contains( $plugin, $required ) ) {
 		$failures[] = 'Plugin contract is missing ' . $required . '.';
 	}
 }
 if ( str_contains( $plugin, 'SettingsPage::SLUG' ) || str_contains( $plugin, 'core-blueprint-docs-settings' ) ) {
 	$failures[] = 'Plugin action links retain the retired flat Docs settings route.';
+}
+
+$organizer_page = (string) file_get_contents( $root . '/src/Admin/OrganizerPage.php' );
+foreach ( [ 'Assets::enqueue_reorder()', "'@cb-core/reorder'", "'edit.php?post_type=' . PostType::TYPE" ] as $required ) {
+	if ( ! str_contains( $organizer_page, $required ) ) {
+		$failures[] = 'Organizer page contract is missing ' . $required . '.';
+	}
+}
+if ( str_contains( $organizer_page, 'cb-core-css-' ) ) {
+	$failures[] = 'Organizer page must consume Reorder through the public Base Foundation, not private asset handles.';
+}
+
+$organizer_runtime = (string) file_get_contents( $root . '/assets/js/admin-organizer.js' );
+foreach ( [ 'window.cbCore?.reorder', 'crossList: true', 'controller.move(', 'controller.moveUp(', 'controller.moveDown(' ] as $required ) {
+	if ( ! str_contains( $organizer_runtime, $required ) ) {
+		$failures[] = 'Organizer runtime contract is missing ' . $required . '.';
+	}
 }
 
 $builder_bootstrap = (string) file_get_contents( $root . '/src/Integration/Builders/Bootstrap.php' );

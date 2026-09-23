@@ -13,6 +13,7 @@ First public release candidate.
 - Added an optional Bricks adapter for Dynamic Data, custom Queries, Conditions, group ordering and document context.
 - Added a dedicated Bricks Docs Search element that delegates to the builder-neutral search component while leaving generic layout and presentation to Bricks.
 - Added Golden Core Admin `Overview → General → Integrations` information architecture while keeping content management WordPress-native.
+- Added a visual Documentation Organizer with category sibling ordering, article ordering, cross-section moves, stale-state protection and semantic structure auditing.
 - Added configurable Docs URL base with safe nested paths and deferred one-time rewrite flushing.
 - Added Core Blueprint Base public API/contract dependency guards, ExtensionRegistry integration and health status.
 - Added canonical Governance lifecycle and settings events with autosave/revision noise filtering.
