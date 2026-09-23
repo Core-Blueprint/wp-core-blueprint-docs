@@ -95,8 +95,8 @@ $bootstrap = (string) file_get_contents( $root . '/core-blueprint-docs.php' );
 if ( ! str_contains( $bootstrap, 'Requires Plugins: core-blueprint' ) ) {
 	$failures[] = 'Bootstrap is missing the canonical native Base dependency header.';
 }
-if ( ! str_contains( $bootstrap, "define( 'CB_DOCS_REQUIRED_API', '1.0' );" ) ) {
-	$failures[] = 'Bootstrap is missing the canonical Core API 1.0 requirement.';
+if ( ! str_contains( $bootstrap, "define( 'CB_DOCS_REQUIRED_API', '1.1' );" ) ) {
+	$failures[] = 'Bootstrap is missing the canonical Core API 1.1 requirement.';
 }
 if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
 	$failures[] = 'Bootstrap retains the obsolete pre-v1 readiness compatibility helper.';
@@ -104,6 +104,8 @@ if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
 foreach ( [
 	"class_exists( '\\\\CB\\\\Core\\\\ExtensionRegistry' )",
 	"class_exists( '\\\\CB\\\\Core\\\\Admin\\\\SettingsRegistry' )",
+	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets' )",
+	"method_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Notice' )",
 	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\IntegrationGrid' )",
