@@ -965,3 +965,7 @@ msgstr "Nicht zugewiesene Dokumente mit Ausweichroute: %d"
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr "Wird für das Docs-Archiv und im Modus Kategoriehierarchie für Kategorie-, Tag- und Dokumentpfade verwendet. Verschachtelte Basispfade wie knowledge/docs werden unterstützt."
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Doppelte Legacy-Dokument-Slugs: %d"
