@@ -66,6 +66,8 @@ $checks = [
 	'Organizer exposes bulk disclosure controls' => str_contains( (string) $organizer, 'data-cb-docs-expand-all' ) && str_contains( (string) $organizer, 'data-cb-docs-collapse-all' ),
 	'Organizer assets use content-derived cache versions' => str_contains( (string) $organizer, "hash_file( 'sha256', \$path )" ) && str_contains( (string) $organizer, "asset_version( 'assets/css/admin-organizer.css' )" ),
 	'Organizer resynchronizes Move-to controls after document moves' => str_contains( (string) $runtime, 'syncMoveToControl' ) && str_contains( (string) $runtime, 'option.disabled' ),
+	'Organizer action controls use accessible Dashicon buttons' => str_contains( (string) $organizer, 'dashicons-arrow-up-alt2' ) && str_contains( (string) $organizer, 'dashicons-arrow-down-alt2' ) && str_contains( (string) $organizer, 'dashicons-edit' ) && str_contains( (string) $organizer, 'cb-docs-organizer__icon-button' ) && str_contains( (string) $organizer, 'aria-label=' ),
+	'Organizer document view action opens the canonical frontend or preview URL in a new tab' => str_contains( (string) $organizer, 'get_permalink( $post )' ) && str_contains( (string) $organizer, 'get_preview_post_link( $post )' ) && str_contains( (string) $organizer, 'dashicons-visibility' ) && str_contains( (string) $organizer, 'target="_blank"' ) && str_contains( (string) $organizer, 'noopener noreferrer' ),
 	'cross-category drag respects taxonomy assignment authority' => str_contains( (string) $runtime, "dataset?.canAssign === '1'" ),
 	'frontend navigation delegates category ordering' => str_contains( (string) $shortcodes, 'CategoryOrder::sort_terms' ),
 	'semantic structure audit exists' => str_contains( (string) $events, 'docs.structure.updated' ),
