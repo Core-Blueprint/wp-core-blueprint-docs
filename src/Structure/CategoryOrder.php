@@ -18,7 +18,7 @@ final class CategoryOrder {
 				'single'            => true,
 				'type'              => 'integer',
 				'default'           => 0,
-				'show_in_rest'      => true,
+				'show_in_rest'      => false,
 				'sanitize_callback' => 'absint',
 			]
 		);
