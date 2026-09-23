@@ -152,6 +152,7 @@ const syncDocumentNumbers = () => {
 		rows.forEach((row, index) => {
 			const numberNode = row.querySelector('[data-cb-docs-document-number]');
 			if (numberNode) {
+				numberNode.hidden = false;
 				numberNode.textContent = `${index + 1}.`;
 			}
 		});
