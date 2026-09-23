@@ -280,7 +280,7 @@ final class SettingsPage {
 					<?php if ( 0 === $readiness['blocking'] ) : ?>
 						<p><strong><?php esc_html_e( 'Ready', 'core-blueprint-docs' ); ?></strong> — <?php esc_html_e( 'No blocking URL conflicts were detected.', 'core-blueprint-docs' ); ?></p>
 					<?php else : ?>
-						<p><strong><?php esc_html_e( 'Action required', 'core-blueprint-docs' ); ?></strong> — <?php echo esc_html( sprintf( _n( '%d blocking URL conflict was detected.', '%d blocking URL conflicts were detected.', $readiness['blocking'], 'core-blueprint-docs' ), $readiness['blocking'] ) ); ?></p>
+						<p><strong><?php esc_html_e( 'Action required', 'core-blueprint-docs' ); ?></strong> — <?php echo esc_html( sprintf( __( 'Blocking URL conflicts: %d', 'core-blueprint-docs' ), $readiness['blocking'] ) ); ?></p>
 					<?php endif; ?>
 					<ul>
 						<li><?php echo esc_html( sprintf( __( 'Reserved Docs URL base conflicts: %d', 'core-blueprint-docs' ), $readiness['reserved_base'] ) ); ?></li>
