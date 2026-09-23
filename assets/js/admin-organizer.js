@@ -58,7 +58,11 @@ if (root && reorder?.enhance) {
 				return move.from.listId === move.to.listId && move.to.listId.startsWith('terms:');
 			}
 			if (kind === 'doc') {
-				return /^docs:\d+$/.test(move.to.listId);
+				if (!/^docs:\d+$/.test(move.to.listId)) return false;
+				if (move.from.listId === move.to.listId) return true;
+
+				const item = root.querySelector(`[data-cb-core-reorder-item="${move.itemId}"]`);
+				return item?.dataset?.canAssign === '1';
 			}
 			return false;
 		},
