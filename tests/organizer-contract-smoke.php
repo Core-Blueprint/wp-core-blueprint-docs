@@ -45,6 +45,13 @@ $organizer_css = file_get_contents( $root . '/assets/css/admin-organizer.css' );
 $category_order = file_get_contents( $root . '/src/Structure/CategoryOrder.php' );
 $runtime = file_get_contents( $root . '/assets/js/admin-organizer.js' );
 
+$document_render_start = strpos( (string) $organizer, 'private static function render_document(' );
+$document_render_end   = strpos( (string) $organizer, 'private static function render_attention_list(', false === $document_render_start ? 0 : $document_render_start );
+$document_render       = false !== $document_render_start && false !== $document_render_end
+	? substr( (string) $organizer, $document_render_start, $document_render_end - $document_render_start )
+	: '';
+
+
 $checks = [
 	'Organizer uses public Reorder Foundation helper' => str_contains( (string) $organizer, 'Assets::enqueue_reorder' ),
 	'Organizer module depends on public Reorder module ID' => str_contains( (string) $organizer, "'@cb-core/reorder'" ),
@@ -68,6 +75,16 @@ $checks = [
 	'Organizer resynchronizes Move-to controls after document moves' => str_contains( (string) $runtime, 'syncMoveToControl' ) && str_contains( (string) $runtime, 'option.disabled' ),
 	'Organizer action controls use accessible Dashicon buttons' => str_contains( (string) $organizer, 'dashicons-arrow-up-alt2' ) && str_contains( (string) $organizer, 'dashicons-arrow-down-alt2' ) && str_contains( (string) $organizer, 'dashicons-edit' ) && str_contains( (string) $organizer, 'cb-docs-organizer__icon-button' ) && str_contains( (string) $organizer, 'aria-label=' ),
 	'Organizer document view action opens the canonical frontend or preview URL in a new tab' => str_contains( (string) $organizer, 'get_permalink( $post )' ) && str_contains( (string) $organizer, 'get_preview_post_link( $post )' ) && str_contains( (string) $organizer, 'dashicons-visibility' ) && str_contains( (string) $organizer, 'target="_blank"' ) && str_contains( (string) $organizer, 'noopener noreferrer' ),
+	'Organizer document actions keep Up Down Move-to Edit View order' => '' !== $document_render
+		&& false !== ( $action_up = strpos( $document_render, 'data-cb-docs-move-up' ) )
+		&& false !== ( $action_down = strpos( $document_render, 'data-cb-docs-move-down' ) )
+		&& false !== ( $action_move = strpos( $document_render, 'data-cb-docs-move-to' ) )
+		&& false !== ( $action_edit = strpos( $document_render, 'dashicons-edit' ) )
+		&& false !== ( $action_view = strpos( $document_render, 'dashicons-visibility' ) )
+		&& $action_up < $action_down
+		&& $action_down < $action_move
+		&& $action_move < $action_edit
+		&& $action_edit < $action_view,
 	'cross-category drag respects taxonomy assignment authority' => str_contains( (string) $runtime, "dataset?.canAssign === '1'" ),
 	'frontend navigation delegates category ordering' => str_contains( (string) $shortcodes, 'CategoryOrder::sort_terms' ),
 	'semantic structure audit exists' => str_contains( (string) $events, 'docs.structure.updated' ),
