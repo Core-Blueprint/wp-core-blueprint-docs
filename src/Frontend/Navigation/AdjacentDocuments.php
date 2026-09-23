@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace CB\Docs\Frontend\Navigation;
 
 use CB\Docs\Content\PostType;
+use CB\Docs\Frontend\DocumentAccess;
 use CB\Docs\Structure\DocumentLocation;
 
 defined( 'ABSPATH' ) || exit;
@@ -15,6 +16,8 @@ defined( 'ABSPATH' ) || exit;
  * this behavior without a builder-specific integration.
  */
 final class AdjacentDocuments {
+	/** @var array<string,int[]> */
+	private static array $readable_sets = [];
 	public static function init(): void {
 		add_filter( 'get_previous_post_where', [ self::class, 'previous_where' ], 20, 5 );
 		add_filter( 'get_next_post_where', [ self::class, 'next_where' ], 20, 5 );
@@ -62,7 +65,9 @@ final class AdjacentDocuments {
 			return $where;
 		}
 
-		$sibling_ids = DocumentLocation::sibling_document_ids( (int) $post->ID );
+		$sibling_ids = self::readable_sibling_ids(
+			DocumentLocation::sibling_document_ids( (int) $post->ID )
+		);
 		if ( empty( $sibling_ids ) ) {
 			return self::fail_closed( $where );
 		}
@@ -98,6 +103,57 @@ final class AdjacentDocuments {
 		}
 
 		return $boundary . substr( $where, $marker_position ) . ' AND p.ID IN (' . $ids . ')';
+	}
+
+	/**
+	 * Apply the same filtered WordPress read boundary used by Docs frontend
+	 * queries before candidate IDs reach the native adjacent-post SQL.
+	 *
+	 * @param int[] $document_ids
+	 * @return int[]
+	 */
+	private static function readable_sibling_ids( array $document_ids ): array {
+		$document_ids = array_values( array_unique( array_filter( array_map( 'absint', $document_ids ) ) ) );
+		if ( empty( $document_ids ) ) {
+			return [];
+		}
+
+		$key = implode( ',', $document_ids );
+		if ( isset( self::$readable_sets[ $key ] ) ) {
+			return self::$readable_sets[ $key ];
+		}
+
+		$statuses = array_values( array_unique( array_merge(
+			[ 'publish' ],
+			array_values( get_post_stati( [ 'private' => true ] ) )
+		) ) );
+
+		$query = new \WP_Query(
+			[
+				'post_type'           => PostType::TYPE,
+				'post_status'         => $statuses,
+				'post__in'            => $document_ids,
+				'posts_per_page'      => -1,
+				'orderby'             => 'post__in',
+				'perm'                => 'readable',
+				'suppress_filters'    => false,
+				'ignore_sticky_posts' => true,
+				'no_found_rows'       => true,
+			]
+		);
+
+		$readable = [];
+		foreach ( $query->posts as $candidate ) {
+			if (
+				$candidate instanceof \WP_Post
+				&& DocumentAccess::protected_content_allowed( $candidate )
+			) {
+				$readable[] = (int) $candidate->ID;
+			}
+		}
+
+		self::$readable_sets[ $key ] = $readable;
+		return $readable;
 	}
 
 	private static function fail_closed( string $where ): string {
