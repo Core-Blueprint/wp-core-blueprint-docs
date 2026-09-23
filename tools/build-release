@@ -34,7 +34,7 @@ done < "$ENTRY"
 [[ "$VERSION" == "$CONSTANT_VERSION" ]] || fail "Version header and CB_DOCS_VERSION differ"
 [[ "$VERSION" == "1.0.0-rc1" ]] || fail "public release builder currently expects 1.0.0-rc1, found $VERSION"
 [[ "$REQUIRES_PHP" == "8.4" ]] || fail "Requires PHP must remain 8.4"
-[[ "$REQUIRED_API" == "1.0" ]] || fail "CB_DOCS_REQUIRED_API must remain 1.0"
+[[ "$REQUIRED_API" == "1.1" ]] || fail "CB_DOCS_REQUIRED_API must remain 1.1"
 
 grep -Fq "Stable tag: $VERSION" readme.txt || fail "readme.txt Stable tag does not match plugin header"
 grep -Fq "## v$VERSION scope" README.md || fail "README public scope version does not match plugin header"
