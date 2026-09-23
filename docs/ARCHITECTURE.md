@@ -38,7 +38,7 @@ Docs keeps WordPress as the canonical datastore. The Organizer is a management l
 
 Document order uses native `menu_order`. Category sibling order uses registered `cb_docs_order` term metadata. A deterministic structure revision covers only structural state so concurrent Organizer mutations can fail closed without treating ordinary content edits as structural conflicts.
 
-One Doc Category is the canonical structural assignment for an article in the Organizer. Documents with no category are shown as Unassigned. Documents with multiple Doc Categories are shown as Needs review and are never silently rewritten until an administrator chooses one structural location.
+The Organizer resolves Doc Category assignments hierarchy-aware. A document may be assigned to multiple categories when those terms all lie on one ancestor-to-descendant path; the deepest assigned term is the canonical structural location. Documents with no category are shown as Unassigned. Assignments across separate taxonomy branches are shown as Needs review and are never silently rewritten until an administrator chooses one structural location.
 
 Category hierarchy remains managed through WordPress taxonomy management. Organizer v1 reorders category siblings but does not reparent categories by drag.
 
