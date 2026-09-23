@@ -76,7 +76,7 @@ Conditions are display logic only. They never grant access. The adapter calls th
 
 Use Bricks' native Post Navigation element. Core Blueprint Docs adapts WordPress' standard adjacent-post queries for the `cb_doc` post type, so compatible previous/next navigation automatically follows Organizer `menu_order` within the document's canonical structural category.
 
-The adapter is builder-neutral. It preserves WordPress post-status, privacy, same-term and excluded-term restrictions, and leaves all non-Docs post types unchanged. Documents that are unassigned or structurally ambiguous intentionally expose no adjacent document until their structure is resolved.
+The adapter is builder-neutral. Candidate documents pass through the normal filtered Docs read boundary before WordPress resolves the adjacent post. It preserves WordPress post-status, privacy, same-term and excluded-term restrictions, and leaves all non-Docs post types unchanged. Documents that are unassigned or structurally ambiguous intentionally expose no adjacent document until their structure is resolved.
 
 ## Form Actions
 
