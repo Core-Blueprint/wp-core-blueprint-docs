@@ -91,7 +91,7 @@ final class Settings {
 			'url_structure' => self::sanitize_url_structure( $raw_structure ),
 		];
 
-		if ( self::URL_STRUCTURE_HIERARCHY === $after['url_structure'] && ! Readiness::ready() ) {
+		if ( self::URL_STRUCTURE_HIERARCHY === $after['url_structure'] && ! Readiness::ready( $after['rewrite_base'] ) ) {
 			wp_safe_redirect(
 				SettingsRegistry::url(
 					Suite::ID,
