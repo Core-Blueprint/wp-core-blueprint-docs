@@ -42,6 +42,8 @@ The Organizer resolves Doc Category assignments hierarchy-aware. A document may 
 
 Category hierarchy remains managed through WordPress taxonomy management. Organizer v1 reorders category siblings but does not reparent categories by drag.
 
+Organizer category disclosure is presentation-only state. Top-level categories default to expanded and nested categories default to collapsed. Per-category expand/collapse choices are stored in browser-local storage under a per-user key and are never written to WordPress content, options or user metadata. Expand all and Collapse all operate on the same local presentation state.
+
 ## Permalink boundary
 
 `cb_doc` uses a plugin-owned configurable rewrite base. The default is `docs`.
