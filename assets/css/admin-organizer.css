@@ -187,6 +187,7 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 .cb-docs-organizer__actions select {
 	height: var(--cb-docs-org-control-height);
 	min-height: var(--cb-docs-org-control-height);
+	line-height: 2.14285714;
 }
 
 .cb-docs-organizer__actions .button.button-compact.cb-docs-organizer__icon-button {
@@ -194,6 +195,7 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 	min-width: var(--cb-docs-org-control-height);
 	aspect-ratio: 1 / 1;
 	padding-inline: 0;
+	text-align: center;
 }
 
 .cb-docs-organizer__attention-grid {
