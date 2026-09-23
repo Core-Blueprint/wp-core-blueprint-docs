@@ -24,7 +24,7 @@ It provides a native WordPress documentation content model that can be edited wi
 - Relevance-ordered live Docs search with a read-only REST endpoint and normal GET fallback.
 - Builder-agnostic shortcodes.
 - Optional Bricks adapter for Dynamic Data, custom Queries, Conditions and a dedicated Docs Search element.
-- Hard dependency on the Core Blueprint Base public API `1.0` and the public Base contracts Docs consumes.
+- Hard dependency on the Core Blueprint Base public API `1.1` and the public Base contracts Docs consumes.
 - Canonical Core Blueprint ExtensionRegistry and health registration.
 - Canonical Governance events through `EventRegistry` and `Audit::record()`.
 - No direct Core Blueprint Access dependency.
@@ -130,7 +130,7 @@ Search requests do not create Governance events or analytics records.
 
 - WordPress 7.0+
 - PHP 8.4+
-- Core Blueprint Base with Core API `1.0` or a compatible newer `1.x` minor and the public Base contracts Docs consumes
+- Core Blueprint Base with Core API `1.1` or a compatible newer `1.x` minor and the public Base contracts Docs consumes
 
 If Base is missing or incompatible, Docs remains inert. Interactive activation is refused rather than creating a standalone fallback runtime.
 
