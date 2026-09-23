@@ -47,6 +47,7 @@ $checks = [
 	'category order is native registered term metadata' => str_contains( (string) $category_order, 'register_term_meta' ) && str_contains( (string) $category_order, 'cb_docs_order' ),
 	'category order metadata is not a public REST write surface' => str_contains( (string) $category_order, "'show_in_rest'      => false" ),
 	'document ordering continues to use menu_order' => str_contains( (string) $mutation, "'menu_order'" ),
+	'same-category reorder avoids taxonomy writes in commit and rollback paths' => substr_count( (string) $mutation, 'if ( ! $same_structural_category )' ) >= 2,
 	'mutations require expected structure revision' => str_contains( (string) $mutation, 'expected_revision' ) && str_contains( (string) $mutation, 'stale' ),
 	'mutations are serialized behind Docs-owned lock' => str_contains( (string) $mutation, 'MutationLock::acquire' ),
 	'Organizer REST stays a private admin mutation boundary' => str_contains( (string) $rest, '/organizer/document' ) && str_contains( (string) $rest, '/organizer/term' ),
