@@ -144,6 +144,20 @@ const syncDocumentCounts = () => {
 	});
 };
 
+const syncDocumentNumbers = () => {
+	if (!root) return;
+
+	root.querySelectorAll('[data-cb-core-reorder-list^="docs:"]').forEach((list) => {
+		const rows = Array.from(list.children).filter((child) => child.matches?.('[data-cb-docs-kind="doc"]'));
+		rows.forEach((row, index) => {
+			const numberNode = row.querySelector('[data-cb-docs-document-number]');
+			if (numberNode) {
+				numberNode.textContent = `${index + 1}.`;
+			}
+		});
+	});
+};
+
 const syncOrganizerState = () => {
 	if (!root) return;
 
@@ -152,6 +166,7 @@ const syncOrganizerState = () => {
 		list.dataset.cbDocsEmpty = hasItems ? '0' : '1';
 	});
 	syncDocumentCounts();
+	syncDocumentNumbers();
 };
 
 if (root) {
