@@ -962,3 +962,7 @@ msgstr "Niet-toegewezen documenten die de fail-safe route gebruiken: %d"
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr "Wordt gebruikt voor het Docs-archief en, in Categoriehiërarchie-modus, voor categorie-, tag- en documentpaden. Geneste bases zoals knowledge/docs worden ondersteund."
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Dubbele legacy-document-slugs: %d"
