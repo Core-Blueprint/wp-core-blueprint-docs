@@ -30,6 +30,7 @@ final class RouteIndex {
  *     invalid_category_paths:int,
 	 *     document_category_collisions:int,
 	 *     duplicate_document_paths:int,
+ *     duplicate_legacy_document_slugs:int,
 	 *     legacy_simple_collisions:int,
 	 *     unassigned:int,
 	 *     ambiguous:int
@@ -68,9 +69,11 @@ final class RouteIndex {
 		$document_by_path = [];
 		$document_category_collisions = 0;
 		$duplicate_document_paths = 0;
+		$duplicate_legacy_document_slugs = 0;
 		$legacy_simple_collisions = 0;
 		$unassigned = 0;
 		$ambiguous = 0;
+		$legacy_slug_owner = [];
 
 		foreach ( self::normalize_documents( $documents ) as $document ) {
 			$id = $document['id'];
@@ -114,6 +117,12 @@ final class RouteIndex {
 					$document_by_path[ $path ] = $id;
 				}
 
+				if ( isset( $legacy_slug_owner[ $slug ] ) && $legacy_slug_owner[ $slug ] !== $id ) {
+					++$duplicate_legacy_document_slugs;
+				} else {
+					$legacy_slug_owner[ $slug ] = $id;
+				}
+
 				if ( isset( $path_owner[ $slug ] ) ) {
 					++$legacy_simple_collisions;
 				}
@@ -124,6 +133,7 @@ final class RouteIndex {
 			+ $duplicate_category_paths
 			+ $invalid_category_paths
 			+ $duplicate_document_paths
+			+ $duplicate_legacy_document_slugs
 			+ $legacy_simple_collisions;
 		$warnings = $document_category_collisions + $unassigned + $ambiguous;
 
@@ -140,6 +150,7 @@ final class RouteIndex {
 				'invalid_category_paths'       => $invalid_category_paths,
 				'document_category_collisions' => $document_category_collisions,
 				'duplicate_document_paths'     => $duplicate_document_paths,
+				'duplicate_legacy_document_slugs' => $duplicate_legacy_document_slugs,
 				'legacy_simple_collisions'     => $legacy_simple_collisions,
 				'unassigned'                   => $unassigned,
 				'ambiguous'                    => $ambiguous,
