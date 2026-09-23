@@ -951,3 +951,7 @@ msgstr ""
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr ""
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr ""
