@@ -149,7 +149,7 @@ foreach ( [
 }
 
 $settings = (string) file_get_contents( $root . '/src/Settings.php' );
-foreach ( [ 'DEFAULT_REWRITE_BASE', 'URL_STRUCTURE_SIMPLE', 'URL_STRUCTURE_HIERARCHY', 'DEFAULT_URL_STRUCTURE', 'Readiness::ready()', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', 'SettingsRegistry::url(', 'Suite::ID', "'tab'             => 'general'" ] as $required ) {
+foreach ( [ 'DEFAULT_REWRITE_BASE', 'URL_STRUCTURE_SIMPLE', 'URL_STRUCTURE_HIERARCHY', 'DEFAULT_URL_STRUCTURE', "Readiness::ready( \$after['rewrite_base'] )", 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', 'SettingsRegistry::url(', 'Suite::ID', "'tab'             => 'general'" ] as $required ) {
 	if ( ! str_contains( $settings, $required ) ) {
 		$failures[] = 'Settings contract is missing ' . $required . '.';
 	}
