@@ -182,6 +182,23 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 	flex: 0 0 auto;
 }
 
+.cb-docs-organizer__icon-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	min-width: 32px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.cb-docs-organizer__icon-button .dashicons {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+	line-height: 18px;
+}
+
 .cb-docs-organizer__attention-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
