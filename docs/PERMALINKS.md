@@ -63,6 +63,7 @@ cannot be handled safely:
 - top-level category slug `tag` or `document`;
 - duplicate category paths;
 - duplicate public document canonical/fail-safe paths;
+- duplicate routable document slugs that would make a legacy Simple URL ambiguous;
 - a legacy Simple document URL that would become a category URL.
 
 A category/document collision at a proposed hierarchy document path is not
