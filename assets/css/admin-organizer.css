@@ -1,15 +1,31 @@
 .cb-docs-organizer-wrap {
-	--cb-docs-org-surface: var(--cb-surface-1, #fff);
-	--cb-docs-org-surface-subtle: var(--cb-surface-2, #f6f7f7);
-	--cb-docs-org-surface-raised: var(--cb-surface-0, #fff);
-	--cb-docs-org-border: var(--cb-border, #c3c4c7);
-	--cb-docs-org-text: var(--cb-text, #2c3338);
-	--cb-docs-org-text-strong: var(--cb-text-strong, #1d2327);
-	--cb-docs-org-muted: var(--cb-text-muted, #646970);
-	--cb-docs-org-faint: var(--cb-text-faint, #8c8f94);
-	--cb-docs-org-accent: var(--cb-accent, #2271b1);
-	--cb-docs-org-radius-sm: var(--cb-radius-sm, 4px);
-	--cb-docs-org-radius-md: var(--cb-radius-md, 6px);
+	--cb-docs-org-surface: #fff;
+	--cb-docs-org-surface-subtle: #f6f7f7;
+	--cb-docs-org-surface-raised: #fff;
+	--cb-docs-org-border: #c3c4c7;
+	--cb-docs-org-text: #2c3338;
+	--cb-docs-org-text-strong: #1d2327;
+	--cb-docs-org-muted: #646970;
+	--cb-docs-org-faint: #8c8f94;
+	--cb-docs-org-accent: #2271b1;
+	--cb-docs-org-accent-strong: #135e96;
+	--cb-docs-org-radius-sm: 4px;
+	--cb-docs-org-radius-md: 6px;
+}
+
+html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
+	--cb-docs-org-surface: var(--cb-surface-1);
+	--cb-docs-org-surface-subtle: var(--cb-surface-2);
+	--cb-docs-org-surface-raised: var(--cb-surface-0);
+	--cb-docs-org-border: var(--cb-border);
+	--cb-docs-org-text: var(--cb-text);
+	--cb-docs-org-text-strong: var(--cb-text-strong);
+	--cb-docs-org-muted: var(--cb-text-muted);
+	--cb-docs-org-faint: var(--cb-text-faint);
+	--cb-docs-org-accent: var(--cb-accent);
+	--cb-docs-org-accent-strong: var(--cb-accent-strong);
+	--cb-docs-org-radius-sm: var(--cb-radius-sm);
+	--cb-docs-org-radius-md: var(--cb-radius-md);
 }
 
 .cb-docs-organizer-wrap > .description {
@@ -23,6 +39,12 @@
 	gap: 20px;
 	max-width: 1280px;
 	color: var(--cb-docs-org-text);
+}
+
+.cb-docs-organizer__toolbar {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
 }
 
 .cb-docs-organizer__term-list {
@@ -54,8 +76,17 @@
 	color: var(--cb-docs-org-text);
 }
 
+.cb-docs-organizer__term-content {
+	display: grid;
+	gap: 12px;
+	margin-top: 10px;
+}
+
+.cb-docs-organizer__term-content[hidden] {
+	display: none !important;
+}
+
 .cb-docs-organizer__term .cb-docs-organizer__term-list {
-	margin-top: 12px;
 	padding-left: 18px;
 	border-left: 2px solid var(--cb-docs-org-border);
 }
@@ -66,10 +97,6 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-}
-
-.cb-docs-organizer__term-header {
-	margin-bottom: 10px;
 }
 
 .cb-docs-organizer__term-heading,
@@ -86,6 +113,42 @@
 	color: var(--cb-docs-org-text-strong);
 }
 
+.cb-docs-organizer__toggle,
+.cb-docs-organizer__handle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	text-decoration: none;
+}
+
+.cb-docs-organizer__toggle {
+	color: var(--cb-docs-org-muted);
+}
+
+.cb-docs-organizer__toggle:hover,
+.cb-docs-organizer__toggle:focus {
+	color: var(--cb-docs-org-text-strong);
+}
+
+.cb-docs-organizer__toggle .dashicons {
+	transition: transform 120ms ease;
+}
+
+.cb-docs-organizer__toggle[aria-expanded="true"] .dashicons {
+	transform: rotate(90deg);
+}
+
+.cb-docs-organizer__handle {
+	color: var(--cb-docs-org-accent);
+}
+
+.cb-docs-organizer__handle:hover,
+.cb-docs-organizer__handle:focus {
+	color: var(--cb-docs-org-accent-strong);
+}
+
 .cb-docs-organizer__doc {
 	padding: 10px 12px;
 	border: 1px solid var(--cb-docs-org-border);
@@ -100,21 +163,6 @@
 	min-height: 8px;
 }
 
-.cb-docs-organizer__handle {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 28px;
-	height: 28px;
-	text-decoration: none;
-	color: var(--cb-docs-org-accent);
-}
-
-.cb-docs-organizer__handle:hover,
-.cb-docs-organizer__handle:focus {
-	color: var(--cb-accent-strong, var(--cb-docs-org-accent));
-}
-
 .cb-docs-organizer__doc-title {
 	font-weight: 600;
 }
@@ -123,7 +171,7 @@
 	display: inline-flex;
 	align-items: center;
 	padding: 2px 7px;
-	border-radius: var(--cb-radius-pill, 999px);
+	border-radius: 999px;
 	background: var(--cb-docs-org-surface-raised);
 	color: var(--cb-docs-org-muted);
 	font-size: 11px;
@@ -163,7 +211,18 @@
 	display: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+	.cb-docs-organizer__toggle .dashicons {
+		transition: none;
+	}
+}
+
 @media (max-width: 900px) {
+	.cb-docs-organizer__toolbar {
+		justify-content: flex-start;
+		flex-wrap: wrap;
+	}
+
 	.cb-docs-organizer__attention-grid {
 		grid-template-columns: 1fr;
 	}
