@@ -72,6 +72,12 @@ Group: **Core Blueprint Docs**
 
 Conditions are display logic only. They never grant access. The adapter calls the builder-neutral Docs condition/read contracts, and protected or unreadable documents fail closed.
 
+## Previous / next navigation
+
+Use Bricks' native Post Navigation element. Core Blueprint Docs adapts WordPress' standard adjacent-post queries for the `cb_doc` post type, so compatible previous/next navigation automatically follows Organizer `menu_order` within the document's canonical structural category.
+
+The adapter is builder-neutral. Candidate documents pass through the normal filtered Docs read boundary before WordPress resolves the adjacent post. It preserves WordPress post-status, privacy, same-term and excluded-term restrictions, and leaves all non-Docs post types unchanged. Documents that are unassigned or structurally ambiguous intentionally expose no adjacent document until their structure is resolved.
+
 ## Form Actions
 
 The `v1.0.0-rc1` public contract does **not** register a Docs write Form Action. The current public Docs contracts expose safe reads/search/conditions but no canonical frontend mutation service. Adding direct post/meta writes inside the Bricks adapter would duplicate WordPress/Docs authorization and mutation semantics and would violate the suite rule that builder actions must call canonical builder-neutral services.

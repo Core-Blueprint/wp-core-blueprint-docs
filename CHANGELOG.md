@@ -9,6 +9,7 @@ First public release candidate.
 - Added registered native documentation metadata and the WP-native Doc Details editing UI.
 - Added builder-neutral frontend data, query, search and condition contracts.
 - Added builder-agnostic list, navigation, live search, breadcrumb and metadata shortcodes.
+- Added native previous/next document navigation that follows Organizer order within the canonical structural category while remaining compatible with WordPress themes and page builders.
 - Added relevance-ordered progressive Docs search with a read-only REST endpoint, debounced live results, keyboard navigation and normal GET fallback.
 - Added an optional Bricks adapter for Dynamic Data, custom Queries, Conditions, group ordering and document context.
 - Added a dedicated Bricks Docs Search element that delegates to the builder-neutral search component while leaving generic layout and presentation to Bricks.

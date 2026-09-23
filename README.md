@@ -23,6 +23,7 @@ It provides a native WordPress documentation content model that can be edited wi
 - Builder-neutral frontend data, query, search and condition contracts.
 - Relevance-ordered live Docs search with a read-only REST endpoint and normal GET fallback.
 - Builder-agnostic shortcodes.
+- Native previous/next document navigation follows canonical Organizer order for themes and builders that use WordPress adjacent-post APIs.
 - Optional Bricks adapter for Dynamic Data, custom Queries, Conditions and a dedicated Docs Search element.
 - Hard dependency on the Core Blueprint Base public API `1.1` and the public Base contracts Docs consumes.
 - Canonical Core Blueprint ExtensionRegistry and health registration.
@@ -100,6 +101,8 @@ The Bricks integration is optional and thin. When Bricks is active, Docs exposes
 - Core Blueprint group ordering and Bricks loop/document context support.
 
 The Bricks adapter delegates to the builder-neutral Docs providers. It does not own storage, authorization, business logic or independent query policy. Sites without Bricks continue to use the same Docs domain through WordPress, themes, shortcodes or future builder adapters.
+
+Previous/next document navigation is intentionally not a Bricks-specific feature. Docs adapts WordPress' native adjacent-post contract for `cb_doc`, so Bricks Post Navigation and other compatible themes/builders automatically follow the canonical Organizer order within the document's structural category.
 
 Core Blueprint Docs intentionally does not duplicate generic builder features. Grids, cards, taxonomy presentation, table-of-contents layouts and other general composition remain the responsibility of Bricks or the active theme. Dedicated builder elements are reserved for Docs-specific behavior.
 

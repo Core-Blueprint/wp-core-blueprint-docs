@@ -42,6 +42,7 @@ $expected = [
 	'src/Structure/Revision.php',
 	'src/Structure/Mutation.php',
 	'src/Structure/MutationLock.php',
+	'src/Structure/DocumentLocation.php',
 	'src/Permalinks/RouteIndex.php',
 	'src/Permalinks/Catalog.php',
 	'src/Permalinks/Readiness.php',
@@ -49,6 +50,7 @@ $expected = [
 	'src/Permalinks/ReservedSlugGuard.php',
 	'src/Permalinks/Router.php',
 	'src/Frontend/Queries.php',
+	'src/Frontend/Navigation/AdjacentDocuments.php',
 	'src/Frontend/Shortcodes.php',
 	'src/Frontend/DocumentAccess.php',
 	'src/Frontend/Data/Document.php',
@@ -268,6 +270,27 @@ foreach ( [ 'is_current', 'in_category', 'has_tag', 'user_can_read', 'DocumentAc
 	}
 }
 
+$adjacent_navigation = (string) file_get_contents( $root . '/src/Frontend/Navigation/AdjacentDocuments.php' );
+foreach ( [
+	'get_previous_post_where',
+	'get_next_post_where',
+	'get_previous_post_sort',
+	'get_next_post_sort',
+	'DocumentLocation::sibling_document_ids',
+	"'perm'                => 'readable'",
+	"'suppress_filters'    => false",
+	'DocumentAccess::protected_content_allowed',
+	'p.menu_order',
+	'p.ID',
+] as $required ) {
+	if ( ! str_contains( $adjacent_navigation, $required ) ) {
+		$failures[] = 'Adjacent Docs navigation contract is missing ' . $required . '.';
+	}
+}
+if ( str_contains( $adjacent_navigation, 'Bricks' ) || str_contains( $adjacent_navigation, 'bricks/' ) ) {
+	$failures[] = 'Adjacent Docs navigation must remain builder-neutral.';
+}
+
 $shortcodes = (string) file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
 foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $required ) {
 	if ( ! str_contains( $shortcodes, $required ) ) {
@@ -276,7 +299,7 @@ foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $requi
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
-foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()' ] as $required ) {
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()', 'AdjacentDocuments::init()' ] as $required ) {
 	if ( ! str_contains( $plugin, $required ) ) {
 		$failures[] = 'Plugin contract is missing ' . $required . '.';
 	}

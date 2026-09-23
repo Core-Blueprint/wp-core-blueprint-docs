@@ -11,6 +11,7 @@ use CB\Docs\Admin\SettingsPage;
 use CB\Docs\Content\Meta;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
+use CB\Docs\Frontend\Navigation\AdjacentDocuments;
 use CB\Docs\Frontend\RestSearch;
 use CB\Docs\Frontend\Shortcodes;
 use CB\Docs\Governance\Events;
@@ -38,6 +39,7 @@ final class Plugin {
 		Catalog::init();
 		ReservedSlugGuard::init();
 		Router::init();
+		AdjacentDocuments::init();
 		BuildersBootstrap::init();
 		RestSearch::init();
 		OrganizerRest::init();

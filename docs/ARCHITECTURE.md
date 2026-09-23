@@ -69,6 +69,16 @@ The normative route contract, collision policy and legacy redirect rules are doc
 
 Activation and deactivation remain explicit rewrite-maintenance points. No unconditional request-time rewrite flushing is allowed.
 
+## Adjacent navigation boundary
+
+Previous/next document navigation is owned at the native WordPress adjacent-post layer, not by a builder adapter. For `cb_doc`, Docs maps the WordPress adjacent boundary and ordering from `post_date + ID` to Organizer `menu_order + ID` while preserving the existing WordPress WHERE suffix.
+
+Candidates are restricted to documents whose canonical structural category resolves to the same Organizer location through `Structure\\StructuralCategory`. Unassigned or cross-branch ambiguous documents fail closed and expose no adjacent document.
+
+Before candidate IDs reach the native adjacent-post SQL, Docs runs one bounded sibling-set query through the normal filtered read boundary with `perm=readable` and `suppress_filters=false`. This keeps compatible access-control policy in the path without adding a direct Core Blueprint Access dependency. WordPress then still applies its own post-status, private-post, same-term and excluded-term constraints.
+
+Non-Docs post types are never modified. Themes and builders that call WordPress `get_previous_post()` / `get_next_post()` inherit the behavior automatically.
+
 ## Access boundary
 
 Docs has no direct dependency on Core Blueprint Access. Access may attach its taxonomy to `cb_doc` through its generic public-post-type scope.

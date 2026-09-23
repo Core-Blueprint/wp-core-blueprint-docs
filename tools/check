@@ -44,6 +44,7 @@ for test in \
   permalink-contract-smoke.php \
   organizer-contract-smoke.php \
   frontend-read-policy-smoke.php \
+  adjacent-navigation-regression.php \
   bricks-adapter-smoke.php; do
   php "$ROOT/tests/$test"
 done
