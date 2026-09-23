@@ -57,6 +57,7 @@ $checks = [
 
 	'Route index reserves tag and document at the root' =>
 		str_contains( $sources['index'], "RESERVED_ROOTS = [ 'tag', 'document' ]" )
+		&& str_contains( $sources['index'], "'duplicate_legacy_document_slugs'" )
 		&& str_contains( $sources['index'], "'legacy_simple_collisions'" )
 		&& str_contains( $sources['index'], "'invalid_category_paths'" ),
 
