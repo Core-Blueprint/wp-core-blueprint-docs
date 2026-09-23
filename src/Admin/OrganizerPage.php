@@ -275,6 +275,9 @@ final class OrganizerPage {
 		$status_object = get_post_status_object( $status );
 		$status_label = $status_object ? (string) $status_object->label : $status;
 		$can_edit = current_user_can( 'edit_post', $document_id );
+		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
+		$assign_cap = $taxonomy && isset( $taxonomy->cap->assign_terms ) ? (string) $taxonomy->cap->assign_terms : 'edit_posts';
+		$can_assign = current_user_can( $assign_cap );
 		$edit_link = get_edit_post_link( $document_id );
 		?>
 		<article
@@ -284,6 +287,7 @@ final class OrganizerPage {
 			data-cb-docs-kind="doc"
 			data-document-id="<?php echo esc_attr( (string) $document_id ); ?>"
 			data-current-term="<?php echo esc_attr( (string) $current_term_id ); ?>"
+			data-can-assign="<?php echo $can_assign ? '1' : '0'; ?>"
 		>
 			<div class="cb-docs-organizer__doc-main">
 				<?php if ( $can_edit ) : ?>
@@ -298,13 +302,15 @@ final class OrganizerPage {
 						<button type="button" class="button button-small" data-cb-docs-move-up><?php esc_html_e( 'Up', 'core-blueprint-docs' ); ?></button>
 						<button type="button" class="button button-small" data-cb-docs-move-down><?php esc_html_e( 'Down', 'core-blueprint-docs' ); ?></button>
 					<?php endif; ?>
-					<label class="screen-reader-text" for="cb-docs-move-<?php echo esc_attr( (string) $document_id ); ?>"><?php esc_html_e( 'Move to category', 'core-blueprint-docs' ); ?></label>
-					<select id="cb-docs-move-<?php echo esc_attr( (string) $document_id ); ?>" data-cb-docs-move-to>
-						<option value=""><?php esc_html_e( 'Move to…', 'core-blueprint-docs' ); ?></option>
-						<?php foreach ( $all_terms as $option ) : ?>
-							<option value="<?php echo esc_attr( (string) $option['id'] ); ?>" <?php disabled( $current_term_id, (int) $option['id'] ); ?>><?php echo esc_html( $option['label'] ); ?></option>
-						<?php endforeach; ?>
-					</select>
+					<?php if ( $can_assign ) : ?>
+						<label class="screen-reader-text" for="cb-docs-move-<?php echo esc_attr( (string) $document_id ); ?>"><?php esc_html_e( 'Move to category', 'core-blueprint-docs' ); ?></label>
+						<select id="cb-docs-move-<?php echo esc_attr( (string) $document_id ); ?>" data-cb-docs-move-to>
+							<option value=""><?php esc_html_e( 'Move to…', 'core-blueprint-docs' ); ?></option>
+							<?php foreach ( $all_terms as $option ) : ?>
+								<option value="<?php echo esc_attr( (string) $option['id'] ); ?>" <?php disabled( $current_term_id, (int) $option['id'] ); ?>><?php echo esc_html( $option['label'] ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					<?php endif; ?>
 					<?php if ( is_string( $edit_link ) && '' !== $edit_link ) : ?>
 						<a class="button button-small" href="<?php echo esc_url( $edit_link ); ?>"><?php esc_html_e( 'Edit', 'core-blueprint-docs' ); ?></a>
 					<?php endif; ?>
