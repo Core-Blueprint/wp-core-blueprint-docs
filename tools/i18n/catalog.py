@@ -27,14 +27,6 @@ SHARED_TRANSLATIONS = {
         "it_IT": "Core Blueprint",
         "pt_PT": "Core Blueprint"
     },
-    "Doc number": {
-        "nl_NL": "Doc-nummer",
-        "de_DE": "Dokumentnummer",
-        "fr_FR": "Numéro du document",
-        "es_ES": "Número del documento",
-        "it_IT": "Numero del documento",
-        "pt_PT": "Número do documento"
-    },
     "Bricks Builder": {
         "nl_NL": "Bricks Builder",
         "de_DE": "Bricks Builder",
