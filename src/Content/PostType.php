@@ -11,6 +11,9 @@ final class PostType {
 	public const TYPE = 'cb_doc';
 
 	public static function register(): void {
+		$base = Settings::rewrite_base();
+		$single_base = Settings::hierarchy_enabled() ? $base . '/document' : $base;
+
 		register_post_type(
 			self::TYPE,
 			[
@@ -54,13 +57,13 @@ final class PostType {
 				'show_in_admin_bar'   => true,
 				'show_in_rest'        => true,
 				'rest_base'           => 'docs',
-				'has_archive'         => true,
+				'has_archive'         => $base,
 				'hierarchical'        => false,
 				'exclude_from_search' => false,
 				'menu_position'       => 26.4,
 				'menu_icon'           => 'dashicons-media-document',
 				'rewrite'             => [
-					'slug'       => Settings::rewrite_base(),
+					'slug'       => $single_base,
 					'with_front' => false,
 				],
 				'supports' => [
