@@ -179,6 +179,14 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 	min-height: 8px;
 }
 
+.cb-docs-organizer__doc-number {
+	flex: 0 0 auto;
+	color: var(--cb-docs-org-text-strong);
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
 .cb-docs-organizer__doc-title {
 	font-weight: 600;
 }
