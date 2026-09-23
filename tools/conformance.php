@@ -42,6 +42,12 @@ $expected = [
 	'src/Structure/Revision.php',
 	'src/Structure/Mutation.php',
 	'src/Structure/MutationLock.php',
+	'src/Permalinks/RouteIndex.php',
+	'src/Permalinks/Catalog.php',
+	'src/Permalinks/Readiness.php',
+	'src/Permalinks/CanonicalPath.php',
+	'src/Permalinks/ReservedSlugGuard.php',
+	'src/Permalinks/Router.php',
 	'src/Frontend/Queries.php',
 	'src/Frontend/Shortcodes.php',
 	'src/Frontend/DocumentAccess.php',
@@ -60,6 +66,7 @@ $expected = [
 	'src/Integration/Builders/Bricks/Conditions.php',
 	'src/Integration/Builders/Bricks/GroupOrder.php',
 	'docs/INTEGRATION-API.md',
+	'docs/PERMALINKS.md',
 	'docs/BRICKS.md',
 	'assets/js/admin-shortcodes.js',
 	'assets/js/admin-organizer.js',
@@ -142,7 +149,7 @@ foreach ( [
 }
 
 $settings = (string) file_get_contents( $root . '/src/Settings.php' );
-foreach ( [ 'DEFAULT_REWRITE_BASE', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', 'SettingsRegistry::url(', 'Suite::ID', "'tab'             => 'general'" ] as $required ) {
+foreach ( [ 'DEFAULT_REWRITE_BASE', 'URL_STRUCTURE_SIMPLE', 'URL_STRUCTURE_HIERARCHY', 'DEFAULT_URL_STRUCTURE', 'Readiness::ready()', 'REWRITE_DIRTY_OPTION', 'flush_rewrite_rules( false )', 'Events::record_settings_updated', 'SettingsRegistry::url(', 'Suite::ID', "'tab'             => 'general'" ] as $required ) {
 	if ( ! str_contains( $settings, $required ) ) {
 		$failures[] = 'Settings contract is missing ' . $required . '.';
 	}
@@ -269,13 +276,39 @@ foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $requi
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
-foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()' ] as $required ) {
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()' ] as $required ) {
 	if ( ! str_contains( $plugin, $required ) ) {
 		$failures[] = 'Plugin contract is missing ' . $required . '.';
 	}
 }
 if ( str_contains( $plugin, 'SettingsPage::SLUG' ) || str_contains( $plugin, 'core-blueprint-docs-settings' ) ) {
 	$failures[] = 'Plugin action links retain the retired flat Docs settings route.';
+}
+
+$permalink_router = (string) file_get_contents( $root . '/src/Permalinks/Router.php' );
+$permalink_catalog = (string) file_get_contents( $root . '/src/Permalinks/Catalog.php' );
+$permalink_index = (string) file_get_contents( $root . '/src/Permalinks/RouteIndex.php' );
+foreach ( [
+	"add_action( 'init', [ __CLASS__, 'register_rules' ], 15 )",
+	'CanonicalPath::document_url',
+	'legacy-category',
+	'legacy-tag',
+	'legacy-simple',
+	'wp_safe_redirect( $url, 301',
+] as $required ) {
+	if ( ! str_contains( $permalink_router, $required ) ) {
+		$failures[] = 'Permalink router contract is missing ' . $required . '.';
+	}
+}
+foreach ( [ 'StructuralCategory::resolve', 'RouteIndex::build' ] as $required ) {
+	if ( ! str_contains( $permalink_catalog, $required ) ) {
+		$failures[] = 'Permalink catalog contract is missing ' . $required . '.';
+	}
+}
+foreach ( [ "RESERVED_ROOTS = [ 'tag', 'document' ]", "'legacy_simple_collisions'", "'invalid_category_paths'" ] as $required ) {
+	if ( ! str_contains( $permalink_index, $required ) ) {
+		$failures[] = 'Permalink route-index contract is missing ' . $required . '.';
+	}
 }
 
 $organizer_page = (string) file_get_contents( $root . '/src/Admin/OrganizerPage.php' );
