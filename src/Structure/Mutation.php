@@ -68,7 +68,10 @@ final class Mutation {
 				return $old_term_ids;
 			}
 			$old_term_ids = array_values( array_unique( array_map( 'absint', $old_term_ids ) ) );
-			$same_structural_category = 1 === count( $old_term_ids ) && (int) $old_term_ids[0] === $target_term_id;
+			$parents = StructuralCategory::parent_map( (array) ( $snapshot['terms'] ?? [] ) );
+			$resolved_source_term_id = StructuralCategory::resolve( $old_term_ids, $parents );
+			$source_term_id = null === $resolved_source_term_id ? 0 : $resolved_source_term_id;
+			$same_structural_category = $source_term_id === $target_term_id;
 
 			if ( ! $same_structural_category ) {
 				$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
@@ -95,7 +98,6 @@ final class Mutation {
 				);
 			}
 
-			$source_term_id = 1 === count( $old_term_ids ) ? (int) $old_term_ids[0] : 0;
 			$new_source_ids = [];
 			if ( $source_term_id > 0 && $source_term_id !== $target_term_id ) {
 				$new_source_ids = array_values( array_filter(
