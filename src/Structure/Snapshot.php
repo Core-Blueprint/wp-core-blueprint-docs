@@ -125,7 +125,7 @@ final class Snapshot {
 	 * @param int[] $post_ids
 	 * @return array<int,int[]>|\\WP_Error
 	 */
-	private static function term_ids_by_post( array $post_ids ): array|\\WP_Error {
+	private static function term_ids_by_post( array $post_ids ): array|\WP_Error {
 		if ( empty( $post_ids ) ) {
 			return [];
 		}
