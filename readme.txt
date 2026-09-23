@@ -21,7 +21,7 @@ The Docs URL base is configurable under Core Blueprint > Docs > General. The def
 
 Docs > Organizer provides a visual structure view for ordering Doc Categories and articles while normal WordPress screens remain canonical for editing content and taxonomy details.
 
-Core Blueprint Base with Core API 1.0 is required.
+Core Blueprint Base with Core API 1.1 is required.
 
 == Installation ==
 
