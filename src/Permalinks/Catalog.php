@@ -107,7 +107,7 @@ final class Catalog {
 				'slug'                   => $slug,
 				'structural_category_id' => $structural_id,
 				'structure_state'        => $state,
-				'public'                 => 'publish' === $post->post_status,
+				'public'                 => in_array( $post->post_status, [ 'publish', 'private', 'future' ], true ),
 			];
 		}
 
