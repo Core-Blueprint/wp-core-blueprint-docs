@@ -29,6 +29,8 @@ The configured Docs URL base becomes the namespace for all public documentation 
 
 `tag` and `document` are reserved as first path segments for hierarchy mode.
 
+The exact Docs URL bases `docs-category` and `docs-tag` remain valid in Simple mode but are rejected for Category hierarchy because they overlap the legacy redirect namespaces.
+
 ## Structural source of truth
 
 Document category resolution uses `Structure\\StructuralCategory::resolve()`.
