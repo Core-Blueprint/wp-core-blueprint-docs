@@ -33,6 +33,15 @@ final class OrganizerPage {
 		self::$hook_suffix = is_string( $hook ) ? $hook : '';
 	}
 
+	private static function asset_version( string $relative_path ): string {
+		$path = CB_DOCS_DIR . ltrim( $relative_path, '/' );
+		$hash = is_file( $path ) ? hash_file( 'sha256', $path ) : false;
+
+		return is_string( $hash ) && '' !== $hash
+			? CB_DOCS_VERSION . '-' . substr( $hash, 0, 12 )
+			: CB_DOCS_VERSION;
+	}
+
 	public static function enqueue_assets( string $hook_suffix ): void {
 		if ( '' === self::$hook_suffix || self::$hook_suffix !== $hook_suffix ) {
 			return;
@@ -44,14 +53,14 @@ final class OrganizerPage {
 			'cb-docs-organizer',
 			CB_DOCS_URL . 'assets/css/admin-organizer.css',
 			[],
-			CB_DOCS_VERSION
+			self::asset_version( 'assets/css/admin-organizer.css' )
 		);
 
 		wp_enqueue_script_module(
 			'@cb-docs/organizer',
 			CB_DOCS_URL . 'assets/js/admin-organizer.js',
 			[ '@cb-core/reorder' ],
-			CB_DOCS_VERSION
+			self::asset_version( 'assets/js/admin-organizer.js' )
 		);
 
 		add_filter(
@@ -63,6 +72,7 @@ final class OrganizerPage {
 						'documentEndpoint' => esc_url_raw( rest_url( 'core-blueprint-docs/v1/organizer/document' ) ),
 						'termEndpoint'     => esc_url_raw( rest_url( 'core-blueprint-docs/v1/organizer/term' ) ),
 						'nonce'            => wp_create_nonce( 'wp_rest' ),
+						'stateKey'         => 'cb-docs-organizer:v1:' . get_current_user_id(),
 						'i18n'             => [
 							'saveFailed' => __( 'The documentation structure could not be saved.', 'core-blueprint-docs' ),
 							'stale'      => __( 'The documentation structure changed. Reload the Organizer before continuing.', 'core-blueprint-docs' ),
@@ -105,11 +115,16 @@ final class OrganizerPage {
 				data-cb-core-reorder
 				data-revision="<?php echo esc_attr( (string) $snapshot['revision'] ); ?>"
 			>
+				<div class="cb-docs-organizer__toolbar">
+					<button type="button" class="button button-secondary" data-cb-docs-expand-all><?php esc_html_e( 'Expand all', 'core-blueprint-docs' ); ?></button>
+					<button type="button" class="button button-secondary" data-cb-docs-collapse-all><?php esc_html_e( 'Collapse all', 'core-blueprint-docs' ); ?></button>
+				</div>
+
 				<?php self::render_term_list( 0, $terms, (array) $snapshot['docs_by_term'], $all_terms ); ?>
 
 				<div class="cb-docs-organizer__attention-grid">
 					<?php self::render_attention_list( 'unassigned', __( 'Unassigned', 'core-blueprint-docs' ), __( 'These documents do not have a structural Doc Category yet.', 'core-blueprint-docs' ), (array) $snapshot['unassigned'], $all_terms ); ?>
-					<?php self::render_attention_list( 'ambiguous', __( 'Needs review', 'core-blueprint-docs' ), __( 'These documents have more than one Doc Category. Move one to a single structural category to resolve it.', 'core-blueprint-docs' ), (array) $snapshot['ambiguous'], $all_terms ); ?>
+					<?php self::render_attention_list( 'ambiguous', __( 'Needs review', 'core-blueprint-docs' ), __( 'These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it.', 'core-blueprint-docs' ), (array) $snapshot['ambiguous'], $all_terms ); ?>
 				</div>
 			</div>
 		</div>
@@ -205,6 +220,8 @@ final class OrganizerPage {
 	private static function render_term( array $term, array $terms, array $docs_by_term, array $all_terms ): void {
 		$term_id = (int) $term['id'];
 		$parent_id = (int) $term['parent'];
+		$content_id = 'cb-docs-organizer-term-' . $term_id;
+		$default_expanded = 0 === $parent_id;
 		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
 		$manage_cap = $taxonomy && isset( $taxonomy->cap->manage_terms ) ? (string) $taxonomy->cap->manage_terms : 'manage_categories';
 		$can_manage = current_user_can( $manage_cap );
@@ -215,10 +232,20 @@ final class OrganizerPage {
 			data-cb-core-reorder-item="term:<?php echo esc_attr( (string) $term_id ); ?>"
 			data-cb-core-reorder-label="<?php echo esc_attr( (string) $term['name'] ); ?>"
 			data-cb-docs-kind="term"
+			data-cb-docs-term-id="<?php echo esc_attr( (string) $term_id ); ?>"
+			data-cb-docs-default-expanded="<?php echo $default_expanded ? '1' : '0'; ?>"
 			data-parent-id="<?php echo esc_attr( (string) $parent_id ); ?>"
 		>
 			<header class="cb-docs-organizer__term-header">
 				<div class="cb-docs-organizer__term-heading">
+					<button
+						type="button"
+						class="button-link cb-docs-organizer__toggle"
+						data-cb-docs-toggle-term
+						aria-expanded="<?php echo $default_expanded ? 'true' : 'false'; ?>"
+						aria-controls="<?php echo esc_attr( $content_id ); ?>"
+						aria-label="<?php echo esc_attr( (string) $term['name'] ); ?>"
+					><span class="dashicons dashicons-arrow-right-alt2" aria-hidden="true"></span></button>
 					<?php if ( $can_manage ) : ?>
 						<button type="button" class="button-link cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), (string) $term['name'] ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
 					<?php endif; ?>
@@ -235,8 +262,15 @@ final class OrganizerPage {
 				</div>
 			</header>
 
-			<?php self::render_document_list( $term_id, (array) ( $docs_by_term[ $term_id ] ?? [] ), $all_terms ); ?>
-			<?php self::render_term_list( $term_id, $terms, $docs_by_term, $all_terms ); ?>
+			<div
+				id="<?php echo esc_attr( $content_id ); ?>"
+				class="cb-docs-organizer__term-content"
+				data-cb-docs-term-content
+				<?php if ( ! $default_expanded ) : ?>hidden<?php endif; ?>
+			>
+				<?php self::render_document_list( $term_id, (array) ( $docs_by_term[ $term_id ] ?? [] ), $all_terms ); ?>
+				<?php self::render_term_list( $term_id, $terms, $docs_by_term, $all_terms ); ?>
+			</div>
 		</section>
 		<?php
 	}
