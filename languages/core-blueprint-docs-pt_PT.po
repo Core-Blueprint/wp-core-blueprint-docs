@@ -881,9 +881,6 @@ msgstr "A categoria de documentação de destino já não existe."
 msgid "These documents do not have a structural Doc Category yet."
 msgstr "Estes documentos ainda não têm uma categoria Docs estrutural."
 
-msgid "These documents have more than one Doc Category. Move one to a single structural category to resolve it."
-msgstr "Estes documentos têm mais de uma categoria Docs. Mova cada documento para uma única categoria estrutural para resolver o problema."
-
 msgid "Unassigned"
 msgstr "Não atribuídos"
 
@@ -901,3 +898,15 @@ msgstr "Não tem permissão para organizar a documentação."
 
 msgid "You do not have permission to reorder documentation categories."
 msgstr "Não tem permissão para reordenar as categorias de documentação."
+
+#: src/Admin/OrganizerPage.php
+msgid "Expand all"
+msgstr "Expandir tudo"
+
+#: src/Admin/OrganizerPage.php
+msgid "Collapse all"
+msgstr "Recolher tudo"
+
+#: src/Admin/OrganizerPage.php
+msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
+msgstr "Estes documentos estão atribuídos a categorias de documentação em diferentes ramos da hierarquia. Mova-os para um único ramo estrutural para resolver a situação."
