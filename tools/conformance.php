@@ -270,6 +270,27 @@ foreach ( [ 'is_current', 'in_category', 'has_tag', 'user_can_read', 'DocumentAc
 	}
 }
 
+$adjacent_navigation = (string) file_get_contents( $root . '/src/Frontend/Navigation/AdjacentDocuments.php' );
+foreach ( [
+	'get_previous_post_where',
+	'get_next_post_where',
+	'get_previous_post_sort',
+	'get_next_post_sort',
+	'DocumentLocation::sibling_document_ids',
+	"'perm'                => 'readable'",
+	"'suppress_filters'    => false",
+	'DocumentAccess::protected_content_allowed',
+	'p.menu_order',
+	'p.ID',
+] as $required ) {
+	if ( ! str_contains( $adjacent_navigation, $required ) ) {
+		$failures[] = 'Adjacent Docs navigation contract is missing ' . $required . '.';
+	}
+}
+if ( str_contains( $adjacent_navigation, 'Bricks' ) || str_contains( $adjacent_navigation, 'bricks/' ) ) {
+	$failures[] = 'Adjacent Docs navigation must remain builder-neutral.';
+}
+
 $shortcodes = (string) file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
 foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $required ) {
 	if ( ! str_contains( $shortcodes, $required ) ) {
