@@ -105,9 +105,6 @@ final class DocumentLocation {
 		$parents = self::parents();
 		$matches = [];
 		foreach ( $object_ids as $object_id ) {
-			if ( PostType::TYPE !== get_post_type( $object_id ) ) {
-				continue;
-			}
 			$term_ids = array_values( array_unique( array_map( 'absint', $term_ids_by_object[ $object_id ] ?? [] ) ) );
 			if ( $structural_id === StructuralCategory::resolve( $term_ids, $parents ) ) {
 				$matches[] = $object_id;
