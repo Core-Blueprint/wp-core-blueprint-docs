@@ -7,8 +7,9 @@ $release_builder = file_get_contents( $root . '/tools/build-release' );
 $taxonomies = file_get_contents( $root . '/src/Content/Taxonomies.php' );
 $shortcodes = file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
 $events = file_get_contents( $root . '/src/Governance/Events.php' );
+$revision = file_get_contents( $root . '/src/Structure/Revision.php' );
 
-foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'events', 'release_builder' ) as $name => $source ) {
+foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'events', 'revision', 'release_builder' ) as $name => $source ) {
 	if ( false === $source ) {
 		fwrite( STDERR, "FAIL: could not read {$name}.\n" );
 		exit( 1 );
@@ -52,7 +53,10 @@ $checks = [
 	'mutations require expected structure revision' => str_contains( (string) $mutation, 'expected_revision' ) && str_contains( (string) $mutation, 'stale' ),
 	'mutations are serialized behind Docs-owned lock' => str_contains( (string) $mutation, 'MutationLock::acquire' ),
 	'Organizer REST stays a private admin mutation boundary' => str_contains( (string) $rest, '/organizer/document' ) && str_contains( (string) $rest, '/organizer/term' ),
+	'Organizer document route checks object-level edit authority' => str_contains( (string) $rest, 'can_move_document' ) && str_contains( (string) $rest, "current_user_can( 'edit_post', $document_id )" ),
+	'structure revision excludes ordinary document status' => ! str_contains( (string) $revision, "'status'" ),
 	'Organizer runtime consumes public Reorder API' => str_contains( (string) $runtime, 'window.cbCore?.reorder' ) && str_contains( (string) $runtime, 'crossList: true' ),
+	'Organizer resynchronizes Move-to controls after document moves' => str_contains( (string) $runtime, 'syncMoveToControl' ) && str_contains( (string) $runtime, 'option.disabled' ),
 	'cross-category drag respects taxonomy assignment authority' => str_contains( (string) $runtime, "dataset?.canAssign === '1'" ),
 	'frontend navigation delegates category ordering' => str_contains( (string) $shortcodes, 'CategoryOrder::sort_terms' ),
 	'semantic structure audit exists' => str_contains( (string) $events, 'docs.structure.updated' ),
