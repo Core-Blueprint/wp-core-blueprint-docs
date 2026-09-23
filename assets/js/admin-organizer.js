@@ -125,12 +125,49 @@ const syncMoveToControl = (row, targetTermId) => {
 	});
 };
 
-const syncEmptyStates = () => {
+const countLabel = (count) => {
+	const template = count === 1
+		? (data.i18n?.documentOne || '%d document')
+		: (data.i18n?.documentMany || '%d documents');
+	return template.replace('%d', String(count));
+};
+
+const syncDocumentCounts = () => {
 	if (!root) return;
+
+	root.querySelectorAll('[data-cb-docs-term-id]').forEach((section) => {
+		const countNode = section.querySelector(':scope > .cb-docs-organizer__term-header [data-cb-docs-document-count]');
+		if (!countNode) return;
+
+		const count = section.querySelectorAll('[data-cb-docs-kind="doc"]').length;
+		countNode.textContent = countLabel(count);
+	});
+};
+
+const syncDocumentNumbers = () => {
+	if (!root) return;
+
+	root.querySelectorAll('[data-cb-core-reorder-list^="docs:"]').forEach((list) => {
+		const rows = Array.from(list.children).filter((child) => child.matches?.('[data-cb-docs-kind="doc"]'));
+		rows.forEach((row, index) => {
+			const numberNode = row.querySelector('[data-cb-docs-document-number]');
+			if (numberNode) {
+				numberNode.hidden = false;
+				numberNode.textContent = `${index + 1}.`;
+			}
+		});
+	});
+};
+
+const syncOrganizerState = () => {
+	if (!root) return;
+
 	root.querySelectorAll('[data-cb-core-reorder-list]').forEach((list) => {
 		const hasItems = Array.from(list.children).some((child) => child.matches?.('[data-cb-core-reorder-item]'));
 		list.dataset.cbDocsEmpty = hasItems ? '0' : '1';
 	});
+	syncDocumentCounts();
+	syncDocumentNumbers();
 };
 
 if (root) {
@@ -251,9 +288,9 @@ if (root && reorder?.enhance) {
 		});
 	});
 
-	root.addEventListener('cb:reorder:change', syncEmptyStates);
-	root.addEventListener('cb:reorder:error', syncEmptyStates);
-	syncEmptyStates();
+	root.addEventListener('cb:reorder:change', syncOrganizerState);
+	root.addEventListener('cb:reorder:error', syncOrganizerState);
+	syncOrganizerState();
 } else if (root) {
 	root.classList.add('is-reorder-unavailable');
 }

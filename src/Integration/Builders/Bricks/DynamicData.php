@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace CB\Docs\Integration\Builders\Bricks;
 
+use CB\Docs\Structure\Numbering;
+
 defined( 'ABSPATH' ) || exit;
 
 final class DynamicData {
 	private const GROUP = 'Core Blueprint Docs';
+	private const NUMBER_TAG = 'cb_docs_number';
 
 	/** @var array<string,string> tag name => public document field */
 	private const FIELDS = [
@@ -50,11 +53,11 @@ final class DynamicData {
 		}
 
 		$name = trim( $tag, '{}' );
-		if ( ! isset( self::FIELDS[ $name ] ) ) {
+		if ( ! self::supports( $name ) ) {
 			return $tag;
 		}
 
-		$value = DocumentContext::value( self::FIELDS[ $name ] );
+		$value = self::value( $name );
 		return is_wp_error( $value ) ? '' : self::string_value( $value );
 	}
 
@@ -64,13 +67,13 @@ final class DynamicData {
 			return $content;
 		}
 
-		foreach ( self::FIELDS as $name => $field ) {
+		foreach ( self::names() as $name ) {
 			$needle = '{' . $name . '}';
 			if ( false === strpos( $content, $needle ) ) {
 				continue;
 			}
 
-			$value   = DocumentContext::value( $field );
+			$value   = self::value( $name );
 			$content = str_replace( $needle, is_wp_error( $value ) ? '' : self::string_value( $value ), $content );
 		}
 
@@ -81,6 +84,7 @@ final class DynamicData {
 	private static function labels(): array {
 		return [
 			'cb_docs_id'            => __( 'Doc ID', 'core-blueprint-docs' ),
+			'cb_docs_number'        => __( 'Doc number', 'core-blueprint-docs' ),
 			'cb_docs_title'         => __( 'Doc title', 'core-blueprint-docs' ),
 			'cb_docs_url'           => __( 'Doc URL', 'core-blueprint-docs' ),
 			'cb_docs_excerpt'       => __( 'Doc excerpt', 'core-blueprint-docs' ),
@@ -93,6 +97,26 @@ final class DynamicData {
 			'cb_docs_last_reviewed' => __( 'Last reviewed', 'core-blueprint-docs' ),
 			'cb_docs_featured'      => __( 'Featured Doc', 'core-blueprint-docs' ),
 		];
+	}
+
+	/** @return string[] */
+	private static function names(): array {
+		return [ ...array_keys( self::FIELDS ), self::NUMBER_TAG ];
+	}
+
+	private static function supports( string $name ): bool {
+		return self::NUMBER_TAG === $name || isset( self::FIELDS[ $name ] );
+	}
+
+	private static function value( string $name ): mixed {
+		if ( self::NUMBER_TAG === $name ) {
+			$document_id = DocumentContext::identifier();
+			return null === $document_id ? null : Numbering::document( $document_id );
+		}
+
+		return isset( self::FIELDS[ $name ] )
+			? DocumentContext::value( self::FIELDS[ $name ] )
+			: null;
 	}
 
 	private static function string_value( mixed $value ): string {
