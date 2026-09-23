@@ -20,7 +20,7 @@ Docs requires Core Blueprint Base and consumes only public Base contracts:
 - `CB\Core\Governance\EventRegistry`
 - `CB\Core\Governance\Audit`
 
-Docs configuration is contributed to the Core Blueprint Settings Hub through `SettingsRegistry`. The operational Documentation Organizer remains under the native Docs content menu and opts into the public Base Reorder Foundation through `CB\Core\UI\Assets::enqueue_reorder()` and the `@cb-core/reorder` module contract.
+Docs requires Core API `1.1+` because the Documentation Organizer consumes the public Reorder Foundation. Docs configuration is contributed to the Core Blueprint Settings Hub through `SettingsRegistry`. The operational Documentation Organizer remains under the native Docs content menu and opts into the public Base Reorder Foundation through `CB\Core\UI\Assets::enqueue_reorder()` and the `@cb-core/reorder` module contract.
 
 Base owns generic reorder interaction, focus, accessibility, pending state and rollback presentation. Docs owns documentation structure, authorization, WordPress persistence, stale-state protection and semantic audit events.
 
