@@ -59,6 +59,9 @@ final class Snapshot {
 		$posts = array_values( array_filter( $posts, static fn( $post ): bool => $post instanceof \WP_Post ) );
 		$post_ids = array_map( static fn( \WP_Post $post ): int => (int) $post->ID, $posts );
 		$term_ids_by_post = self::term_ids_by_post( $post_ids );
+		if ( is_wp_error( $term_ids_by_post ) ) {
+			return $term_ids_by_post;
+		}
 
 		$term_projection = [];
 		foreach ( $terms as $term ) {
@@ -120,9 +123,9 @@ final class Snapshot {
 
 	/**
 	 * @param int[] $post_ids
-	 * @return array<int,int[]>
+	 * @return array<int,int[]>|\\WP_Error
 	 */
-	private static function term_ids_by_post( array $post_ids ): array {
+	private static function term_ids_by_post( array $post_ids ): array|\\WP_Error {
 		if ( empty( $post_ids ) ) {
 			return [];
 		}
@@ -133,7 +136,7 @@ final class Snapshot {
 			[ 'fields' => 'all_with_object_id' ]
 		);
 		if ( is_wp_error( $relations ) ) {
-			return [];
+			return $relations;
 		}
 
 		$by_post = [];
