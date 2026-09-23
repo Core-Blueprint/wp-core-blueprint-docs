@@ -117,7 +117,7 @@ final class Router {
 		return $url;
 	}
 
-	public static function canonical_url( string $url, \WP_Post $post ): string {
+	public static function canonical_url( string|false $url, \WP_Post $post ): string|false {
 		if ( ! Settings::hierarchy_enabled() || PostType::TYPE !== $post->post_type ) {
 			return $url;
 		}
@@ -195,7 +195,7 @@ final class Router {
 
 		if ( ! str_contains( $path, '/' ) ) {
 			$post = get_page_by_path( $path, OBJECT, PostType::TYPE );
-			if ( $post instanceof \WP_Post && 'publish' === $post->post_status ) {
+			if ( $post instanceof \WP_Post && ( 'publish' === $post->post_status || current_user_can( 'read_post', (int) $post->ID ) ) ) {
 				$vars['post_type'] = PostType::TYPE;
 				$vars['p'] = (int) $post->ID;
 				$vars[ self::QUERY_ROUTE ] = 'legacy-simple';
