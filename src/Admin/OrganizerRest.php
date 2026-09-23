@@ -22,7 +22,7 @@ final class OrganizerRest {
 			[
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => [ __CLASS__, 'move_document' ],
-				'permission_callback' => [ __CLASS__, 'can_assign_terms' ],
+				'permission_callback' => static fn(): bool => current_user_can( 'edit_posts' ),
 			]
 		);
 
@@ -37,14 +37,6 @@ final class OrganizerRest {
 		);
 	}
 
-
-	public static function can_assign_terms(): bool {
-		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
-		$capability = $taxonomy && isset( $taxonomy->cap->assign_terms )
-			? (string) $taxonomy->cap->assign_terms
-			: 'edit_posts';
-		return current_user_can( $capability );
-	}
 
 	public static function can_manage_terms(): bool {
 		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
