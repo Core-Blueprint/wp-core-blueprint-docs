@@ -46,13 +46,28 @@ Organizer category disclosure is presentation-only state. Top-level categories d
 
 ## Permalink boundary
 
-`cb_doc` uses a plugin-owned configurable rewrite base. The default is `docs`.
+Docs owns one public permalink domain with two explicit modes.
 
-The stored base is normalized as one or more safe WordPress slug segments, so both `documentation` and paths such as `knowledge/docs` are valid. Empty or invalid input resolves to `docs`.
+`Simple` is the backward-compatible default. `Category hierarchy` is opt-in and places category archives, tags and canonical document paths under the configured Docs URL base.
 
-Changing the base does not flush rewrite rules inside the settings save request because the post type was registered earlier in that request with the previous base. Instead Docs stores a rewrite-dirty marker. On the next `init`, after `cb_doc` has registered with the new base, Docs flushes rewrite rules once and removes the marker.
+The permalink domain is split into four responsibilities:
 
-Activation and deactivation remain explicit rewrite-maintenance points. No request-time unconditional rewrite flushing is allowed.
+- `Permalinks\\RouteIndex` is a pure route planner and collision/readiness authority.
+- `Permalinks\\Catalog` projects native WordPress Docs/category state into the route planner and delegates structural category selection to `Structure\\StructuralCategory`.
+- `Permalinks\\CanonicalPath` is the single URL-construction boundary for archive, category, tag and document links.
+- `Permalinks\\Router` owns hierarchy rewrite registration, request resolution and deterministic legacy redirects.
+
+The hierarchy router reserves `tag` and `document` as first path segments. Unsafe or unresolved document hierarchy routes use the deterministic `/{base}/document/{slug}/` fail-safe. Category hierarchy activation is blocked when the route index reports an unresolvable namespace conflict.
+
+The stored Docs base is normalized as one or more safe WordPress slug segments. Changing the base or URL structure marks rewrite rules dirty. On the next `init`, the post type/taxonomies and hierarchy router register the new route contract first; the deferred flush then refreshes rewrite rules once and removes the marker.
+
+Category slug, parent and document-assignment changes do not flush rewrite rules. The route catalog resolves current taxonomy state dynamically and invalidates its in-request cache on relevant content/taxonomy mutations.
+
+Breadcrumbs, normal WordPress links, shortcodes and builder adapters must not implement independent permalink rules. They consume WordPress links or the canonical Docs permalink boundary.
+
+The normative route contract, collision policy and legacy redirect rules are documented in `PERMALINKS.md`.
+
+Activation and deactivation remain explicit rewrite-maintenance points. No unconditional request-time rewrite flushing is allowed.
 
 ## Access boundary
 
