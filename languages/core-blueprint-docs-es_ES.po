@@ -967,3 +967,7 @@ msgstr "Documentos sin asignar que usan la ruta de respaldo: %d"
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr "Se usa para el archivo de Docs y, en modo Jerarquía de categorías, para las rutas de categorías, etiquetas y documentos. Se admiten bases anidadas como knowledge/docs."
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Slugs de documento heredados duplicados: %d"
