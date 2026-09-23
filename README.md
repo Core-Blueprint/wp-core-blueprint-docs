@@ -45,20 +45,32 @@ Actual Docs, Categories and Tags remain on their normal WordPress content screen
 
 ## Permalinks
 
-The default archive is `/docs/` and individual documents use `/docs/{doc-slug}/`.
+The Docs URL base is configurable under **Core Blueprint → Docs → General**. The default is `docs`; safe nested bases such as `knowledge/docs` are supported.
 
-Under **Core Blueprint → Docs → General**, administrators can change the URL base to values such as:
+Docs exposes two explicit URL structures:
 
-- `documentation`
-- `handleiding`
-- `knowledge-base`
-- `knowledge/docs`
+- **Simple** is the backward-compatible default. The archive is `/docs/` and documents use `/docs/{doc-slug}/`. Doc Categories and Doc Tags keep their legacy taxonomy namespaces.
+- **Category hierarchy** makes the configured Docs base the public documentation namespace. Categories use their full hierarchy, tags use `/{base}/tag/{slug}/`, and documents use the same structural category resolution as the Documentation Organizer.
 
-The value is normalized into safe WordPress slug segments. Empty or invalid input falls back to `docs`.
+A normal hierarchy document can therefore use:
 
-Changing the URL base marks rewrite rules dirty. Docs waits until the next `init`, after `cb_doc` has been registered with the new base, flushes rewrite rules once and removes the dirty marker. Rewrite rules are never flushed on every request.
+```text
+/docs/wp-suite/core-blueprint-base/getting-started/
+```
 
-Changing the URL base changes public archive and single URLs. Existing external links may therefore need redirects.
+When a document has no safe hierarchy route, Docs uses the deterministic fail-safe namespace:
+
+```text
+/docs/document/getting-started/
+```
+
+Before Category hierarchy can be enabled, Docs runs a readiness analysis for reserved slugs, duplicate paths and legacy Simple URL collisions. Unassigned or structurally ambiguous documents do not require guessing; they use the fail-safe route.
+
+Legacy Simple document URLs, `/docs-category/…` and `/docs-tag/…` may redirect to the current hierarchy canonical URL only when the old request resolves unambiguously.
+
+Changing the Docs URL base or the URL structure marks rewrite rules dirty. Docs registers the new route contract first, flushes rewrite rules once on the next `init`, and removes the dirty marker. Category slug, category parent and document assignment changes are resolved dynamically and do not flush rewrite rules.
+
+The full public route contract is documented in `docs/PERMALINKS.md`.
 
 ## Search architecture
 
