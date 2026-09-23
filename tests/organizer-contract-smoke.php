@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 $root = dirname( __DIR__ );
 $plugin = file_get_contents( $root . '/src/Plugin.php' );
+$release_builder = file_get_contents( $root . '/tools/build-release' );
 $taxonomies = file_get_contents( $root . '/src/Content/Taxonomies.php' );
 $shortcodes = file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
 $events = file_get_contents( $root . '/src/Governance/Events.php' );
 
-foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'events' ) as $name => $source ) {
+foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'events', 'release_builder' ) as $name => $source ) {
 	if ( false === $source ) {
 		fwrite( STDERR, "FAIL: could not read {$name}.\n" );
 		exit( 1 );
@@ -56,6 +57,7 @@ $checks = [
 	'frontend navigation delegates category ordering' => str_contains( (string) $shortcodes, 'CategoryOrder::sort_terms' ),
 	'semantic structure audit exists' => str_contains( (string) $events, 'docs.structure.updated' ),
 	'plugin boots Organizer structure and mutation surfaces' => str_contains( (string) $plugin, 'OrganizerRest::init' ) && str_contains( (string) $plugin, 'OrganizerPage::init' ),
+	'Docs release builder requires Core API 1.1' => str_contains( (string) $release_builder, 'CB_DOCS_REQUIRED_API must remain 1.1' ),
 ];
 
 foreach ( $checks as $label => $passed ) {
