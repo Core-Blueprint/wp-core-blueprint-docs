@@ -35,7 +35,7 @@ $checks = [
 
 	'Hierarchy activation is readiness-gated before settings persistence' =>
 		str_contains( $sources['settings'], 'URL_STRUCTURE_HIERARCHY' )
-		&& str_contains( $sources['settings'], '! Readiness::ready()' )
+		&& str_contains( $sources['settings'], '! Readiness::ready( $after[\'rewrite_base\'] )' )
 		&& str_contains( $sources['settings'], "'cb_docs_updated' => 'blocked'" ),
 
 	'Only base or URL structure changes mark rewrite rules dirty' =>
@@ -50,6 +50,10 @@ $checks = [
 	'Hierarchy categories use the dynamic router and tags use the reserved tag namespace' =>
 		str_contains( $sources['taxonomies'], "'rewrite'           => $hierarchy ? false" )
 		&& str_contains( $sources['taxonomies'], "$base . '/tag'" ),
+
+	'Hierarchy readiness also reserves legacy public namespace bases' =>
+		str_contains( $sources['readiness'], "RESERVED_BASES = [ 'docs-category', 'docs-tag' ]" )
+		&& str_contains( $sources['readiness'], "'reserved_base'" ),
 
 	'Route index reserves tag and document at the root' =>
 		str_contains( $sources['index'], "RESERVED_ROOTS = [ 'tag', 'document' ]" )
