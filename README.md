@@ -10,7 +10,8 @@ It provides a native WordPress documentation content model that can be edited wi
 - Configurable Docs URL base with `docs` as the default.
 - Golden Core Admin page with `Overview → General → Integrations`.
 - Gutenberg and standard WordPress support for title, content, excerpt, author, featured image, revisions, custom fields, comments and menu order.
-- Hierarchical `cb_doc_category` taxonomy.
+- Hierarchical `cb_doc_category` taxonomy with managed sibling ordering.
+- Visual Documentation Organizer for category and article order using the public Base Reorder Foundation.
 - Non-hierarchical `cb_doc_tag` taxonomy.
 - Registered native post meta:
   - `cb_docs_subtitle`
@@ -40,7 +41,7 @@ Under **Core Blueprint → Docs**:
 - **General** owns site-wide Docs configuration such as the public URL base.
 - **Integrations** reports optional integration readiness through the Base `IntegrationGrid` contract.
 
-Actual Docs, Categories and Tags remain on their normal WordPress content screens.
+Actual Docs, Categories and Tags remain on their normal WordPress content screens. **Docs → Organizer** adds a focused structure view for ordering documentation sets, sections and articles without replacing normal WordPress editing.
 
 ## Permalinks
 
@@ -119,6 +120,7 @@ See [`docs/SHORTCODES.md`](docs/SHORTCODES.md).
 - `docs.document.restored`
 - `docs.document.deleted`
 - `docs.settings.updated`
+- `docs.structure.updated`
 
 Autosaves, revisions and auto-drafts are excluded. Multiple document-field changes in one request collapse into a single `docs.document.updated` record with a `changed_fields` list. URL-base changes are recorded as settings Governance events.
 
