@@ -784,3 +784,115 @@ msgid ""
 "Core API %1$s or a newer compatible minor version is required. Available "
 "Core API: %2$s."
 msgstr "Core API %1$s of een nieuwere compatibele minorversie is vereist. Beschikbare Core API: %2$s."
+
+msgid "A documentation article in the requested order no longer exists."
+msgstr "Een documentatieartikel in de gevraagde volgorde bestaat niet meer."
+
+msgid "A documentation category in the requested order no longer exists."
+msgstr "Een documentatiecategorie in de gevraagde volgorde bestaat niet meer."
+
+msgid "Docs structure updated"
+msgstr "Docs-structuur bijgewerkt"
+
+msgid "Documentation articles"
+msgstr "Documentatieartikelen"
+
+msgid "Documentation Organizer"
+msgstr "Documentatie-organizer"
+
+msgid "Documentation sections"
+msgstr "Documentatiesecties"
+
+msgid "Documentation sets"
+msgstr "Documentatiesets"
+
+msgid "Down"
+msgstr "Omlaag"
+
+msgid "Drag documentation sets, sections and articles into their intended order. Category hierarchy remains managed from the normal Categories screen."
+msgstr "Sleep documentatiesets, secties en artikelen naar de gewenste volgorde. De categoriehiërarchie blijft beheerd via het normale Categorieën-scherm."
+
+msgid "Edit"
+msgstr "Bewerken"
+
+msgid "Edit category"
+msgstr "Categorie bewerken"
+
+msgid "Move to category"
+msgstr "Verplaatsen naar categorie"
+
+msgid "Move to…"
+msgstr "Verplaatsen naar…"
+
+msgid "Needs review"
+msgstr "Beoordeling nodig"
+
+msgid "No categories at this level."
+msgstr "Geen categorieën op dit niveau."
+
+msgid "No documents in this category."
+msgstr "Geen documenten in deze categorie."
+
+msgid "Nothing needs attention."
+msgstr "Niets vereist aandacht."
+
+msgid "Organizer"
+msgstr "Organizer"
+
+#, php-format
+msgid "Reorder %s"
+msgstr "Volgorde van %s wijzigen"
+
+msgid "The documentation article no longer exists."
+msgstr "Het documentatieartikel bestaat niet meer."
+
+msgid "The documentation category no longer exists."
+msgstr "De documentatiecategorie bestaat niet meer."
+
+msgid "The documentation category order could not be saved."
+msgstr "De volgorde van documentatiecategorieën kon niet worden opgeslagen."
+
+msgid "The documentation structure changed. Reload the Organizer before continuing."
+msgstr "De documentatiestructuur is gewijzigd. Herlaad de Organizer voordat je doorgaat."
+
+msgid "The documentation structure contains too many categories for the Organizer."
+msgstr "De documentatiestructuur bevat te veel categorieën voor de Organizer."
+
+msgid "The documentation structure contains too many documents for the Organizer."
+msgstr "De documentatiestructuur bevat te veel documenten voor de Organizer."
+
+msgid "The documentation structure could not be saved because the request failed."
+msgstr "De documentatiestructuur kon niet worden opgeslagen omdat de aanvraag is mislukt."
+
+msgid "The documentation structure could not be saved."
+msgstr "De documentatiestructuur kon niet worden opgeslagen."
+
+msgid "The documentation structure revision is invalid."
+msgstr "De revisie van de documentatiestructuur is ongeldig."
+
+msgid "The target documentation category no longer exists."
+msgstr "De doelcategorie voor documentatie bestaat niet meer."
+
+msgid "These documents do not have a structural Doc Category yet."
+msgstr "Deze documenten hebben nog geen structurele Doc-categorie."
+
+msgid "These documents have more than one Doc Category. Move one to a single structural category to resolve it."
+msgstr "Deze documenten hebben meer dan één Doc-categorie. Verplaats elk document naar één structurele categorie om dit op te lossen."
+
+msgid "Unassigned"
+msgstr "Niet toegewezen"
+
+msgid "Up"
+msgstr "Omhoog"
+
+msgid "You do not have permission to change documentation categories."
+msgstr "Je hebt geen toestemming om documentatiecategorieën te wijzigen."
+
+msgid "You do not have permission to move this documentation article."
+msgstr "Je hebt geen toestemming om dit documentatieartikel te verplaatsen."
+
+msgid "You do not have permission to organize documentation."
+msgstr "Je hebt geen toestemming om documentatie te organiseren."
+
+msgid "You do not have permission to reorder documentation categories."
+msgstr "Je hebt geen toestemming om documentatiecategorieën opnieuw te ordenen."
