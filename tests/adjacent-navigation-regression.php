@@ -21,6 +21,7 @@ $checks = [
 	'adjacent ordering is menu_order with deterministic ID fallback' => str_contains( (string) $adjacent, 'p.menu_order' ) && str_contains( (string) $adjacent, 'p.ID' ) && str_contains( (string) $adjacent, 'LIMIT 1' ),
 	'native WordPress restrictions remain in the original WHERE suffix' => str_contains( (string) $adjacent, 'substr( $where, $marker_position )' ),
 	'adjacent candidates are restricted to the canonical structural sibling set' => str_contains( (string) $adjacent, 'DocumentLocation::sibling_document_ids' ) && str_contains( (string) $adjacent, "' AND p.ID IN ('" ),
+	'adjacent candidates pass through the filtered Docs read boundary' => str_contains( (string) $adjacent, "'perm'                => 'readable'" ) && str_contains( (string) $adjacent, "'suppress_filters'    => false" ) && str_contains( (string) $adjacent, 'DocumentAccess::protected_content_allowed' ),
 	'non-Docs post types are returned untouched' => substr_count( (string) $adjacent, 'PostType::TYPE !== $post->post_type' ) >= 2,
 	'plugin boots the builder-neutral native adapter' => str_contains( (string) $plugin, 'AdjacentDocuments::init()' ),
 	'no builder-specific dependency exists in the native adapter' => ! str_contains( (string) $adjacent, 'Bricks' ) && ! str_contains( (string) $adjacent, 'bricks/' ),
