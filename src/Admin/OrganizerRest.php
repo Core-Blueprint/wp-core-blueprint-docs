@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs\Admin;
 
+use CB\Docs\Content\Taxonomies;
 use CB\Docs\Structure\Mutation;
 
 defined( 'ABSPATH' ) || exit;
@@ -21,7 +22,7 @@ final class OrganizerRest {
 			[
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => [ __CLASS__, 'move_document' ],
-				'permission_callback' => static fn(): bool => current_user_can( 'edit_posts' ),
+				'permission_callback' => [ __CLASS__, 'can_assign_terms' ],
 			]
 		);
 
@@ -31,9 +32,26 @@ final class OrganizerRest {
 			[
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => [ __CLASS__, 'reorder_term' ],
-				'permission_callback' => static fn(): bool => current_user_can( 'manage_categories' ),
+				'permission_callback' => [ __CLASS__, 'can_manage_terms' ],
 			]
 		);
+	}
+
+
+	public static function can_assign_terms(): bool {
+		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
+		$capability = $taxonomy && isset( $taxonomy->cap->assign_terms )
+			? (string) $taxonomy->cap->assign_terms
+			: 'edit_posts';
+		return current_user_can( $capability );
+	}
+
+	public static function can_manage_terms(): bool {
+		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
+		$capability = $taxonomy && isset( $taxonomy->cap->manage_terms )
+			? (string) $taxonomy->cap->manage_terms
+			: 'manage_categories';
+		return current_user_can( $capability );
 	}
 
 	public static function move_document( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
