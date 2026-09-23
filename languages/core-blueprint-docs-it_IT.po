@@ -790,3 +790,115 @@ msgid ""
 "Core API %1$s or a newer compatible minor version is required. Available "
 "Core API: %2$s."
 msgstr "È richiesta Core API %1$s o una versione minor compatibile più recente. Core API disponibile: %2$s."
+
+msgid "A documentation article in the requested order no longer exists."
+msgstr "Un articolo della documentazione presente nell’ordine richiesto non esiste più."
+
+msgid "A documentation category in the requested order no longer exists."
+msgstr "Una categoria della documentazione presente nell’ordine richiesto non esiste più."
+
+msgid "Docs structure updated"
+msgstr "Struttura di Docs aggiornata"
+
+msgid "Documentation articles"
+msgstr "Articoli della documentazione"
+
+msgid "Documentation Organizer"
+msgstr "Organizzatore della documentazione"
+
+msgid "Documentation sections"
+msgstr "Sezioni della documentazione"
+
+msgid "Documentation sets"
+msgstr "Set di documentazione"
+
+msgid "Down"
+msgstr "Sposta in basso"
+
+msgid "Drag documentation sets, sections and articles into their intended order. Category hierarchy remains managed from the normal Categories screen."
+msgstr "Trascina i set di documentazione, le sezioni e gli articoli nell’ordine desiderato. La gerarchia delle categorie continua a essere gestita dalla normale schermata Categorie."
+
+msgid "Edit"
+msgstr "Modifica"
+
+msgid "Edit category"
+msgstr "Modifica categoria"
+
+msgid "Move to category"
+msgstr "Sposta nella categoria"
+
+msgid "Move to…"
+msgstr "Sposta in…"
+
+msgid "Needs review"
+msgstr "Da verificare"
+
+msgid "No categories at this level."
+msgstr "Nessuna categoria a questo livello."
+
+msgid "No documents in this category."
+msgstr "Nessun documento in questa categoria."
+
+msgid "Nothing needs attention."
+msgstr "Nessun elemento richiede attenzione."
+
+msgid "Organizer"
+msgstr "Organizzatore"
+
+#, php-format
+msgid "Reorder %s"
+msgstr "Riordina %s"
+
+msgid "The documentation article no longer exists."
+msgstr "L’articolo della documentazione non esiste più."
+
+msgid "The documentation category no longer exists."
+msgstr "La categoria della documentazione non esiste più."
+
+msgid "The documentation category order could not be saved."
+msgstr "Non è stato possibile salvare l’ordine delle categorie della documentazione."
+
+msgid "The documentation structure changed. Reload the Organizer before continuing."
+msgstr "La struttura della documentazione è cambiata. Ricarica l’Organizzatore prima di continuare."
+
+msgid "The documentation structure contains too many categories for the Organizer."
+msgstr "La struttura della documentazione contiene troppe categorie per l’Organizzatore."
+
+msgid "The documentation structure contains too many documents for the Organizer."
+msgstr "La struttura della documentazione contiene troppi documenti per l’Organizzatore."
+
+msgid "The documentation structure could not be saved because the request failed."
+msgstr "Non è stato possibile salvare la struttura della documentazione perché la richiesta non è riuscita."
+
+msgid "The documentation structure could not be saved."
+msgstr "Non è stato possibile salvare la struttura della documentazione."
+
+msgid "The documentation structure revision is invalid."
+msgstr "La revisione della struttura della documentazione non è valida."
+
+msgid "The target documentation category no longer exists."
+msgstr "La categoria di destinazione della documentazione non esiste più."
+
+msgid "These documents do not have a structural Doc Category yet."
+msgstr "Questi documenti non hanno ancora una categoria Docs strutturale."
+
+msgid "These documents have more than one Doc Category. Move one to a single structural category to resolve it."
+msgstr "Questi documenti hanno più di una categoria Docs. Sposta ogni documento in una sola categoria strutturale per risolvere il problema."
+
+msgid "Unassigned"
+msgstr "Non assegnati"
+
+msgid "Up"
+msgstr "Sposta in alto"
+
+msgid "You do not have permission to change documentation categories."
+msgstr "Non hai il permesso di modificare le categorie della documentazione."
+
+msgid "You do not have permission to move this documentation article."
+msgstr "Non hai il permesso di spostare questo articolo della documentazione."
+
+msgid "You do not have permission to organize documentation."
+msgstr "Non hai il permesso di organizzare la documentazione."
+
+msgid "You do not have permission to reorder documentation categories."
+msgstr "Non hai il permesso di riordinare le categorie della documentazione."
