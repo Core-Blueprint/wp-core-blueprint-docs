@@ -968,3 +968,7 @@ msgstr "Documentos não atribuídos que usam a rota de recurso: %d"
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr "Usado para o arquivo do Docs e, no modo Hierarquia de categorias, para caminhos de categorias, tags e documentos. São suportadas bases aninhadas como knowledge/docs."
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Slugs de documento antigos duplicados: %d"
