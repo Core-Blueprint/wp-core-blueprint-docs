@@ -18,6 +18,7 @@ final class Readiness {
 			'warnings'                     => (int) ( $readiness['warnings'] ?? 0 ),
 			'reserved_categories'          => (int) ( $readiness['reserved_categories'] ?? 0 ),
 			'duplicate_category_paths'     => (int) ( $readiness['duplicate_category_paths'] ?? 0 ),
+			'invalid_category_paths'       => (int) ( $readiness['invalid_category_paths'] ?? 0 ),
 			'document_category_collisions' => (int) ( $readiness['document_category_collisions'] ?? 0 ),
 			'duplicate_document_paths'     => (int) ( $readiness['duplicate_document_paths'] ?? 0 ),
 			'legacy_simple_collisions'     => (int) ( $readiness['legacy_simple_collisions'] ?? 0 ),
