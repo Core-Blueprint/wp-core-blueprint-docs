@@ -22,7 +22,7 @@ final class OrganizerRest {
 			[
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => [ __CLASS__, 'move_document' ],
-				'permission_callback' => static fn(): bool => current_user_can( 'edit_posts' ),
+				'permission_callback' => [ __CLASS__, 'can_move_document' ],
 			]
 		);
 
@@ -37,6 +37,12 @@ final class OrganizerRest {
 		);
 	}
 
+
+
+	public static function can_move_document( \WP_REST_Request $request ): bool {
+		$document_id = absint( $request->get_param( 'document_id' ) );
+		return $document_id > 0 && current_user_can( 'edit_post', $document_id );
+	}
 
 	public static function can_manage_terms(): bool {
 		$taxonomy = get_taxonomy( Taxonomies::CATEGORY );
