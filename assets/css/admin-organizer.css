@@ -1,0 +1,146 @@
+.cb-docs-organizer-wrap > .description {
+	max-width: 900px;
+	margin-bottom: 20px;
+}
+
+.cb-docs-organizer {
+	display: grid;
+	gap: 20px;
+	max-width: 1280px;
+}
+
+.cb-docs-organizer__term-list {
+	display: grid;
+	gap: 12px;
+	min-height: 12px;
+}
+
+.cb-docs-organizer__term-list--root {
+	gap: 16px;
+}
+
+.cb-docs-organizer__term-list:empty::before,
+.cb-docs-organizer__docs:empty::before {
+	content: attr(data-empty-label);
+	display: block;
+	padding: 12px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #646970;
+	background: #fff;
+}
+
+.cb-docs-organizer__term {
+	padding: 14px;
+	border: 1px solid #c3c4c7;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.cb-docs-organizer__term .cb-docs-organizer__term-list {
+	margin-top: 12px;
+	padding-left: 18px;
+	border-left: 2px solid #dcdcde;
+}
+
+.cb-docs-organizer__term-header,
+.cb-docs-organizer__doc {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.cb-docs-organizer__term-header {
+	margin-bottom: 10px;
+}
+
+.cb-docs-organizer__term-heading,
+.cb-docs-organizer__doc-main,
+.cb-docs-organizer__actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cb-docs-organizer__doc {
+	padding: 10px 12px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	background: #f6f7f7;
+}
+
+.cb-docs-organizer__docs {
+	display: grid;
+	gap: 8px;
+	min-height: 8px;
+}
+
+.cb-docs-organizer__handle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	text-decoration: none;
+	color: #50575e;
+}
+
+.cb-docs-organizer__doc-title {
+	font-weight: 600;
+}
+
+.cb-docs-organizer__status {
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 7px;
+	border-radius: 999px;
+	background: #f0f0f1;
+	color: #50575e;
+	font-size: 11px;
+	line-height: 1.5;
+}
+
+.cb-docs-organizer__actions {
+	flex: 0 0 auto;
+}
+
+.cb-docs-organizer__attention-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.cb-docs-organizer__attention {
+	padding: 16px;
+	border: 1px solid #c3c4c7;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.cb-docs-organizer__attention h2 {
+	margin-top: 0;
+}
+
+.cb-docs-organizer.is-reorder-unavailable [data-cb-core-reorder-handle],
+.cb-docs-organizer.is-reorder-unavailable [data-cb-docs-move-up],
+.cb-docs-organizer.is-reorder-unavailable [data-cb-docs-move-down],
+.cb-docs-organizer.is-reorder-unavailable [data-cb-docs-move-to] {
+	display: none;
+}
+
+@media (max-width: 900px) {
+	.cb-docs-organizer__attention-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cb-docs-organizer__term-header,
+	.cb-docs-organizer__doc {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.cb-docs-organizer__actions {
+		flex-wrap: wrap;
+	}
+}
