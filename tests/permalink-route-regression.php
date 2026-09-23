@@ -68,6 +68,17 @@ $reserved = RouteIndex::build(
 $assert( 2 === $reserved['readiness']['reserved_categories'], 'reserved root category slugs are blocking' );
 $assert( 2 === $reserved['readiness']['blocking'], 'reserved root conflicts contribute to blocking total' );
 
+$malformed = RouteIndex::build(
+	[
+		[ 'id' => 60, 'parent' => 70, 'slug' => 'cycle-a' ],
+		[ 'id' => 70, 'parent' => 60, 'slug' => 'cycle-b' ],
+	],
+	[]
+);
+$assert( 2 === $malformed['readiness']['invalid_category_paths'], 'cyclic category graph is detected' );
+$assert( 2 === $malformed['readiness']['blocking'], 'invalid category graph blocks hierarchy activation' );
+
+
 $legacy_collision = RouteIndex::build(
 	[
 		[ 'id' => 1, 'parent' => 0, 'slug' => 'getting-started' ],
