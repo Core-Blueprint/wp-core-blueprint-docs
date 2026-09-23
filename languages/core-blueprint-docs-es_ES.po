@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Core Blueprint Docs 1.0.0-rc1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-core-blueprint-"
 "docs\n"
-"POT-Creation-Date: 2026-09-23 13:13+0000\n"
-"PO-Revision-Date: 2026-09-23 13:13+0000\n"
+"POT-Creation-Date: 2026-09-23 19:15+0000\n"
+"PO-Revision-Date: 2026-09-23 19:15+0000\n"
 "Last-Translator: Core Blueprint\n"
 "Language-Team: es_ES\n"
 "Language: es_ES\n"
@@ -35,15 +35,15 @@ msgid ""
 msgstr "Documentación ligera e independiente del maquetador con contenido, taxonomías y metadatos nativos de WordPress."
 
 #. Author of the plugin
-#: core-blueprint-docs.php src/Admin/SettingsPage.php:90
+#: core-blueprint-docs.php src/Admin/SettingsPage.php:91
 msgid "Core Blueprint"
 msgstr "Core Blueprint"
 
-#: core-blueprint-docs.php:110 core-blueprint-docs.php:168
+#: core-blueprint-docs.php:112 core-blueprint-docs.php:170
 msgid "Required Core Blueprint Base contracts are unavailable."
 msgstr "Los contratos requeridos de Core Blueprint Base no están disponibles."
 
-#: core-blueprint-docs.php:151 core-blueprint-docs.php:167
+#: core-blueprint-docs.php:153 core-blueprint-docs.php:169
 msgid "Core Blueprint Docs:"
 msgstr "Core Blueprint Docs:"
 
@@ -60,7 +60,7 @@ msgstr "Subtítulo"
 msgid "Documentation status"
 msgstr "Estado de la documentación"
 
-#: src/Admin/DocDetails.php:53 src/Frontend/Shortcodes.php:191
+#: src/Admin/DocDetails.php:53 src/Frontend/Shortcodes.php:193
 msgid "Version"
 msgstr "Versión"
 
@@ -68,7 +68,7 @@ msgstr "Versión"
 msgid "Optional product or documentation version."
 msgstr "Versión opcional del producto o de la documentación."
 
-#: src/Admin/DocDetails.php:58 src/Frontend/Shortcodes.php:194
+#: src/Admin/DocDetails.php:58 src/Frontend/Shortcodes.php:196
 #: src/Integration/Builders/Bricks/DynamicData.php:93
 msgid "Last reviewed"
 msgstr "Última revisión"
@@ -102,81 +102,366 @@ msgid ""
 "content, shortcodes and builder-neutral frontend contracts."
 msgstr "Bricks es opcional. Docs funciona sin constructor mediante contenido nativo de WordPress, shortcodes y contratos de frontend independientes del constructor."
 
+#: src/Admin/IntegrationReadiness.php:35 src/Admin/SettingsPage.php:281
+#: src/Support/Requirements.php:88
+msgid "Ready"
+msgstr "Listo"
+
 #: src/Admin/IntegrationReadiness.php:36
 msgid "Not active"
 msgstr "No activo"
 
-#: src/Admin/SettingsPage.php:34 src/Admin/SettingsPage.php:93
+#: src/Admin/OrganizerPage.php:25 src/Admin/OrganizerPage.php:98
+#: src/Admin/OrganizerPage.php:111
+msgid "Documentation Organizer"
+msgstr "Organizador de documentación"
+
+#: src/Admin/OrganizerPage.php:26
+msgid "Organizer"
+msgstr "Organizador"
+
+#: src/Admin/OrganizerPage.php:77 src/Structure/MutationLock.php:35
+#: src/Structure/MutationLock.php:45
+msgid "The documentation structure could not be saved."
+msgstr "No se pudo guardar la estructura de la documentación."
+
+#: src/Admin/OrganizerPage.php:78 src/Structure/Mutation.php:364
+#: src/Structure/MutationLock.php:63
+msgid ""
+"The documentation structure changed. Reload the Organizer before continuing."
+msgstr ""
+"La estructura de la documentación ha cambiado. Recarga el Organizador antes "
+"de continuar."
+
+#: src/Admin/OrganizerPage.php:79
+msgid ""
+"The documentation structure could not be saved because the request failed."
+msgstr ""
+"No se pudo guardar la estructura de la documentación porque falló la "
+"solicitud."
+
+#: src/Admin/OrganizerPage.php:80 src/Admin/OrganizerPage.php:81
+#: src/Admin/OrganizerPage.php:290
+#, php-format
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] "%d documento"
+msgstr[1] "%d documentos"
+
+#: src/Admin/OrganizerPage.php:91
+msgid "You do not have permission to organize documentation."
+msgstr "No tienes permiso para organizar la documentación."
+
+#: src/Admin/OrganizerPage.php:113
+msgid ""
+"Drag documentation sets, sections and articles into their intended order. "
+"Category hierarchy remains managed from the normal Categories screen."
+msgstr ""
+"Arrastra los conjuntos de documentación, las secciones y los artículos al "
+"orden deseado. La jerarquía de categorías se sigue gestionando desde la "
+"pantalla normal de Categorías."
+
+#: src/Admin/OrganizerPage.php:123
+msgid "Expand all"
+msgstr "Expandir todo"
+
+#: src/Admin/OrganizerPage.php:124
+msgid "Collapse all"
+msgstr "Contraer todo"
+
+#: src/Admin/OrganizerPage.php:130
+msgid "Unassigned"
+msgstr "Sin asignar"
+
+#: src/Admin/OrganizerPage.php:130
+msgid "These documents do not have a structural Doc Category yet."
+msgstr "Estos documentos aún no tienen una categoría de Docs estructural."
+
+#: src/Admin/OrganizerPage.php:131
+msgid "Needs review"
+msgstr "Revisar"
+
+#: src/Admin/OrganizerPage.php:131
+msgid ""
+"These documents are assigned to Doc Categories on different hierarchy "
+"branches. Move one to a single structural branch to resolve it."
+msgstr ""
+"Estos documentos están asignados a categorías de documentación en distintas "
+"ramas de la jerarquía. Muévelos a una sola rama estructural para resolverlo."
+
+#: src/Admin/OrganizerPage.php:253
+msgid "Documentation sets"
+msgstr "Conjuntos de documentación"
+
+#: src/Admin/OrganizerPage.php:253
+msgid "Documentation sections"
+msgstr "Secciones de documentación"
+
+#: src/Admin/OrganizerPage.php:260
+msgid "No categories at this level."
+msgstr "No hay categorías en este nivel."
+
+#: src/Admin/OrganizerPage.php:285 src/Admin/OrganizerPage.php:394
+msgid "Up"
+msgstr "Subir"
+
+#: src/Admin/OrganizerPage.php:286 src/Admin/OrganizerPage.php:395
+msgid "Down"
+msgstr "Bajar"
+
+#: src/Admin/OrganizerPage.php:287
+msgid "Edit category"
+msgstr "Editar categoría"
+
+#: src/Admin/OrganizerPage.php:314 src/Admin/OrganizerPage.php:410
+#, php-format
+msgid "Reorder %s"
+msgstr "Reordenar %s"
+
+#: src/Admin/OrganizerPage.php:355
+msgid "Documentation articles"
+msgstr "Artículos de documentación"
+
+#: src/Admin/OrganizerPage.php:356
+msgid "No documents in this category."
+msgstr "No hay documentos en esta categoría."
+
+#: src/Admin/OrganizerPage.php:396
+msgid "Edit"
+msgstr "Editar"
+
+#: src/Admin/OrganizerPage.php:397 src/Content/PostType.php:29
+msgid "View Doc"
+msgstr "Ver Doc"
+
+#: src/Admin/OrganizerPage.php:422
+msgid "Move to category"
+msgstr "Mover a categoría"
+
+#: src/Admin/OrganizerPage.php:424
+msgid "Move to…"
+msgstr "Mover a…"
+
+#: src/Admin/OrganizerPage.php:456
+msgid "Nothing needs attention."
+msgstr "Nada requiere atención."
+
+#: src/Admin/SettingsPage.php:35 src/Admin/SettingsPage.php:94
 msgid ""
 "Manage documentation health, URL behavior, frontend composition and optional "
 "integrations. Documentation content remains native WordPress and is managed "
 "from the Docs content screen."
 msgstr "Gestiona el estado de la documentación, el comportamiento de las URL, la composición del frontend y las integraciones opcionales. El contenido de la documentación sigue siendo nativo de WordPress y se gestiona desde la pantalla de contenido de Docs."
 
-#: src/Admin/SettingsPage.php:71 src/Admin/SettingsPage.php:75
-#: src/Admin/SettingsPage.php:91 src/Content/PostType.php:18
-#: src/Content/PostType.php:20 src/Frontend/Shortcodes.php:123
-#: src/Integration/Suite.php:33 src/Plugin.php:54
+#: src/Admin/SettingsPage.php:72 src/Admin/SettingsPage.php:76
+#: src/Admin/SettingsPage.php:92 src/Content/PostType.php:21
+#: src/Content/PostType.php:23 src/Frontend/Shortcodes.php:125
+#: src/Integration/Suite.php:33 src/Plugin.php:68
 msgid "Docs"
 msgstr "Docs"
 
-#: src/Admin/SettingsPage.php:84
+#: src/Admin/SettingsPage.php:85
 msgid "You do not have permission to access this page."
 msgstr "No tienes permiso para acceder a esta página."
 
-#: src/Admin/SettingsPage.php:119
+#: src/Admin/SettingsPage.php:120
 msgid "Overview"
 msgstr "Resumen"
 
-#: src/Admin/SettingsPage.php:120
+#: src/Admin/SettingsPage.php:121
 msgid "General"
 msgstr "General"
 
-#: src/Admin/SettingsPage.php:121
+#: src/Admin/SettingsPage.php:122
 msgid "Integrations"
 msgstr "Integraciones"
 
-#: src/Admin/SettingsPage.php:161
+#: src/Admin/SettingsPage.php:162
 msgid "Docs sections"
 msgstr "Secciones de Docs"
 
-#: src/Admin/SettingsPage.php:184
+#: src/Admin/SettingsPage.php:185
 msgid "Docs at a glance"
 msgstr "Docs de un vistazo"
 
-#: src/Admin/SettingsPage.php:186
+#: src/Admin/SettingsPage.php:187
 msgid "Published Docs"
 msgstr "Docs publicados"
 
-#: src/Admin/SettingsPage.php:190
+#: src/Admin/SettingsPage.php:191
 msgid "Drafts"
 msgstr "Borradores"
 
-#: src/Admin/SettingsPage.php:194 src/Content/Taxonomies.php:28
+#: src/Admin/SettingsPage.php:195 src/Content/Taxonomies.php:33
 msgid "Categories"
 msgstr "Categorías"
 
-#: src/Admin/SettingsPage.php:198 src/Content/Taxonomies.php:61
+#: src/Admin/SettingsPage.php:199 src/Content/Taxonomies.php:66
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: src/Admin/SettingsPage.php:226
+#: src/Admin/SettingsPage.php:222
+msgid "Permalink settings updated"
+msgstr "Ajustes de enlaces permanentes actualizados"
+
+#: src/Admin/SettingsPage.php:223
+msgid ""
+"The Docs URL settings are active. WordPress rewrite rules were refreshed "
+"once after the new routes were registered."
+msgstr ""
+"Los ajustes de URL de Docs están activos. Las reglas de reescritura de "
+"WordPress se actualizaron una vez después de registrar las nuevas rutas."
+
+#: src/Admin/SettingsPage.php:230
 msgid "No changes needed"
 msgstr "No se necesitan cambios"
 
-#: src/Admin/SettingsPage.php:233
+#: src/Admin/SettingsPage.php:231
+msgid ""
+"The Docs permalink settings already had these values, so no rewrite refresh "
+"was necessary."
+msgstr ""
+"Los ajustes de enlaces permanentes de Docs ya tenían estos valores, por lo "
+"que no fue necesario actualizar las reglas de reescritura."
+
+#: src/Admin/SettingsPage.php:236
+msgid "Category hierarchy was not enabled."
+msgstr "No se activó la jerarquía de categorías."
+
+#: src/Admin/SettingsPage.php:237
+msgid ""
+"Resolve the blocking URL conflicts shown below and save the permalink "
+"settings again."
+msgstr ""
+"Resuelve los conflictos de URL bloqueantes que se muestran a continuación y "
+"vuelve a guardar los ajustes de enlaces permanentes."
+
+#: src/Admin/SettingsPage.php:242
 msgid "Permalinks"
 msgstr "Enlaces permanentes"
 
-#: src/Admin/SettingsPage.php:241
+#: src/Admin/SettingsPage.php:243
+msgid ""
+"Configure the public Docs namespace and choose whether document URLs stay "
+"simple or include the resolved Doc Category hierarchy."
+msgstr ""
+"Configura el espacio de nombres público de Docs y elige si las URL de los "
+"documentos se mantienen simples o incluyen la jerarquía resuelta de Doc "
+"Categories."
+
+#: src/Admin/SettingsPage.php:250
 msgid "Docs URL base"
 msgstr "Base de URL de Docs"
 
+#: src/Admin/SettingsPage.php:254
+msgid ""
+"Used for the Docs archive and, in Category hierarchy mode, category, tag and "
+"document paths. Nested bases such as knowledge/docs are supported."
+msgstr ""
+"Se usa para el archivo de Docs y, en modo Jerarquía de categorías, para las "
+"rutas de categorías, etiquetas y documentos. Se admiten bases anidadas como "
+"knowledge/docs."
+
+#: src/Admin/SettingsPage.php:258
+msgid "Document URL structure"
+msgstr "Estructura de URL de documentos"
+
+#: src/Admin/SettingsPage.php:262
+msgid "Simple"
+msgstr "Simple"
+
 #: src/Admin/SettingsPage.php:269
+msgid "Category hierarchy"
+msgstr "Jerarquía de categorías"
+
+#: src/Admin/SettingsPage.php:274
+msgid ""
+"Category hierarchy uses the same structural category resolution as the "
+"Documentation Organizer. Safe parent categories are included automatically; "
+"unresolved or colliding documents use the reserved document/ fail-safe route."
+msgstr ""
+"La jerarquía de categorías usa la misma resolución estructural de categorías "
+"que Documentation Organizer. Las categorías superiores seguras se incluyen "
+"automáticamente; los documentos sin resolver o con colisiones usan la ruta "
+"de respaldo reservada document/."
+
+#: src/Admin/SettingsPage.php:279
+msgid "Category hierarchy readiness"
+msgstr "Estado de preparación de la jerarquía de categorías"
+
+#: src/Admin/SettingsPage.php:281
+msgid "No blocking URL conflicts were detected."
+msgstr "No se detectaron conflictos de URL bloqueantes."
+
+#: src/Admin/SettingsPage.php:283
+msgid "Action required"
+msgstr "Acción requerida"
+
+#: src/Admin/SettingsPage.php:283
+#, php-format
+msgid "Blocking URL conflicts: %d"
+msgstr "Conflictos de URL bloqueantes: %d"
+
+#: src/Admin/SettingsPage.php:286
+#, php-format
+msgid "Reserved Docs URL base conflicts: %d"
+msgstr "Conflictos con bases de URL reservadas de Docs: %d"
+
+#: src/Admin/SettingsPage.php:287
+#, php-format
+msgid "Reserved top-level category slugs: %d"
+msgstr "Slugs reservados de categorías de nivel superior: %d"
+
+#: src/Admin/SettingsPage.php:288
+#, php-format
+msgid "Duplicate category paths: %d"
+msgstr "Rutas de categoría duplicadas: %d"
+
+#: src/Admin/SettingsPage.php:289
+#, php-format
+msgid "Invalid category hierarchy paths: %d"
+msgstr "Rutas de jerarquía de categorías no válidas: %d"
+
+#: src/Admin/SettingsPage.php:290
+#, php-format
+msgid "Duplicate document routes: %d"
+msgstr "Rutas de documento duplicadas: %d"
+
+#: src/Admin/SettingsPage.php:291
+#, php-format
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Slugs de documento heredados duplicados: %d"
+
+#: src/Admin/SettingsPage.php:292
+#, php-format
+msgid "Legacy Simple URL collisions: %d"
+msgstr "Colisiones con URL Simple heredadas: %d"
+
+#: src/Admin/SettingsPage.php:293
+#, php-format
+msgid "Documents using the fail-safe route because of a category collision: %d"
+msgstr ""
+"Documentos que usan la ruta de respaldo por una colisión de categoría: %d"
+
+#: src/Admin/SettingsPage.php:294
+#, php-format
+msgid "Unassigned documents using the fail-safe route: %d"
+msgstr "Documentos sin asignar que usan la ruta de respaldo: %d"
+
+#: src/Admin/SettingsPage.php:295
+#, php-format
+msgid "Documents that need structural review: %d"
+msgstr "Documentos que requieren revisión estructural: %d"
+
+#: src/Admin/SettingsPage.php:299
+msgid "Save permalinks"
+msgstr "Guardar enlaces permanentes"
+
+#: src/Admin/SettingsPage.php:316
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/Admin/SettingsPage.php:273
+#: src/Admin/SettingsPage.php:320
 msgid ""
 "Use these built-in shortcodes to place Docs content in WordPress content "
 "areas. Copy a shortcode and add optional attributes where needed."
@@ -185,49 +470,49 @@ msgstr ""
 "contenido de WordPress. Copia un shortcode y añade atributos opcionales "
 "cuando sea necesario."
 
-#: src/Admin/SettingsPage.php:275
+#: src/Admin/SettingsPage.php:322
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: src/Admin/SettingsPage.php:276
+#: src/Admin/SettingsPage.php:323
 msgid "Purpose"
 msgstr "Propósito"
 
-#: src/Admin/SettingsPage.php:277
+#: src/Admin/SettingsPage.php:324
 msgid "Optional attributes"
 msgstr "Atributos opcionales"
 
-#: src/Admin/SettingsPage.php:278
+#: src/Admin/SettingsPage.php:325
 msgid "Action"
 msgstr "Acción"
 
-#: src/Admin/SettingsPage.php:282
+#: src/Admin/SettingsPage.php:329
 msgid "Shortcodes"
 msgstr "Shortcodes"
 
-#: src/Admin/SettingsPage.php:292
+#: src/Admin/SettingsPage.php:339
 msgid "Lists published Docs ordered by menu order and title."
 msgstr "Lista los Docs publicados ordenados por orden de menú y título."
 
-#: src/Admin/SettingsPage.php:297
+#: src/Admin/SettingsPage.php:344
 msgid "Renders the hierarchical Doc Category tree with its published Docs."
 msgstr ""
 "Muestra el árbol jerárquico de categorías de Docs con sus Docs publicados."
 
-#: src/Admin/SettingsPage.php:302
+#: src/Admin/SettingsPage.php:349
 msgid "Renders a documentation search form with scoped Docs results."
 msgstr ""
 "Muestra un formulario de búsqueda de documentación con resultados limitados "
 "a Docs."
 
-#: src/Admin/SettingsPage.php:307
+#: src/Admin/SettingsPage.php:354
 msgid ""
 "Renders archive, category and single-document breadcrumbs in Docs contexts."
 msgstr ""
 "Muestra migas de pan de archivo, categoría y documento individual en "
 "contextos de Docs."
 
-#: src/Admin/SettingsPage.php:312
+#: src/Admin/SettingsPage.php:359
 msgid ""
 "Renders documentation metadata for the current Doc or a specific Doc ID."
 msgstr ""
@@ -242,203 +527,199 @@ msgstr "Actual"
 msgid "Deprecated"
 msgstr "Obsoleto"
 
-#: src/Content/PostType.php:19 src/Content/PostType.php:21
+#: src/Content/PostType.php:22 src/Content/PostType.php:24
 msgid "Doc"
 msgstr "Doc"
 
-#: src/Content/PostType.php:22
+#: src/Content/PostType.php:25
 msgid "Add New"
 msgstr "Añadir nuevo"
 
-#: src/Content/PostType.php:23
+#: src/Content/PostType.php:26
 msgid "Add New Doc"
 msgstr "Añadir nuevo Doc"
 
-#: src/Content/PostType.php:24
+#: src/Content/PostType.php:27
 msgid "New Doc"
 msgstr "Nuevo Doc"
 
-#: src/Content/PostType.php:25
+#: src/Content/PostType.php:28
 msgid "Edit Doc"
 msgstr "Editar Doc"
 
-#: src/Content/PostType.php:26
-msgid "View Doc"
-msgstr "Ver Doc"
-
-#: src/Content/PostType.php:27
+#: src/Content/PostType.php:30
 msgid "View Docs"
 msgstr "Ver Docs"
 
-#: src/Content/PostType.php:28
+#: src/Content/PostType.php:31
 msgid "All Docs"
 msgstr "Todos los Docs"
 
-#: src/Content/PostType.php:29
+#: src/Content/PostType.php:32
 msgid "Search Docs"
 msgstr "Buscar Docs"
 
-#: src/Content/PostType.php:30
+#: src/Content/PostType.php:33
 msgid "Parent Doc:"
 msgstr "Doc superior:"
 
-#: src/Content/PostType.php:31
+#: src/Content/PostType.php:34
 msgid "No docs found."
 msgstr "No se encontraron Docs."
 
-#: src/Content/PostType.php:32
+#: src/Content/PostType.php:35
 msgid "No docs found in Trash."
 msgstr "No se encontraron Docs en la papelera."
 
-#: src/Content/PostType.php:33
+#: src/Content/PostType.php:36
 msgid "Docs Archives"
 msgstr "Archivos de Docs"
 
-#: src/Content/PostType.php:34
+#: src/Content/PostType.php:37
 msgid "Doc Attributes"
 msgstr "Atributos del Doc"
 
-#: src/Content/PostType.php:35
+#: src/Content/PostType.php:38
 msgid "Featured image"
 msgstr "Imagen destacada"
 
-#: src/Content/PostType.php:36
+#: src/Content/PostType.php:39
 msgid "Set featured image"
 msgstr "Establecer imagen destacada"
 
-#: src/Content/PostType.php:37
+#: src/Content/PostType.php:40
 msgid "Remove featured image"
 msgstr "Eliminar imagen destacada"
 
-#: src/Content/PostType.php:38
+#: src/Content/PostType.php:41
 msgid "Use as featured image"
 msgstr "Usar como imagen destacada"
 
-#: src/Content/PostType.php:39
+#: src/Content/PostType.php:42
 msgid "Filter docs list"
 msgstr "Filtrar lista de Docs"
 
-#: src/Content/PostType.php:40
+#: src/Content/PostType.php:43
 msgid "Docs list navigation"
 msgstr "Navegación de la lista de Docs"
 
-#: src/Content/PostType.php:41
+#: src/Content/PostType.php:44
 msgid "Docs list"
 msgstr "Lista de Docs"
 
-#: src/Content/PostType.php:42
+#: src/Content/PostType.php:45
 msgid "Doc published."
 msgstr "Doc publicado."
 
-#: src/Content/PostType.php:43
+#: src/Content/PostType.php:46
 msgid "Doc published privately."
 msgstr "Doc publicado de forma privada."
 
-#: src/Content/PostType.php:44
+#: src/Content/PostType.php:47
 msgid "Doc reverted to draft."
 msgstr "Doc vuelto a borrador."
 
-#: src/Content/PostType.php:45
+#: src/Content/PostType.php:48
 msgid "Doc scheduled."
 msgstr "Doc programado."
 
-#: src/Content/PostType.php:46
+#: src/Content/PostType.php:49
 msgid "Doc updated."
 msgstr "Doc actualizado."
 
-#: src/Content/PostType.php:48
+#: src/Content/PostType.php:51
 msgid "Documentation articles managed by Core Blueprint Docs."
 msgstr "Artículos de documentación gestionados por Core Blueprint Docs."
 
-#: src/Content/Taxonomies.php:18
+#: src/Content/Taxonomies.php:23
 msgid "Doc Categories"
 msgstr "Categorías de Docs"
 
-#: src/Content/Taxonomies.php:19
+#: src/Content/Taxonomies.php:24
 msgid "Doc Category"
 msgstr "Categoría de Doc"
 
-#: src/Content/Taxonomies.php:20
+#: src/Content/Taxonomies.php:25
 msgid "Search Doc Categories"
 msgstr "Buscar categorías de Docs"
 
-#: src/Content/Taxonomies.php:21
+#: src/Content/Taxonomies.php:26
 msgid "All Doc Categories"
 msgstr "Todas las categorías de Docs"
 
-#: src/Content/Taxonomies.php:22
+#: src/Content/Taxonomies.php:27
 msgid "Parent Doc Category"
 msgstr "Categoría superior de Doc"
 
-#: src/Content/Taxonomies.php:23
+#: src/Content/Taxonomies.php:28
 msgid "Parent Doc Category:"
 msgstr "Categoría superior de Doc:"
 
-#: src/Content/Taxonomies.php:24
+#: src/Content/Taxonomies.php:29
 msgid "Edit Doc Category"
 msgstr "Editar categoría de Doc"
 
-#: src/Content/Taxonomies.php:25
+#: src/Content/Taxonomies.php:30
 msgid "Update Doc Category"
 msgstr "Actualizar categoría de Doc"
 
-#: src/Content/Taxonomies.php:26
+#: src/Content/Taxonomies.php:31
 msgid "Add New Doc Category"
 msgstr "Añadir nueva categoría de Doc"
 
-#: src/Content/Taxonomies.php:27
+#: src/Content/Taxonomies.php:32
 msgid "New Doc Category Name"
 msgstr "Nombre de la nueva categoría de Doc"
 
-#: src/Content/Taxonomies.php:49
+#: src/Content/Taxonomies.php:54
 msgid "Doc Tags"
 msgstr "Etiquetas de Docs"
 
-#: src/Content/Taxonomies.php:50
+#: src/Content/Taxonomies.php:55
 msgid "Doc Tag"
 msgstr "Etiqueta de Doc"
 
-#: src/Content/Taxonomies.php:51
+#: src/Content/Taxonomies.php:56
 msgid "Search Doc Tags"
 msgstr "Buscar etiquetas de Docs"
 
-#: src/Content/Taxonomies.php:52
+#: src/Content/Taxonomies.php:57
 msgid "Popular Doc Tags"
 msgstr "Etiquetas de Docs populares"
 
-#: src/Content/Taxonomies.php:53
+#: src/Content/Taxonomies.php:58
 msgid "All Doc Tags"
 msgstr "Todas las etiquetas de Docs"
 
-#: src/Content/Taxonomies.php:54
+#: src/Content/Taxonomies.php:59
 msgid "Edit Doc Tag"
 msgstr "Editar etiqueta de Doc"
 
-#: src/Content/Taxonomies.php:55
+#: src/Content/Taxonomies.php:60
 msgid "Update Doc Tag"
 msgstr "Actualizar etiqueta de Doc"
 
-#: src/Content/Taxonomies.php:56
+#: src/Content/Taxonomies.php:61
 msgid "Add New Doc Tag"
 msgstr "Añadir nueva etiqueta de Doc"
 
-#: src/Content/Taxonomies.php:57
+#: src/Content/Taxonomies.php:62
 msgid "New Doc Tag Name"
 msgstr "Nombre de la nueva etiqueta de Doc"
 
-#: src/Content/Taxonomies.php:58
+#: src/Content/Taxonomies.php:63
 msgid "Separate doc tags with commas"
 msgstr "Separa las etiquetas de Docs con comas"
 
-#: src/Content/Taxonomies.php:59
+#: src/Content/Taxonomies.php:64
 msgid "Add or remove doc tags"
 msgstr "Añadir o eliminar etiquetas de Docs"
 
-#: src/Content/Taxonomies.php:60
+#: src/Content/Taxonomies.php:65
 msgid "Choose from the most used doc tags"
 msgstr "Elegir entre las etiquetas de Docs más utilizadas"
 
-#: src/Frontend/Components/Search.php:33 src/Frontend/Shortcodes.php:95
+#: src/Frontend/Components/Search.php:33 src/Frontend/Shortcodes.php:97
 #: src/Integration/Builders/Bricks/Elements/Search.php:57
 #: src/Integration/Builders/Bricks/Elements/Search.php:211
 msgid "Search documentation…"
@@ -465,70 +746,74 @@ msgstr "Buscar documentación"
 msgid "Search"
 msgstr "Buscar"
 
-#: src/Frontend/Data/Document.php:125 src/Frontend/Shortcodes.php:41
-#: src/Frontend/Shortcodes.php:64
+#: src/Frontend/Data/Document.php:125 src/Frontend/Shortcodes.php:43
+#: src/Frontend/Shortcodes.php:66
 msgid "No documentation found."
 msgstr "No se encontró documentación."
 
-#: src/Frontend/Shortcodes.php:73
+#: src/Frontend/Shortcodes.php:75
 msgid "Documentation category not found."
 msgstr "No se encontró la categoría de documentación."
 
-#: src/Frontend/Shortcodes.php:88
+#: src/Frontend/Shortcodes.php:90
 msgid "Documentation navigation"
 msgstr "Navegación de documentación"
 
-#: src/Frontend/Shortcodes.php:89
+#: src/Frontend/Shortcodes.php:91
 msgid "No documentation navigation is available."
 msgstr "No hay navegación de documentación disponible."
 
-#: src/Frontend/Shortcodes.php:149
+#: src/Frontend/Shortcodes.php:151
 msgid "Breadcrumbs"
 msgstr "Migas de pan"
 
-#: src/Frontend/Shortcodes.php:185
+#: src/Frontend/Shortcodes.php:187
 msgid "Author"
 msgstr "Autor"
 
-#: src/Frontend/Shortcodes.php:186
+#: src/Frontend/Shortcodes.php:188
 msgid "Published"
 msgstr "Publicado"
 
-#: src/Frontend/Shortcodes.php:187
+#: src/Frontend/Shortcodes.php:189
 msgid "Updated"
 msgstr "Actualizado"
 
-#: src/Frontend/Shortcodes.php:188
+#: src/Frontend/Shortcodes.php:190
 msgid "Status"
 msgstr "Estado"
 
-#: src/Governance/Events.php:44
+#: src/Governance/Events.php:46
 msgid "Docs document created"
 msgstr "Documento de Docs creado"
 
-#: src/Governance/Events.php:45
+#: src/Governance/Events.php:47
 msgid "Docs document published"
 msgstr "Documento de Docs publicado"
 
-#: src/Governance/Events.php:46
+#: src/Governance/Events.php:48
 msgid "Docs document updated"
 msgstr "Documento de Docs actualizado"
 
-#: src/Governance/Events.php:47
+#: src/Governance/Events.php:49
 msgid "Docs document trashed"
 msgstr "Documento de Docs enviado a la papelera"
 
-#: src/Governance/Events.php:48
+#: src/Governance/Events.php:50
 msgid "Docs document restored"
 msgstr "Documento de Docs restaurado"
 
-#: src/Governance/Events.php:49
+#: src/Governance/Events.php:51
 msgid "Docs document permanently deleted"
 msgstr "Documento de Docs eliminado permanentemente"
 
-#: src/Governance/Events.php:50
+#: src/Governance/Events.php:52
 msgid "Docs settings updated"
 msgstr "Ajustes de Docs actualizados"
+
+#: src/Governance/Events.php:53
+msgid "Docs structure updated"
+msgstr "Estructura de Docs actualizada"
 
 #: src/Integration/Builders/Bricks/Conditions.php:36
 msgid "Current item is a Doc"
@@ -713,13 +998,77 @@ msgstr "Docs: Resultados de búsqueda"
 msgid "%1$d published · %2$d drafts"
 msgstr "%1$d publicados · %2$d borradores"
 
-#: src/Plugin.php:59
+#: src/Permalinks/ReservedSlugGuard.php:31
+msgid ""
+"This top-level Doc Category slug is reserved by the active Docs URL "
+"structure."
+msgstr ""
+"Este slug de Doc Category de nivel superior está reservado por la estructura "
+"de URL de Docs activa."
+
+#: src/Plugin.php:73
 msgid "Settings"
 msgstr "Ajustes"
 
-#: src/Settings.php:56
+#: src/Settings.php:76
 msgid "You do not have permission to change Docs settings."
 msgstr "No tienes permiso para cambiar los ajustes de Docs."
+
+#: src/Structure/CategoryOrder.php:79 src/Structure/Snapshot.php:32
+msgid ""
+"The documentation structure contains too many categories for the Organizer."
+msgstr ""
+"La estructura de la documentación contiene demasiadas categorías para el "
+"Organizador."
+
+#: src/Structure/CategoryOrder.php:105
+msgid "A documentation category in the requested order no longer exists."
+msgstr ""
+"Una categoría de documentación incluida en el orden solicitado ya no existe."
+
+#: src/Structure/CategoryOrder.php:121
+msgid "The documentation category order could not be saved."
+msgstr "No se pudo guardar el orden de las categorías de documentación."
+
+#: src/Structure/Mutation.php:45
+msgid "The documentation article no longer exists."
+msgstr "El artículo de documentación ya no existe."
+
+#: src/Structure/Mutation.php:52
+msgid "You do not have permission to move this documentation article."
+msgstr "No tienes permiso para mover este artículo de documentación."
+
+#: src/Structure/Mutation.php:61
+msgid "The target documentation category no longer exists."
+msgstr "La categoría de documentación de destino ya no existe."
+
+#: src/Structure/Mutation.php:84
+msgid "You do not have permission to change documentation categories."
+msgstr "No tienes permiso para cambiar las categorías de documentación."
+
+#: src/Structure/Mutation.php:207
+msgid "The documentation category no longer exists."
+msgstr "La categoría de documentación ya no existe."
+
+#: src/Structure/Mutation.php:219
+msgid "You do not have permission to reorder documentation categories."
+msgstr "No tienes permiso para reordenar las categorías de documentación."
+
+#: src/Structure/Mutation.php:308
+msgid "A documentation article in the requested order no longer exists."
+msgstr ""
+"Un artículo de documentación incluido en el orden solicitado ya no existe."
+
+#: src/Structure/Mutation.php:348
+msgid "The documentation structure revision is invalid."
+msgstr "La revisión de la estructura de la documentación no es válida."
+
+#: src/Structure/Snapshot.php:54
+msgid ""
+"The documentation structure contains too many documents for the Organizer."
+msgstr ""
+"La estructura de la documentación contiene demasiados documentos para el "
+"Organizador."
 
 #. translators: 1: required PHP version, 2: current PHP version.
 #: src/Support/Requirements.php:74
@@ -738,243 +1087,3 @@ msgid ""
 "Core API %1$s or a newer compatible minor version is required. Available "
 "Core API: %2$s."
 msgstr "Se requiere Core API %1$s o una versión menor compatible más reciente. Core API disponible: %2$s."
-
-msgid "A documentation article in the requested order no longer exists."
-msgstr "Un artículo de documentación incluido en el orden solicitado ya no existe."
-
-msgid "A documentation category in the requested order no longer exists."
-msgstr "Una categoría de documentación incluida en el orden solicitado ya no existe."
-
-msgid "Docs structure updated"
-msgstr "Estructura de Docs actualizada"
-
-msgid "Documentation articles"
-msgstr "Artículos de documentación"
-
-msgid "Documentation Organizer"
-msgstr "Organizador de documentación"
-
-msgid "Documentation sections"
-msgstr "Secciones de documentación"
-
-msgid "Documentation sets"
-msgstr "Conjuntos de documentación"
-
-msgid "Down"
-msgstr "Bajar"
-
-msgid "Drag documentation sets, sections and articles into their intended order. Category hierarchy remains managed from the normal Categories screen."
-msgstr "Arrastra los conjuntos de documentación, las secciones y los artículos al orden deseado. La jerarquía de categorías se sigue gestionando desde la pantalla normal de Categorías."
-
-msgid "Edit"
-msgstr "Editar"
-
-msgid "Edit category"
-msgstr "Editar categoría"
-
-msgid "Move to category"
-msgstr "Mover a categoría"
-
-msgid "Move to…"
-msgstr "Mover a…"
-
-msgid "Needs review"
-msgstr "Revisar"
-
-msgid "No categories at this level."
-msgstr "No hay categorías en este nivel."
-
-msgid "No documents in this category."
-msgstr "No hay documentos en esta categoría."
-
-msgid "Nothing needs attention."
-msgstr "Nada requiere atención."
-
-msgid "Organizer"
-msgstr "Organizador"
-
-#, php-format
-msgid "Reorder %s"
-msgstr "Reordenar %s"
-
-msgid "The documentation article no longer exists."
-msgstr "El artículo de documentación ya no existe."
-
-msgid "The documentation category no longer exists."
-msgstr "La categoría de documentación ya no existe."
-
-msgid "The documentation category order could not be saved."
-msgstr "No se pudo guardar el orden de las categorías de documentación."
-
-msgid "The documentation structure changed. Reload the Organizer before continuing."
-msgstr "La estructura de la documentación ha cambiado. Recarga el Organizador antes de continuar."
-
-msgid "The documentation structure contains too many categories for the Organizer."
-msgstr "La estructura de la documentación contiene demasiadas categorías para el Organizador."
-
-msgid "The documentation structure contains too many documents for the Organizer."
-msgstr "La estructura de la documentación contiene demasiados documentos para el Organizador."
-
-msgid "The documentation structure could not be saved because the request failed."
-msgstr "No se pudo guardar la estructura de la documentación porque falló la solicitud."
-
-msgid "The documentation structure could not be saved."
-msgstr "No se pudo guardar la estructura de la documentación."
-
-msgid "The documentation structure revision is invalid."
-msgstr "La revisión de la estructura de la documentación no es válida."
-
-msgid "The target documentation category no longer exists."
-msgstr "La categoría de documentación de destino ya no existe."
-
-msgid "These documents do not have a structural Doc Category yet."
-msgstr "Estos documentos aún no tienen una categoría de Docs estructural."
-
-msgid "Unassigned"
-msgstr "Sin asignar"
-
-msgid "Up"
-msgstr "Subir"
-
-msgid "You do not have permission to change documentation categories."
-msgstr "No tienes permiso para cambiar las categorías de documentación."
-
-msgid "You do not have permission to move this documentation article."
-msgstr "No tienes permiso para mover este artículo de documentación."
-
-msgid "You do not have permission to organize documentation."
-msgstr "No tienes permiso para organizar la documentación."
-
-msgid "You do not have permission to reorder documentation categories."
-msgstr "No tienes permiso para reordenar las categorías de documentación."
-
-#: src/Admin/OrganizerPage.php
-msgid "Expand all"
-msgstr "Expandir todo"
-
-#: src/Admin/OrganizerPage.php
-msgid "Collapse all"
-msgstr "Contraer todo"
-
-#: src/Admin/OrganizerPage.php
-msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
-msgstr "Estos documentos están asignados a categorías de documentación en distintas ramas de la jerarquía. Muévelos a una sola rama estructural para resolverlo."
-
-#: src/Admin/SettingsPage.php
-msgid "Action required"
-msgstr "Acción requerida"
-
-#: src/Admin/SettingsPage.php
-msgid "Blocking URL conflicts: %d"
-msgstr "Conflictos de URL bloqueantes: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Category hierarchy"
-msgstr "Jerarquía de categorías"
-
-#: src/Admin/SettingsPage.php
-msgid "Category hierarchy readiness"
-msgstr "Estado de preparación de la jerarquía de categorías"
-
-#: src/Admin/SettingsPage.php
-msgid "Category hierarchy uses the same structural category resolution as the Documentation Organizer. Safe parent categories are included automatically; unresolved or colliding documents use the reserved document/ fail-safe route."
-msgstr "La jerarquía de categorías usa la misma resolución estructural de categorías que Documentation Organizer. Las categorías superiores seguras se incluyen automáticamente; los documentos sin resolver o con colisiones usan la ruta de respaldo reservada document/."
-
-#: src/Admin/SettingsPage.php
-msgid "Category hierarchy was not enabled."
-msgstr "No se activó la jerarquía de categorías."
-
-#: src/Admin/SettingsPage.php
-msgid "Configure the public Docs namespace and choose whether document URLs stay simple or include the resolved Doc Category hierarchy."
-msgstr "Configura el espacio de nombres público de Docs y elige si las URL de los documentos se mantienen simples o incluyen la jerarquía resuelta de Doc Categories."
-
-#: src/Admin/SettingsPage.php
-msgid "Document URL structure"
-msgstr "Estructura de URL de documentos"
-
-#: src/Admin/SettingsPage.php
-msgid "Documents that need structural review: %d"
-msgstr "Documentos que requieren revisión estructural: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Documents using the fail-safe route because of a category collision: %d"
-msgstr "Documentos que usan la ruta de respaldo por una colisión de categoría: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Duplicate category paths: %d"
-msgstr "Rutas de categoría duplicadas: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Duplicate document routes: %d"
-msgstr "Rutas de documento duplicadas: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Invalid category hierarchy paths: %d"
-msgstr "Rutas de jerarquía de categorías no válidas: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Legacy Simple URL collisions: %d"
-msgstr "Colisiones con URL Simple heredadas: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "No blocking URL conflicts were detected."
-msgstr "No se detectaron conflictos de URL bloqueantes."
-
-#: src/Admin/SettingsPage.php
-msgid "Permalink settings updated"
-msgstr "Ajustes de enlaces permanentes actualizados"
-
-#: src/Admin/SettingsPage.php
-msgid "Ready"
-msgstr "Listo"
-
-#: src/Admin/SettingsPage.php
-msgid "Reserved Docs URL base conflicts: %d"
-msgstr "Conflictos con bases de URL reservadas de Docs: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Reserved top-level category slugs: %d"
-msgstr "Slugs reservados de categorías de nivel superior: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Resolve the blocking URL conflicts shown below and save the permalink settings again."
-msgstr "Resuelve los conflictos de URL bloqueantes que se muestran a continuación y vuelve a guardar los ajustes de enlaces permanentes."
-
-#: src/Admin/SettingsPage.php
-msgid "Save permalinks"
-msgstr "Guardar enlaces permanentes"
-
-#: src/Admin/SettingsPage.php
-msgid "Simple"
-msgstr "Simple"
-
-#: src/Admin/SettingsPage.php
-msgid "The Docs URL settings are active. WordPress rewrite rules were refreshed once after the new routes were registered."
-msgstr "Los ajustes de URL de Docs están activos. Las reglas de reescritura de WordPress se actualizaron una vez después de registrar las nuevas rutas."
-
-#: src/Admin/SettingsPage.php
-msgid "The Docs permalink settings already had these values, so no rewrite refresh was necessary."
-msgstr "Los ajustes de enlaces permanentes de Docs ya tenían estos valores, por lo que no fue necesario actualizar las reglas de reescritura."
-
-#: src/Permalinks/ReservedSlugGuard.php
-msgid "This top-level Doc Category slug is reserved by the active Docs URL structure."
-msgstr "Este slug de Doc Category de nivel superior está reservado por la estructura de URL de Docs activa."
-
-#: src/Admin/SettingsPage.php
-msgid "Unassigned documents using the fail-safe route: %d"
-msgstr "Documentos sin asignar que usan la ruta de respaldo: %d"
-
-#: src/Admin/SettingsPage.php
-msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
-msgstr "Se usa para el archivo de Docs y, en modo Jerarquía de categorías, para las rutas de categorías, etiquetas y documentos. Se admiten bases anidadas como knowledge/docs."
-
-#: src/Admin/SettingsPage.php
-msgid "Duplicate legacy document slugs: %d"
-msgstr "Slugs de documento heredados duplicados: %d"
-
-#: src/Admin/OrganizerPage.php
-#, php-format
-msgid "%d document"
-msgid_plural "%d documents"
-msgstr[0] "%d documento"
-msgstr[1] "%d documentos"
