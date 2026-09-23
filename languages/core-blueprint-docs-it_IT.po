@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Core Blueprint Docs 1.0.0-rc1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-core-blueprint-"
 "docs\n"
-"POT-Creation-Date: 2026-09-23 19:15+0000\n"
-"PO-Revision-Date: 2026-09-23 19:15+0000\n"
+"POT-Creation-Date: 2026-09-23 19:40+0000\n"
+"PO-Revision-Date: 2026-09-23 19:40+0000\n"
 "Last-Translator: Core Blueprint\n"
 "Language-Team: it_IT\n"
 "Language: it_IT\n"
@@ -56,7 +56,7 @@ msgid "Subtitle"
 msgstr "Sottotitolo"
 
 #: src/Admin/DocDetails.php:45
-#: src/Integration/Builders/Bricks/DynamicData.php:91
+#: src/Integration/Builders/Bricks/DynamicData.php:95
 msgid "Documentation status"
 msgstr "Stato della documentazione"
 
@@ -69,7 +69,7 @@ msgid "Optional product or documentation version."
 msgstr "Versione opzionale del prodotto o della documentazione."
 
 #: src/Admin/DocDetails.php:58 src/Frontend/Shortcodes.php:196
-#: src/Integration/Builders/Bricks/DynamicData.php:93
+#: src/Integration/Builders/Bricks/DynamicData.php:97
 msgid "Last reviewed"
 msgstr "Ultima revisione"
 
@@ -235,15 +235,15 @@ msgstr "Modifica"
 msgid "View Doc"
 msgstr "Visualizza Doc"
 
-#: src/Admin/OrganizerPage.php:422
+#: src/Admin/OrganizerPage.php:427
 msgid "Move to category"
 msgstr "Sposta nella categoria"
 
-#: src/Admin/OrganizerPage.php:424
+#: src/Admin/OrganizerPage.php:429
 msgid "Move to…"
 msgstr "Sposta in…"
 
-#: src/Admin/OrganizerPage.php:456
+#: src/Admin/OrganizerPage.php:461
 msgid "Nothing needs attention."
 msgstr "Nessun elemento richiede attenzione."
 
@@ -852,43 +852,47 @@ msgstr "è"
 msgid "is not"
 msgstr "non è"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:83
+#: src/Integration/Builders/Bricks/DynamicData.php:86
 msgid "Doc ID"
 msgstr "ID Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:84
+#: src/Integration/Builders/Bricks/DynamicData.php:87
+msgid "Doc number"
+msgstr "Numero del documento"
+
+#: src/Integration/Builders/Bricks/DynamicData.php:88
 msgid "Doc title"
 msgstr "Titolo Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:85
+#: src/Integration/Builders/Bricks/DynamicData.php:89
 msgid "Doc URL"
 msgstr "URL Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:86
+#: src/Integration/Builders/Bricks/DynamicData.php:90
 msgid "Doc excerpt"
 msgstr "Riassunto Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:87
+#: src/Integration/Builders/Bricks/DynamicData.php:91
 msgid "Doc content"
 msgstr "Contenuto Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:88
+#: src/Integration/Builders/Bricks/DynamicData.php:92
 msgid "Doc categories"
 msgstr "Categorie Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:89
+#: src/Integration/Builders/Bricks/DynamicData.php:93
 msgid "Doc tags"
 msgstr "Tag Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:90
+#: src/Integration/Builders/Bricks/DynamicData.php:94
 msgid "Doc subtitle"
 msgstr "Sottotitolo Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:92
+#: src/Integration/Builders/Bricks/DynamicData.php:96
 msgid "Doc version"
 msgstr "Versione Doc"
 
-#: src/Integration/Builders/Bricks/DynamicData.php:94
+#: src/Integration/Builders/Bricks/DynamicData.php:98
 msgid "Featured Doc"
 msgstr "Doc in evidenza"
 

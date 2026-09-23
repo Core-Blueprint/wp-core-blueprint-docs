@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23 19:15+0000\n"
+"POT-Creation-Date: 2026-09-23 19:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-blueprint-docs\n"
@@ -57,7 +57,7 @@ msgid "Subtitle"
 msgstr ""
 
 #: src/Admin/DocDetails.php:45
-#: src/Integration/Builders/Bricks/DynamicData.php:91
+#: src/Integration/Builders/Bricks/DynamicData.php:95
 msgid "Documentation status"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 
 #: src/Admin/DocDetails.php:58
 #: src/Frontend/Shortcodes.php:196
-#: src/Integration/Builders/Bricks/DynamicData.php:93
+#: src/Integration/Builders/Bricks/DynamicData.php:97
 msgid "Last reviewed"
 msgstr ""
 
@@ -222,15 +222,15 @@ msgstr ""
 msgid "View Doc"
 msgstr ""
 
-#: src/Admin/OrganizerPage.php:422
+#: src/Admin/OrganizerPage.php:427
 msgid "Move to category"
 msgstr ""
 
-#: src/Admin/OrganizerPage.php:424
+#: src/Admin/OrganizerPage.php:429
 msgid "Move to…"
 msgstr ""
 
-#: src/Admin/OrganizerPage.php:456
+#: src/Admin/OrganizerPage.php:461
 msgid "Nothing needs attention."
 msgstr ""
 
@@ -800,43 +800,47 @@ msgstr ""
 msgid "is not"
 msgstr ""
 
-#: src/Integration/Builders/Bricks/DynamicData.php:83
+#: src/Integration/Builders/Bricks/DynamicData.php:86
 msgid "Doc ID"
 msgstr ""
 
-#: src/Integration/Builders/Bricks/DynamicData.php:84
-msgid "Doc title"
-msgstr ""
-
-#: src/Integration/Builders/Bricks/DynamicData.php:85
-msgid "Doc URL"
-msgstr ""
-
-#: src/Integration/Builders/Bricks/DynamicData.php:86
-msgid "Doc excerpt"
-msgstr ""
-
 #: src/Integration/Builders/Bricks/DynamicData.php:87
-msgid "Doc content"
+msgid "Doc number"
 msgstr ""
 
 #: src/Integration/Builders/Bricks/DynamicData.php:88
-msgid "Doc categories"
+msgid "Doc title"
 msgstr ""
 
 #: src/Integration/Builders/Bricks/DynamicData.php:89
-msgid "Doc tags"
+msgid "Doc URL"
 msgstr ""
 
 #: src/Integration/Builders/Bricks/DynamicData.php:90
-msgid "Doc subtitle"
+msgid "Doc excerpt"
+msgstr ""
+
+#: src/Integration/Builders/Bricks/DynamicData.php:91
+msgid "Doc content"
 msgstr ""
 
 #: src/Integration/Builders/Bricks/DynamicData.php:92
-msgid "Doc version"
+msgid "Doc categories"
+msgstr ""
+
+#: src/Integration/Builders/Bricks/DynamicData.php:93
+msgid "Doc tags"
 msgstr ""
 
 #: src/Integration/Builders/Bricks/DynamicData.php:94
+msgid "Doc subtitle"
+msgstr ""
+
+#: src/Integration/Builders/Bricks/DynamicData.php:96
+msgid "Doc version"
+msgstr ""
+
+#: src/Integration/Builders/Bricks/DynamicData.php:98
 msgid "Featured Doc"
 msgstr ""
 
