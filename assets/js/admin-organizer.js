@@ -8,6 +8,7 @@ try {
 
 const root = document.querySelector('[data-cb-docs-organizer]');
 const reorder = window.cbCore?.reorder;
+const storageKey = String(data.stateKey || 'cb-docs-organizer:v1');
 
 const request = async (endpoint, payload) => {
 	const response = await fetch(endpoint, {
@@ -40,6 +41,80 @@ const request = async (endpoint, payload) => {
 
 const itemKind = (itemId) => String(itemId || '').split(':', 1)[0];
 
+const readDisclosureState = () => {
+	try {
+		const parsed = JSON.parse(window.localStorage.getItem(storageKey) || '{}');
+		if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+
+		return Object.fromEntries(
+			Object.entries(parsed).filter(([, value]) => typeof value === 'boolean')
+		);
+	} catch {
+		return {};
+	}
+};
+
+let disclosureState = readDisclosureState();
+
+const writeDisclosureState = () => {
+	try {
+		window.localStorage.setItem(storageKey, JSON.stringify(disclosureState));
+	} catch {
+		// Browser storage is an optional convenience, never a functional dependency.
+	}
+};
+
+const setTermExpanded = (section, expanded, persist = true) => {
+	if (!section) return;
+
+	const termId = String(section.dataset.cbDocsTermId || '');
+	const toggle = section.querySelector(':scope > .cb-docs-organizer__term-header [data-cb-docs-toggle-term]');
+	const content = section.querySelector(':scope > [data-cb-docs-term-content]');
+	if (!toggle || !content) return;
+
+	toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+	content.hidden = !expanded;
+	section.dataset.cbDocsExpanded = expanded ? '1' : '0';
+
+	if (persist && termId) {
+		disclosureState[termId] = expanded;
+		writeDisclosureState();
+	}
+};
+
+const initializeDisclosure = () => {
+	if (!root) return;
+
+	const liveTermIds = new Set();
+	root.querySelectorAll('[data-cb-docs-term-id]').forEach((section) => {
+		const termId = String(section.dataset.cbDocsTermId || '');
+		if (!termId) return;
+		liveTermIds.add(termId);
+
+		const defaultExpanded = section.dataset.cbDocsDefaultExpanded === '1';
+		const expanded = Object.prototype.hasOwnProperty.call(disclosureState, termId)
+			? disclosureState[termId]
+			: defaultExpanded;
+		setTermExpanded(section, expanded, false);
+	});
+
+	disclosureState = Object.fromEntries(
+		Object.entries(disclosureState).filter(([termId]) => liveTermIds.has(termId))
+	);
+	writeDisclosureState();
+};
+
+const setAllTermsExpanded = (expanded) => {
+	if (!root) return;
+
+	root.querySelectorAll('[data-cb-docs-term-id]').forEach((section) => {
+		const termId = String(section.dataset.cbDocsTermId || '');
+		setTermExpanded(section, expanded, false);
+		if (termId) disclosureState[termId] = expanded;
+	});
+	writeDisclosureState();
+};
+
 const syncMoveToControl = (row, targetTermId) => {
 	const select = row?.querySelector?.('[data-cb-docs-move-to]');
 	if (!select) return;
@@ -57,6 +132,29 @@ const syncEmptyStates = () => {
 		list.dataset.cbDocsEmpty = hasItems ? '0' : '1';
 	});
 };
+
+if (root) {
+	initializeDisclosure();
+
+	root.addEventListener('click', (event) => {
+		const toggle = event.target.closest?.('[data-cb-docs-toggle-term]');
+		if (toggle && root.contains(toggle)) {
+			const section = toggle.closest('[data-cb-docs-term-id]');
+			const expanded = toggle.getAttribute('aria-expanded') === 'true';
+			setTermExpanded(section, !expanded);
+			return;
+		}
+
+		if (event.target.closest?.('[data-cb-docs-expand-all]')) {
+			setAllTermsExpanded(true);
+			return;
+		}
+
+		if (event.target.closest?.('[data-cb-docs-collapse-all]')) {
+			setAllTermsExpanded(false);
+		}
+	});
+}
 
 if (root && reorder?.enhance) {
 	const controller = reorder.enhance(root, {
