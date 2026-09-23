@@ -202,10 +202,14 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 }
 
 .cb-docs-organizer__icon-button .dashicons {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
 	width: 18px;
 	height: 18px;
 	font-size: 18px;
-	line-height: 18px;
+	line-height: 1;
 }
 
 .cb-docs-organizer__attention-grid {
