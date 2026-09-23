@@ -77,6 +77,49 @@ $checks = [
 		str_contains( $sources['router'], 'legacy-category' )
 		&& str_contains( $sources['router'], 'legacy-tag' )
 		&& str_contains( $sources['router'], 'legacy-simple' )
+		&& str_contains( $sources['router'], "'^' . $base . '/(tag|document)/?
+
+	'Canonical document and term links are filtered centrally' =>
+		str_contains( $sources['router'], "add_filter( 'post_type_link'" )
+		&& str_contains( $sources['router'], "add_filter( 'term_link'" )
+		&& str_contains( $sources['router'], "add_filter( 'get_canonical_url'" ),
+
+	'Reserved top-level categories fail closed after hierarchy activation' =>
+		str_contains( $sources['guard'], "'pre_insert_term'" )
+		&& str_contains( $sources['guard'], "'wp_update_term_data'" )
+		&& str_contains( $sources['guard'], 'RouteIndex::RESERVED_ROOTS' ),
+
+	'Settings UI exposes structure mode examples and readiness' =>
+		str_contains( $sources['page'], 'Document URL structure' )
+		&& str_contains( $sources['page'], 'Category hierarchy readiness' )
+		&& str_contains( $sources['page'], 'Save permalinks' ),
+
+	'Breadcrumbs consume the canonical structural category resolver' =>
+		str_contains( $sources['shortcodes'], 'StructuralCategory::resolve' ),
+
+	'Plugin boots Catalog, reserved slug protection and Router' =>
+		str_contains( $sources['plugin'], 'Catalog::init()' )
+		&& str_contains( $sources['plugin'], 'ReservedSlugGuard::init()' )
+		&& str_contains( $sources['plugin'], 'Router::init()' ),
+];
+
+foreach ( $checks as $label => $passed ) {
+	if ( ! $passed ) {
+		fwrite( STDERR, 'Docs permalink contract smoke failed: ' . $label . "\n" );
+		exit( 1 );
+	}
+}
+
+foreach ( [ $sources['router'], $sources['canonical'], $sources['catalog'] ] as $source ) {
+	if ( str_contains( $source, 'bricks/' ) || str_contains( $source, '\\Bricks\\' ) || str_contains( $source, 'BRICKS_VERSION' ) ) {
+		fwrite( STDERR, "Docs permalink contract smoke failed: permalink domain must remain builder-agnostic.\n" );
+		exit( 1 );
+	}
+}
+
+echo "Docs permalink contract smoke passed.\n";
+" )
+		&& str_contains( $sources['router'], 'untrailingslashit( $current_path )' )
 		&& str_contains( $sources['router'], "wp_safe_redirect( $url, 301" ),
 
 	'Canonical document and term links are filtered centrally' =>
