@@ -141,8 +141,10 @@ final class Mutation {
 
 			if ( is_wp_error( $result ) ) {
 				Events::without_change_capture(
-					static function () use ( $document_id, $old_term_ids, $old_orders ): void {
-						wp_set_object_terms( $document_id, $old_term_ids, Taxonomies::CATEGORY, false );
+					static function () use ( $document_id, $old_term_ids, $old_orders, $same_structural_category ): void {
+						if ( ! $same_structural_category ) {
+							wp_set_object_terms( $document_id, $old_term_ids, Taxonomies::CATEGORY, false );
+						}
 						self::restore_document_orders( $old_orders );
 					}
 				);
