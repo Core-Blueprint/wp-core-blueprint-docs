@@ -74,9 +74,11 @@ final class OrganizerPage {
 						'nonce'            => wp_create_nonce( 'wp_rest' ),
 						'stateKey'         => 'cb-docs-organizer:v1:' . get_current_user_id(),
 						'i18n'             => [
-							'saveFailed' => __( 'The documentation structure could not be saved.', 'core-blueprint-docs' ),
-							'stale'      => __( 'The documentation structure changed. Reload the Organizer before continuing.', 'core-blueprint-docs' ),
-							'network'    => __( 'The documentation structure could not be saved because the request failed.', 'core-blueprint-docs' ),
+							'saveFailed'   => __( 'The documentation structure could not be saved.', 'core-blueprint-docs' ),
+							'stale'        => __( 'The documentation structure changed. Reload the Organizer before continuing.', 'core-blueprint-docs' ),
+							'network'      => __( 'The documentation structure could not be saved because the request failed.', 'core-blueprint-docs' ),
+							'documentOne'  => _x( '%d document', 'Organizer category document count singular', 'core-blueprint-docs' ),
+							'documentMany' => _x( '%d documents', 'Organizer category document count plural', 'core-blueprint-docs' ),
 						],
 					]
 				);
@@ -101,7 +103,9 @@ final class OrganizerPage {
 		}
 
 		$terms = self::terms_by_parent( (array) $snapshot['terms'] );
+		$docs_by_term = (array) $snapshot['docs_by_term'];
 		$all_terms = self::ordered_flat_terms( $terms );
+		$document_counts = self::document_counts( $terms, $docs_by_term );
 		?>
 		<div class="wrap cb-docs-organizer-wrap">
 			<h1><?php esc_html_e( 'Documentation Organizer', 'core-blueprint-docs' ); ?></h1>
@@ -120,7 +124,7 @@ final class OrganizerPage {
 					<button type="button" class="button button-secondary" data-cb-docs-collapse-all><?php esc_html_e( 'Collapse all', 'core-blueprint-docs' ); ?></button>
 				</div>
 
-				<?php self::render_term_list( 0, $terms, (array) $snapshot['docs_by_term'], $all_terms ); ?>
+				<?php self::render_term_list( 0, $terms, $docs_by_term, $all_terms, $document_counts ); ?>
 
 				<div class="cb-docs-organizer__attention-grid">
 					<?php self::render_attention_list( 'unassigned', __( 'Unassigned', 'core-blueprint-docs' ), __( 'These documents do not have a structural Doc Category yet.', 'core-blueprint-docs' ), (array) $snapshot['unassigned'], $all_terms ); ?>
@@ -189,11 +193,62 @@ final class OrganizerPage {
 	}
 
 	/**
+	 * Build recursive document totals for every structural category.
+	 *
+	 * A parent count includes documents assigned directly to that category and
+	 * documents in all descendant categories. Memoization keeps the traversal
+	 * linear for a valid taxonomy tree; the visiting guard fails closed if a
+	 * malformed hierarchy ever contains a cycle.
+	 *
+	 * @param array<int,array<int,array<string,mixed>>> $terms
+	 * @param array<int,array<int,array<string,mixed>>> $docs_by_term
+	 * @return array<int,int>
+	 */
+	private static function document_counts( array $terms, array $docs_by_term ): array {
+		$counts = [];
+		$visiting = [];
+
+		$count_term = static function ( int $term_id ) use ( &$count_term, &$counts, &$visiting, $terms, $docs_by_term ): int {
+			if ( isset( $counts[ $term_id ] ) ) {
+				return $counts[ $term_id ];
+			}
+			if ( isset( $visiting[ $term_id ] ) ) {
+				return 0;
+			}
+
+			$visiting[ $term_id ] = true;
+			$count = count( $docs_by_term[ $term_id ] ?? [] );
+			foreach ( $terms[ $term_id ] ?? [] as $child ) {
+				$child_id = (int) ( $child['id'] ?? 0 );
+				if ( $child_id > 0 ) {
+					$count += $count_term( $child_id );
+				}
+			}
+			unset( $visiting[ $term_id ] );
+
+			$counts[ $term_id ] = $count;
+			return $count;
+		};
+
+		foreach ( $terms as $siblings ) {
+			foreach ( $siblings as $term ) {
+				$term_id = (int) ( $term['id'] ?? 0 );
+				if ( $term_id > 0 ) {
+					$count_term( $term_id );
+				}
+			}
+		}
+
+		return $counts;
+	}
+
+	/**
 	 * @param array<int,array<int,array<string,mixed>>> $terms
 	 * @param array<int,array<int,array<string,mixed>>> $docs_by_term
 	 * @param array<int,array{id:int,label:string}> $all_terms
+	 * @param array<int,int> $document_counts
 	 */
-	private static function render_term_list( int $parent, array $terms, array $docs_by_term, array $all_terms ): void {
+	private static function render_term_list( int $parent, array $terms, array $docs_by_term, array $all_terms, array $document_counts ): void {
 		$list_id = 'terms:' . $parent;
 		$label = 0 === $parent ? __( 'Documentation sets', 'core-blueprint-docs' ) : __( 'Documentation sections', 'core-blueprint-docs' );
 		?>
@@ -205,7 +260,7 @@ final class OrganizerPage {
 			data-empty-label="<?php echo esc_attr__( 'No categories at this level.', 'core-blueprint-docs' ); ?>"
 		>
 			<?php foreach ( $terms[ $parent ] ?? [] as $term ) : ?>
-				<?php self::render_term( $term, $terms, $docs_by_term, $all_terms ); ?>
+				<?php self::render_term( $term, $terms, $docs_by_term, $all_terms, $document_counts ); ?>
 			<?php endforeach; ?>
 		</div>
 		<?php
@@ -216,8 +271,9 @@ final class OrganizerPage {
 	 * @param array<int,array<int,array<string,mixed>>> $terms
 	 * @param array<int,array<int,array<string,mixed>>> $docs_by_term
 	 * @param array<int,array{id:int,label:string}> $all_terms
+	 * @param array<int,int> $document_counts
 	 */
-	private static function render_term( array $term, array $terms, array $docs_by_term, array $all_terms ): void {
+	private static function render_term( array $term, array $terms, array $docs_by_term, array $all_terms, array $document_counts ): void {
 		$term_id = (int) $term['id'];
 		$parent_id = (int) $term['parent'];
 		$content_id = 'cb-docs-organizer-term-' . $term_id;
@@ -229,6 +285,11 @@ final class OrganizerPage {
 		$move_up_label = sprintf( '%s: %s', __( 'Up', 'core-blueprint-docs' ), (string) $term['name'] );
 		$move_down_label = sprintf( '%s: %s', __( 'Down', 'core-blueprint-docs' ), (string) $term['name'] );
 		$edit_label = __( 'Edit category', 'core-blueprint-docs' );
+		$document_count = (int) ( $document_counts[ $term_id ] ?? 0 );
+		$document_count_label = sprintf(
+			_n( '%d document', '%d documents', $document_count, 'core-blueprint-docs' ),
+			$document_count
+		);
 		?>
 		<section
 			class="cb-docs-organizer__term"
@@ -252,7 +313,10 @@ final class OrganizerPage {
 					<?php if ( $can_manage ) : ?>
 						<button type="button" class="button-link cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), (string) $term['name'] ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
 					<?php endif; ?>
-					<strong><?php echo esc_html( (string) $term['name'] ); ?></strong>
+					<div class="cb-docs-organizer__term-label">
+						<strong><?php echo esc_html( (string) $term['name'] ); ?></strong>
+						<span class="cb-docs-organizer__count" data-cb-docs-document-count><?php echo esc_html( $document_count_label ); ?></span>
+					</div>
 				</div>
 				<div class="cb-docs-organizer__actions">
 					<?php if ( $can_manage ) : ?>
@@ -272,7 +336,7 @@ final class OrganizerPage {
 				<?php if ( ! $default_expanded ) : ?>hidden<?php endif; ?>
 			>
 				<?php self::render_document_list( $term_id, (array) ( $docs_by_term[ $term_id ] ?? [] ), $all_terms ); ?>
-				<?php self::render_term_list( $term_id, $terms, $docs_by_term, $all_terms ); ?>
+				<?php self::render_term_list( $term_id, $terms, $docs_by_term, $all_terms, $document_counts ); ?>
 			</div>
 		</section>
 		<?php
