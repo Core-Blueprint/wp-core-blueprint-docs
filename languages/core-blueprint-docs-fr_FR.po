@@ -972,3 +972,10 @@ msgstr "Utilisé pour l’archive Docs et, en mode Hiérarchie des catégories, 
 #: src/Admin/SettingsPage.php
 msgid "Duplicate legacy document slugs: %d"
 msgstr "Slugs de document hérités en double : %d"
+
+#: src/Admin/OrganizerPage.php
+#, php-format
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] "%d document"
+msgstr[1] "%d documents"

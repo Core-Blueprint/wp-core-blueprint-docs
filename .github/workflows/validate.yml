@@ -40,6 +40,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gettext
 
+      - name: Refresh i18n catalogs
+        shell: bash
+        run: bash tools/i18n/update
+
+      - name: Upload refreshed i18n catalogs
+        if: matrix.php == '8.4'
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-blueprint-docs-i18n
+          path: languages/
+          if-no-files-found: error
+          retention-days: 1
+
       - name: Run Docs checks
         shell: bash
         run: bash tools/check

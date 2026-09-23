@@ -77,8 +77,8 @@ final class OrganizerPage {
 							'saveFailed'   => __( 'The documentation structure could not be saved.', 'core-blueprint-docs' ),
 							'stale'        => __( 'The documentation structure changed. Reload the Organizer before continuing.', 'core-blueprint-docs' ),
 							'network'      => __( 'The documentation structure could not be saved because the request failed.', 'core-blueprint-docs' ),
-							'documentOne'  => _x( '%d document', 'Organizer category document count singular', 'core-blueprint-docs' ),
-							'documentMany' => _x( '%d documents', 'Organizer category document count plural', 'core-blueprint-docs' ),
+							'documentOne'  => _n( '%d document', '%d documents', 1, 'core-blueprint-docs' ),
+							'documentMany' => _n( '%d document', '%d documents', 2, 'core-blueprint-docs' ),
 						],
 					]
 				);

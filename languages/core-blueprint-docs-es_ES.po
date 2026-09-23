@@ -971,3 +971,10 @@ msgstr "Se usa para el archivo de Docs y, en modo Jerarquía de categorías, par
 #: src/Admin/SettingsPage.php
 msgid "Duplicate legacy document slugs: %d"
 msgstr "Slugs de documento heredados duplicados: %d"
+
+#: src/Admin/OrganizerPage.php
+#, php-format
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] "%d documento"
+msgstr[1] "%d documentos"
