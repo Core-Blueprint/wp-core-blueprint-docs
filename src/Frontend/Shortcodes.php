@@ -6,6 +6,7 @@ namespace CB\Docs\Frontend;
 use CB\Docs\Content\Meta;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
+use CB\Docs\Structure\CategoryOrder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -241,6 +242,12 @@ final class Shortcodes {
 			$allowed_terms[ $term_id ] = true;
 			$terms_by_parent[ (int) $term->parent ][] = $term;
 		}
+
+		update_meta_cache( 'term', $term_ids );
+		foreach ( $terms_by_parent as &$siblings ) {
+			$siblings = CategoryOrder::sort_terms( $siblings );
+		}
+		unset( $siblings );
 
 		if ( empty( $term_ids ) ) {
 			return [ 'terms_by_parent' => $terms_by_parent, 'docs_by_term' => [] ];
