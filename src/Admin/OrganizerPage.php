@@ -256,11 +256,11 @@ final class OrganizerPage {
 				</div>
 				<div class="cb-docs-organizer__actions">
 					<?php if ( $can_manage ) : ?>
-						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-up aria-label="<?php echo esc_attr( $move_up_label ); ?>" title="<?php echo esc_attr( $move_up_label ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
-						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-down aria-label="<?php echo esc_attr( $move_down_label ); ?>" title="<?php echo esc_attr( $move_down_label ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
+						<button type="button" class="button button-compact cb-docs-organizer__icon-button" data-cb-docs-move-up aria-label="<?php echo esc_attr( $move_up_label ); ?>" title="<?php echo esc_attr( $move_up_label ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
+						<button type="button" class="button button-compact cb-docs-organizer__icon-button" data-cb-docs-move-down aria-label="<?php echo esc_attr( $move_down_label ); ?>" title="<?php echo esc_attr( $move_down_label ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
 					<?php endif; ?>
 					<?php if ( is_string( $edit_link ) && '' !== $edit_link ) : ?>
-						<a class="button button-small cb-docs-organizer__icon-button" href="<?php echo esc_url( $edit_link ); ?>" aria-label="<?php echo esc_attr( $edit_label ); ?>" title="<?php echo esc_attr( $edit_label ); ?>"><span class="dashicons dashicons-edit" aria-hidden="true"></span></a>
+						<a class="button button-compact cb-docs-organizer__icon-button" href="<?php echo esc_url( $edit_link ); ?>" aria-label="<?php echo esc_attr( $edit_label ); ?>" title="<?php echo esc_attr( $edit_label ); ?>"><span class="dashicons dashicons-edit" aria-hidden="true"></span></a>
 					<?php endif; ?>
 				</div>
 			</header>
@@ -351,8 +351,8 @@ final class OrganizerPage {
 			<?php if ( $can_edit ) : ?>
 				<div class="cb-docs-organizer__actions">
 					<?php if ( $ordered ) : ?>
-						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-up aria-label="<?php echo esc_attr( $move_up_label ); ?>" title="<?php echo esc_attr( $move_up_label ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
-						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-down aria-label="<?php echo esc_attr( $move_down_label ); ?>" title="<?php echo esc_attr( $move_down_label ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
+						<button type="button" class="button button-compact cb-docs-organizer__icon-button" data-cb-docs-move-up aria-label="<?php echo esc_attr( $move_up_label ); ?>" title="<?php echo esc_attr( $move_up_label ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
+						<button type="button" class="button button-compact cb-docs-organizer__icon-button" data-cb-docs-move-down aria-label="<?php echo esc_attr( $move_down_label ); ?>" title="<?php echo esc_attr( $move_down_label ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
 					<?php endif; ?>
 					<?php if ( $can_assign ) : ?>
 						<label class="screen-reader-text" for="cb-docs-move-<?php echo esc_attr( (string) $document_id ); ?>"><?php esc_html_e( 'Move to category', 'core-blueprint-docs' ); ?></label>
@@ -364,10 +364,10 @@ final class OrganizerPage {
 						</select>
 					<?php endif; ?>
 					<?php if ( is_string( $edit_link ) && '' !== $edit_link ) : ?>
-						<a class="button button-small cb-docs-organizer__icon-button" href="<?php echo esc_url( $edit_link ); ?>" aria-label="<?php echo esc_attr( $edit_label ); ?>" title="<?php echo esc_attr( $edit_label ); ?>"><span class="dashicons dashicons-edit" aria-hidden="true"></span></a>
+						<a class="button button-compact cb-docs-organizer__icon-button" href="<?php echo esc_url( $edit_link ); ?>" aria-label="<?php echo esc_attr( $edit_label ); ?>" title="<?php echo esc_attr( $edit_label ); ?>"><span class="dashicons dashicons-edit" aria-hidden="true"></span></a>
 					<?php endif; ?>
 					<?php if ( '' !== $view_link ) : ?>
-						<a class="button button-small cb-docs-organizer__icon-button" href="<?php echo esc_url( $view_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $view_label ); ?>" title="<?php echo esc_attr( $view_label ); ?>"><span class="dashicons dashicons-visibility" aria-hidden="true"></span></a>
+						<a class="button button-compact cb-docs-organizer__icon-button" href="<?php echo esc_url( $view_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $view_label ); ?>" title="<?php echo esc_attr( $view_label ); ?>"><span class="dashicons dashicons-visibility" aria-hidden="true"></span></a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>

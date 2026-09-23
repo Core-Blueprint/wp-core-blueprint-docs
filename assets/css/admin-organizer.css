@@ -189,27 +189,11 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 	min-height: var(--cb-docs-org-control-height);
 }
 
-.cb-docs-organizer__icon-button {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+.cb-docs-organizer__actions .button.button-compact.cb-docs-organizer__icon-button {
 	width: var(--cb-docs-org-control-height);
-	height: var(--cb-docs-org-control-height);
 	min-width: var(--cb-docs-org-control-height);
-	min-height: var(--cb-docs-org-control-height);
 	aspect-ratio: 1 / 1;
-	padding: 0;
-}
-
-.cb-docs-organizer__icon-button .dashicons {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex: 0 0 auto;
-	width: 18px;
-	height: 18px;
-	font-size: 18px;
-	line-height: 1;
+	padding-inline: 0;
 }
 
 .cb-docs-organizer__attention-grid {
