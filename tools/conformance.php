@@ -42,6 +42,7 @@ $expected = [
 	'src/Structure/Revision.php',
 	'src/Structure/Mutation.php',
 	'src/Structure/MutationLock.php',
+	'src/Structure/DocumentLocation.php',
 	'src/Permalinks/RouteIndex.php',
 	'src/Permalinks/Catalog.php',
 	'src/Permalinks/Readiness.php',
@@ -49,6 +50,7 @@ $expected = [
 	'src/Permalinks/ReservedSlugGuard.php',
 	'src/Permalinks/Router.php',
 	'src/Frontend/Queries.php',
+	'src/Frontend/Navigation/AdjacentDocuments.php',
 	'src/Frontend/Shortcodes.php',
 	'src/Frontend/DocumentAccess.php',
 	'src/Frontend/Data/Document.php',
@@ -276,7 +278,7 @@ foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $requi
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
-foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()' ] as $required ) {
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()', 'AdjacentDocuments::init()' ] as $required ) {
 	if ( ! str_contains( $plugin, $required ) ) {
 		$failures[] = 'Plugin contract is missing ' . $required . '.';
 	}
