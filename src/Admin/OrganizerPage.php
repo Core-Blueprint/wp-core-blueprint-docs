@@ -226,6 +226,9 @@ final class OrganizerPage {
 		$manage_cap = $taxonomy && isset( $taxonomy->cap->manage_terms ) ? (string) $taxonomy->cap->manage_terms : 'manage_categories';
 		$can_manage = current_user_can( $manage_cap );
 		$edit_link = get_edit_term_link( $term_id, Taxonomies::CATEGORY, PostType::TYPE );
+		$move_up_label = sprintf( '%s: %s', __( 'Up', 'core-blueprint-docs' ), (string) $term['name'] );
+		$move_down_label = sprintf( '%s: %s', __( 'Down', 'core-blueprint-docs' ), (string) $term['name'] );
+		$edit_label = __( 'Edit category', 'core-blueprint-docs' );
 		?>
 		<section
 			class="cb-docs-organizer__term"
@@ -253,11 +256,11 @@ final class OrganizerPage {
 				</div>
 				<div class="cb-docs-organizer__actions">
 					<?php if ( $can_manage ) : ?>
-						<button type="button" class="button button-small" data-cb-docs-move-up><?php esc_html_e( 'Up', 'core-blueprint-docs' ); ?></button>
-						<button type="button" class="button button-small" data-cb-docs-move-down><?php esc_html_e( 'Down', 'core-blueprint-docs' ); ?></button>
+						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-up aria-label="<?php echo esc_attr( $move_up_label ); ?>" title="<?php echo esc_attr( $move_up_label ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
+						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-down aria-label="<?php echo esc_attr( $move_down_label ); ?>" title="<?php echo esc_attr( $move_down_label ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
 					<?php endif; ?>
 					<?php if ( is_string( $edit_link ) && '' !== $edit_link ) : ?>
-						<a class="button button-small" href="<?php echo esc_url( $edit_link ); ?>"><?php esc_html_e( 'Edit category', 'core-blueprint-docs' ); ?></a>
+						<a class="button button-small cb-docs-organizer__icon-button" href="<?php echo esc_url( $edit_link ); ?>" aria-label="<?php echo esc_attr( $edit_label ); ?>" title="<?php echo esc_attr( $edit_label ); ?>"><span class="dashicons dashicons-edit" aria-hidden="true"></span></a>
 					<?php endif; ?>
 				</div>
 			</header>
@@ -313,6 +316,21 @@ final class OrganizerPage {
 		$assign_cap = $taxonomy && isset( $taxonomy->cap->assign_terms ) ? (string) $taxonomy->cap->assign_terms : 'edit_posts';
 		$can_assign = current_user_can( $assign_cap );
 		$edit_link = get_edit_post_link( $document_id );
+		$view_link = '';
+		$post = get_post( $document_id );
+		if ( $post instanceof \WP_Post ) {
+			if ( in_array( $post->post_status, [ 'publish', 'private' ], true ) ) {
+				$permalink = get_permalink( $post );
+				$view_link = is_string( $permalink ) ? $permalink : '';
+			} elseif ( $can_edit ) {
+				$preview = get_preview_post_link( $post );
+				$view_link = is_string( $preview ) ? $preview : '';
+			}
+		}
+		$move_up_label = sprintf( '%s: %s', __( 'Up', 'core-blueprint-docs' ), $title );
+		$move_down_label = sprintf( '%s: %s', __( 'Down', 'core-blueprint-docs' ), $title );
+		$edit_label = sprintf( '%s: %s', __( 'Edit', 'core-blueprint-docs' ), $title );
+		$view_label = sprintf( '%s: %s', __( 'View Doc', 'core-blueprint-docs' ), $title );
 		?>
 		<article
 			class="cb-docs-organizer__doc"
@@ -333,8 +351,8 @@ final class OrganizerPage {
 			<?php if ( $can_edit ) : ?>
 				<div class="cb-docs-organizer__actions">
 					<?php if ( $ordered ) : ?>
-						<button type="button" class="button button-small" data-cb-docs-move-up><?php esc_html_e( 'Up', 'core-blueprint-docs' ); ?></button>
-						<button type="button" class="button button-small" data-cb-docs-move-down><?php esc_html_e( 'Down', 'core-blueprint-docs' ); ?></button>
+						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-up aria-label="<?php echo esc_attr( $move_up_label ); ?>" title="<?php echo esc_attr( $move_up_label ); ?>"><span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span></button>
+						<button type="button" class="button button-small cb-docs-organizer__icon-button" data-cb-docs-move-down aria-label="<?php echo esc_attr( $move_down_label ); ?>" title="<?php echo esc_attr( $move_down_label ); ?>"><span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span></button>
 					<?php endif; ?>
 					<?php if ( $can_assign ) : ?>
 						<label class="screen-reader-text" for="cb-docs-move-<?php echo esc_attr( (string) $document_id ); ?>"><?php esc_html_e( 'Move to category', 'core-blueprint-docs' ); ?></label>
@@ -346,7 +364,10 @@ final class OrganizerPage {
 						</select>
 					<?php endif; ?>
 					<?php if ( is_string( $edit_link ) && '' !== $edit_link ) : ?>
-						<a class="button button-small" href="<?php echo esc_url( $edit_link ); ?>"><?php esc_html_e( 'Edit', 'core-blueprint-docs' ); ?></a>
+						<a class="button button-small cb-docs-organizer__icon-button" href="<?php echo esc_url( $edit_link ); ?>" aria-label="<?php echo esc_attr( $edit_label ); ?>" title="<?php echo esc_attr( $edit_label ); ?>"><span class="dashicons dashicons-edit" aria-hidden="true"></span></a>
+					<?php endif; ?>
+					<?php if ( '' !== $view_link ) : ?>
+						<a class="button button-small cb-docs-organizer__icon-button" href="<?php echo esc_url( $view_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $view_label ); ?>" title="<?php echo esc_attr( $view_label ); ?>"><span class="dashicons dashicons-visibility" aria-hidden="true"></span></a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
