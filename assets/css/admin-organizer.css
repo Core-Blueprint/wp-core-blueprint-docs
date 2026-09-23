@@ -19,8 +19,8 @@
 	gap: 16px;
 }
 
-.cb-docs-organizer__term-list:empty::before,
-.cb-docs-organizer__docs:empty::before {
+.cb-docs-organizer__term-list[data-cb-docs-empty="1"]::before,
+.cb-docs-organizer__docs[data-cb-docs-empty="1"]::before {
 	content: attr(data-empty-label);
 	display: block;
 	padding: 12px;
