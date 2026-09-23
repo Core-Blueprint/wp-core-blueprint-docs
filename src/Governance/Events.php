@@ -19,11 +19,13 @@ final class Events {
 	public const RESTORED         = 'docs.document.restored';
 	public const DELETED          = 'docs.document.deleted';
 	public const SETTINGS_UPDATED = 'docs.settings.updated';
+	public const STRUCTURE_UPDATED = 'docs.structure.updated';
 
 	/** @var array<int,array{created:bool,fields:array<string,bool>}> */
 	private static array $changes = [];
 	/** @var array<int,bool> */
 	private static array $lifecycle = [];
+	private static int $suspend_changes = 0;
 
 	public static function init(): void {
 		add_action( 'init', [ __CLASS__, 'register' ], 10 );
@@ -48,6 +50,7 @@ final class Events {
 		EventRegistry::register( [ 'id' => self::RESTORED, 'label' => __( 'Docs document restored', 'core-blueprint-docs' ), 'retention_category' => 'general' ] );
 		EventRegistry::register( [ 'id' => self::DELETED, 'label' => __( 'Docs document permanently deleted', 'core-blueprint-docs' ), 'retention_category' => 'general' ] );
 		EventRegistry::register( [ 'id' => self::SETTINGS_UPDATED, 'label' => __( 'Docs settings updated', 'core-blueprint-docs' ), 'retention_category' => 'settings' ] );
+		EventRegistry::register( [ 'id' => self::STRUCTURE_UPDATED, 'label' => __( 'Docs structure updated', 'core-blueprint-docs' ), 'retention_category' => 'general' ] );
 	}
 
 	public static function record_settings_updated( string $setting, string $before, string $after ): bool {
@@ -67,7 +70,43 @@ final class Events {
 		);
 	}
 
+
+	/**
+	 * Run one canonical structure mutation without emitting low-level document
+	 * update noise. The caller records one semantic structure event afterwards.
+	 */
+	public static function without_change_capture( callable $callback ): mixed {
+		++self::$suspend_changes;
+		try {
+			return $callback();
+		} finally {
+			self::$suspend_changes = max( 0, self::$suspend_changes - 1 );
+		}
+	}
+
+	/** @param array<string,mixed> $context */
+	public static function record_structure_updated( string $operation, array $context = [] ): bool {
+		$operation = sanitize_key( $operation );
+		if ( '' === $operation ) {
+			return false;
+		}
+
+		$safe = [ 'operation' => $operation ];
+		foreach ( $context as $key => $value ) {
+			$key = sanitize_key( (string) $key );
+			if ( '' === $key || ! is_scalar( $value ) ) {
+				continue;
+			}
+			$safe[ $key ] = is_int( $value ) ? $value : sanitize_text_field( (string) $value );
+		}
+
+		return Audit::record( self::STRUCTURE_UPDATED, 'notice', $safe );
+	}
+
 	public static function capture_post_update( int $post_id, \WP_Post $post_after, \WP_Post $post_before ): void {
+		if ( self::$suspend_changes > 0 ) {
+			return;
+		}
 		if ( ! self::is_doc( $post_after ) || self::is_noise( $post_id ) ) {
 			return;
 		}
@@ -104,6 +143,9 @@ final class Events {
 	}
 
 	public static function capture_insert( int $post_id, \WP_Post $post, bool $update, ?\WP_Post $post_before ): void {
+		if ( self::$suspend_changes > 0 ) {
+			return;
+		}
 		unset( $post_before );
 		if ( $update || ! self::is_doc( $post ) || 'auto-draft' === $post->post_status || self::is_noise( $post_id ) ) {
 			return;
@@ -112,6 +154,9 @@ final class Events {
 	}
 
 	public static function capture_meta_change( mixed $meta_id, int $post_id, string $meta_key, mixed $meta_value ): void {
+		if ( self::$suspend_changes > 0 ) {
+			return;
+		}
 		unset( $meta_id, $meta_value );
 		if ( PostType::TYPE !== get_post_type( $post_id ) || self::is_noise( $post_id ) ) {
 			return;
@@ -135,6 +180,9 @@ final class Events {
 
 	/** @param array<int|string,mixed>|string $terms @param int[] $tt_ids @param int[] $old_tt_ids */
 	public static function capture_terms_change( int $object_id, mixed $terms, array $tt_ids, string $taxonomy, bool $append, array $old_tt_ids ): void {
+		if ( self::$suspend_changes > 0 ) {
+			return;
+		}
 		unset( $terms, $tt_ids, $append, $old_tt_ids );
 		if ( PostType::TYPE !== get_post_type( $object_id ) || self::is_noise( $object_id ) ) {
 			return;
