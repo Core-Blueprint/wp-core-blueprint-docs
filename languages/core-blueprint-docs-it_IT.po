@@ -968,3 +968,7 @@ msgstr "Documenti non assegnati che usano il percorso di fallback: %d"
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr "Usato per l’archivio Docs e, in modalità Gerarchia delle categorie, per i percorsi di categorie, tag e documenti. Sono supportate basi annidate come knowledge/docs."
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Slug documento legacy duplicati: %d"
