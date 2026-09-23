@@ -12,15 +12,17 @@ Docs requires Core Blueprint Base and consumes only public Base contracts:
 
 - `CB_CORE_API_VERSION`
 - `CB\Core\ExtensionRegistry`
-- `CB\Core\Admin\PageRegistry`
-- `CB\Core\Admin\Page`
+- `CB\Core\Admin\SettingsRegistry`
+- `CB\Core\UI\Assets`
 - `CB\Core\UI\Card`
 - `CB\Core\UI\Notice`
 - `CB\Core\UI\IntegrationGrid`
 - `CB\Core\Governance\EventRegistry`
 - `CB\Core\Governance\Audit`
 
-The Docs Core Admin page is registered through `PageRegistry` and declares semantic Base components instead of private asset handles. Base owns shared presentation; Docs owns its information architecture and domain semantics.
+Docs configuration is contributed to the Core Blueprint Settings Hub through `SettingsRegistry`. The operational Documentation Organizer remains under the native Docs content menu and opts into the public Base Reorder Foundation through `CB\Core\UI\Assets::enqueue_reorder()` and the `@cb-core/reorder` module contract.
+
+Base owns generic reorder interaction, focus, accessibility, pending state and rollback presentation. Docs owns documentation structure, authorization, WordPress persistence, stale-state protection and semantic audit events.
 
 Docs does not use Base-private assets, repositories, `PageBase` or AuditLog internals.
 
@@ -29,6 +31,16 @@ Docs does not use Base-private assets, repositories, `PageBase` or AuditLog inte
 The optional Base Content Models module is not a Docs runtime dependency. Disabling Content Models must not disable the Docs content type or its fields.
 
 Docs therefore registers its own fixed schema directly with the WordPress registration APIs.
+
+## Organizer and structure boundary
+
+Docs keeps WordPress as the canonical datastore. The Organizer is a management layer over the existing `cb_doc` post type and hierarchical `cb_doc_category` taxonomy, not a second content system.
+
+Document order uses native `menu_order`. Category sibling order uses registered `cb_docs_order` term metadata. A deterministic structure revision covers only structural state so concurrent Organizer mutations can fail closed without treating ordinary content edits as structural conflicts.
+
+One Doc Category is the canonical structural assignment for an article in the Organizer. Documents with no category are shown as Unassigned. Documents with multiple Doc Categories are shown as Needs review and are never silently rewritten until an administrator chooses one structural location.
+
+Category hierarchy remains managed through WordPress taxonomy management. Organizer v1 reorders category siblings but does not reparent categories by drag.
 
 ## Permalink boundary
 
