@@ -74,6 +74,8 @@ final class Snapshot {
 			];
 		}
 
+		$parents = StructuralCategory::parent_map( $term_projection );
+
 		$documents = [];
 		$docs_by_term = [];
 		$unassigned = [];
@@ -93,13 +95,18 @@ final class Snapshot {
 			];
 			$documents[] = $document;
 
-			if ( 0 === count( $term_ids ) ) {
+			if ( empty( $term_ids ) ) {
 				$unassigned[] = $document;
-			} elseif ( 1 === count( $term_ids ) ) {
-				$docs_by_term[ $term_ids[0] ][] = $document;
-			} else {
-				$ambiguous[] = $document;
+				continue;
 			}
+
+			$structural_term_id = StructuralCategory::resolve( $term_ids, $parents );
+			if ( null === $structural_term_id ) {
+				$ambiguous[] = $document;
+				continue;
+			}
+
+			$docs_by_term[ $structural_term_id ][] = $document;
 		}
 
 		foreach ( $docs_by_term as &$term_documents ) {
