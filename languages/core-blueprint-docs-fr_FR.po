@@ -968,3 +968,7 @@ msgstr "Documents non attribués utilisant la route de secours : %d"
 #: src/Admin/SettingsPage.php
 msgid "Used for the Docs archive and, in Category hierarchy mode, category, tag and document paths. Nested bases such as knowledge/docs are supported."
 msgstr "Utilisé pour l’archive Docs et, en mode Hiérarchie des catégories, pour les chemins de catégories, de tags et de documents. Les bases imbriquées comme knowledge/docs sont prises en charge."
+
+#: src/Admin/SettingsPage.php
+msgid "Duplicate legacy document slugs: %d"
+msgstr "Slugs de document hérités en double : %d"
