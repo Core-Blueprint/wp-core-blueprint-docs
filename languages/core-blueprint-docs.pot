@@ -847,9 +847,6 @@ msgstr ""
 msgid "These documents do not have a structural Doc Category yet."
 msgstr ""
 
-msgid "These documents have more than one Doc Category. Move one to a single structural category to resolve it."
-msgstr ""
-
 msgid "Unassigned"
 msgstr ""
 
@@ -866,4 +863,16 @@ msgid "You do not have permission to organize documentation."
 msgstr ""
 
 msgid "You do not have permission to reorder documentation categories."
+msgstr ""
+
+#: src/Admin/OrganizerPage.php
+msgid "Expand all"
+msgstr ""
+
+#: src/Admin/OrganizerPage.php
+msgid "Collapse all"
+msgstr ""
+
+#: src/Admin/OrganizerPage.php
+msgid "These documents are assigned to Doc Categories on different hierarchy branches. Move one to a single structural branch to resolve it."
 msgstr ""
