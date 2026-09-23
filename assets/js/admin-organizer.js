@@ -40,6 +40,14 @@ const request = async (endpoint, payload) => {
 
 const itemKind = (itemId) => String(itemId || '').split(':', 1)[0];
 
+const syncEmptyStates = () => {
+	if (!root) return;
+	root.querySelectorAll('[data-cb-core-reorder-list]').forEach((list) => {
+		const hasItems = Array.from(list.children).some((child) => child.matches?.('[data-cb-core-reorder-item]'));
+		list.dataset.cbDocsEmpty = hasItems ? '0' : '1';
+	});
+};
+
 if (root && reorder?.enhance) {
 	const controller = reorder.enhance(root, {
 		crossList: true,
@@ -127,6 +135,10 @@ if (root && reorder?.enhance) {
 			select.value = '';
 		});
 	});
+
+	root.addEventListener('cb:reorder:change', syncEmptyStates);
+	root.addEventListener('cb:reorder:error', syncEmptyStates);
+	syncEmptyStates();
 } else if (root) {
 	root.classList.add('is-reorder-unavailable');
 }
