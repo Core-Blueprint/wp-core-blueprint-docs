@@ -32,7 +32,7 @@ final class MutationLock {
 		if ( ! is_string( $raw ) || '' === $raw ) {
 			return new \WP_Error(
 				'cb_docs_structure_locked',
-				__( 'The documentation structure is being updated. Try again.', 'core-blueprint-docs' ),
+				__( 'The documentation structure could not be saved.', 'core-blueprint-docs' ),
 				[ 'status' => 423 ]
 			);
 		}
@@ -42,7 +42,7 @@ final class MutationLock {
 		if ( $acquired_at > 0 && ( time() - $acquired_at ) <= self::STALE_SECONDS ) {
 			return new \WP_Error(
 				'cb_docs_structure_locked',
-				__( 'The documentation structure is being updated. Try again.', 'core-blueprint-docs' ),
+				__( 'The documentation structure could not be saved.', 'core-blueprint-docs' ),
 				[ 'status' => 423 ]
 			);
 		}
@@ -60,7 +60,7 @@ final class MutationLock {
 		if ( 1 !== $updated ) {
 			return new \WP_Error(
 				'cb_docs_structure_locked',
-				__( 'The documentation structure changed while acquiring the Organizer lock. Try again.', 'core-blueprint-docs' ),
+				__( 'The documentation structure changed. Reload the Organizer before continuing.', 'core-blueprint-docs' ),
 				[ 'status' => 409 ]
 			);
 		}
