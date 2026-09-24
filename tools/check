@@ -38,6 +38,7 @@ php "$ROOT/tools/conformance.php"
 for test in \
   bootstrap-v1-smoke.php \
   content-model-smoke.php \
+  admin-list-filters-smoke.php \
   organizer-order-regression.php \
   organizer-structure-regression.php \
   permalink-route-regression.php \

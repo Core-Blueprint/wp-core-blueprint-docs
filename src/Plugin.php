@@ -5,6 +5,7 @@ namespace CB\Docs;
 
 use CB\Core\Admin\SettingsRegistry;
 use CB\Docs\Admin\DocDetails;
+use CB\Docs\Admin\ListFilters;
 use CB\Docs\Admin\OrganizerPage;
 use CB\Docs\Admin\OrganizerRest;
 use CB\Docs\Admin\SettingsPage;
@@ -53,6 +54,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			DocDetails::init();
+			ListFilters::init();
 			OrganizerPage::init();
 			SettingsPage::init();
 		}
