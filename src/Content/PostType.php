@@ -76,6 +76,7 @@ final class PostType {
 					'custom-fields',
 					'comments',
 					'page-attributes',
+					'slug',
 				],
 				'map_meta_cap'     => true,
 				'capability_type'  => 'post',
