@@ -15,6 +15,7 @@ First public release candidate.
 - Added a dedicated Bricks Docs Search element that delegates to the builder-neutral search component while leaving generic layout and presentation to Bricks.
 - Added Golden Core Admin `Overview → General → Integrations` information architecture while keeping content management WordPress-native.
 - Added a visual Documentation Organizer with category sibling ordering, article ordering, cross-section moves, stale-state protection and semantic structure auditing.
+- Added native Doc Category and Doc Tag filters to the WordPress Docs list, with hierarchical category presentation and combinable native query filtering.
 - Polished the Documentation Organizer with accessible square Dashicon action controls aligned to the canonical Base control height, plus a direct frontend/preview view action for documents.
 - Added configurable Docs URL base with backward-compatible Simple URLs and readiness-gated Category hierarchy URLs, including canonical category/document paths, reserved tag/document namespaces, deterministic fail-safe document routes and legacy redirects.
 - Added Core Blueprint Base public API/contract dependency guards, ExtensionRegistry integration and health status.
