@@ -4,7 +4,7 @@
 
 First public release candidate.
 
-- Added native `cb_doc` content with Gutenberg, revisions, comments, custom fields and menu ordering.
+- Added native `cb_doc` content with Gutenberg, revisions, comments, custom fields, menu ordering and editable WordPress document slugs.
 - Added hierarchical Doc Categories and Doc Tags.
 - Added registered native documentation metadata and the WP-native Doc Details editing UI.
 - Added builder-neutral frontend data, query, search and condition contracts.
