@@ -111,7 +111,7 @@ if grep -Eq '(^|/)(\.git|\.github|tools|tests|docs|build|dist)(/|$)' <<<"$ZIP_EN
   fail "release package contains repository-only paths"
 fi
 
-for required in "$PACKAGE/$MAIN_FILE" "$PACKAGE/uninstall.php" "$PACKAGE/languages/core-blueprint-docs.pot"; do
+for required in "$PACKAGE/$MAIN_FILE" "$PACKAGE/readme.txt" "$PACKAGE/uninstall.php" "$PACKAGE/languages/core-blueprint-docs.pot"; do
   grep -Fxq "$required" <<<"$ZIP_ENTRIES" || fail "required release file missing from ZIP: $required"
 done
 for locale in "${LOCALES[@]}"; do
