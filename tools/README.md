@@ -1,76 +1,60 @@
-# Release tooling
+# Core Blueprint Docs tooling
 
-## Purpose
+Docs uses the suite-owned canonical first-party localization workflow, one read-only product check gate and one fail-closed customer release entrypoint.
 
-`tools/build-release` creates the canonical installable Core Blueprint Docs release package. It is fail-closed: version drift, incomplete localization, syntax errors, conformance failures, package-boundary leaks or checksum failures stop the build.
+## Product checks
 
-## Canonical local check
-
-Run the complete repository-owned closure gate with:
+Run the canonical read-only quality gate with:
 
 ```bash
-bash tools/check
+./tools/check
 ```
 
-This gate validates source syntax, canonical localization, product conformance, focused smoke contracts and deterministic release packaging. It is the preferred local check before a release branch or pull request is considered stable.
+The gate validates release identity, PHP syntax, shipped JavaScript syntax, canonical localization, Docs conformance and every repository-owned Docs/Bricks smoke or regression test. It does not build a customer ZIP or mutate release-visible source.
 
-## Requirements
+## Localization
 
-- Bash
-- PHP CLI 8.4+
-- Python 3
-- WP-CLI with `wp i18n`
-- GNU gettext (`msgfmt`; `msgmerge` and `msgattrib` are also required when updating catalogs)
-- `zip` / `unzip`
-- `sha256sum`
+English source is authority. POT is generated from source and the six reviewed PO files are translation authority.
 
-## Canonical localization workflow
-
-English source is authoritative. The repository owns the release catalogs in `languages/`.
-
-Use the canonical operator entrypoints only:
+Use only:
 
 ```bash
-tools/i18n/update
-tools/i18n/check
+./tools/i18n/update
+./tools/i18n/check
 ```
 
-`tools/i18n/update` regenerates the POT from current source, synchronizes the six reviewed PO catalogs, removes obsolete entries, validates placeholders and completeness, and rebuilds committed MO artifacts for Docs.
+`tools/i18n/update` is the only mutating catalog command. `tools/i18n/check` is read-only.
 
-`tools/i18n/check` is read-only. It proves source/POT equality, required locale coverage, current metadata, no fuzzy or untranslated release strings, placeholder validity, shared Core Blueprint translations and reproducible MO artifacts.
+MO files are runtime build artifacts. They are not committed to the repository and are compiled fresh from reviewed PO files during release packaging.
 
-There is no separate compatibility sync command, translation-map overlay, xgettext workflow, polib authority or alternate catalog generator. Reviewed PO files remain translation source; POT and MO files are generated/reproducible artifacts under the canonical Core Blueprint i18n contract.
+Do not add product-specific translation maps, live machine translation, alternate sync scripts or any other second translation authority.
 
-## Release build
+## Customer release
 
-From the repository root:
+Build the accepted customer artifact with:
 
 ```bash
-bash tools/build-release
+./tools/build-release
 ```
 
-The release builder runs `tools/i18n/check` before copying catalogs into the package. It never repairs or mutates localization during packaging. A stale or incomplete catalog therefore fails before a release ZIP is accepted.
+The builder first requires `./tools/check` to pass, then stages only the explicit runtime/public release surface, compiles locale MO files in isolated staging, validates the staged PHP and JavaScript, normalizes timestamps, creates the canonical `core-blueprint-docs/` ZIP root, rejects development-only paths and emits a SHA-256 checksum.
+
+The builder is read-only with respect to release-visible source.
 
 ## Output
 
-For the current first public release candidate the builder writes:
+Accepted repository-local release artifacts are written only to:
 
 ```text
-build/core-blueprint-docs-1.0.0-rc1.zip
-build/core-blueprint-docs-1.0.0-rc1.zip.sha256
+dist/core-blueprint-docs-1.0.0-rc1.zip
+dist/core-blueprint-docs-1.0.0-rc1.zip.sha256
 ```
 
-The ZIP has exactly one canonical plugin root:
-
-```text
-core-blueprint-docs/
-```
-
-The plugin root is never renamed to a branch, tag, version or GitHub archive name.
+`build/` is not an accepted artifact destination. It may only be used as disposable local state if a future workflow genuinely requires it.
 
 ## Production package boundary
 
-The installable package contains only the release-facing plugin surface:
+The installable package contains:
 
 - `core-blueprint-docs.php`
 - `uninstall.php`
@@ -78,27 +62,9 @@ The installable package contains only the release-facing plugin surface:
 - `README.md`
 - `CHANGELOG.md`
 - `assets/`
-- `languages/`
+- `languages/` with POT, reviewed PO and freshly compiled MO files
 - `src/`
 
-Repository-only paths such as `.github/`, `tools/`, `tests/`, `docs/` and `build/` are excluded and explicitly rejected if they leak into the ZIP.
+Repository-only paths such as `.git/`, `.github/`, `tools/`, `tests/`, `docs/`, `dist/`, `build/`, `.venv/`, `vendor/` and `node_modules/` are rejected if they leak into the ZIP.
 
-## Validation and failure behavior
-
-Before a ZIP is accepted, the builder:
-
-1. verifies required command-line tools;
-2. requires public version `1.0.0-rc1` and checks plugin-header/runtime/readme/README/changelog consistency;
-3. lints all PHP source with PHP 8.4+;
-4. runs `tools/conformance.php`;
-5. runs canonical `tools/i18n/check`;
-6. stages only the production package boundary and committed verified catalogs;
-7. creates the ZIP with canonical `core-blueprint-docs/` root;
-8. rejects repository-only paths in the archive;
-9. writes a SHA256 checksum next to the ZIP.
-
-Any failed prerequisite or validation exits non-zero. A package from a failed run is not a valid release artifact.
-
-## Maintenance
-
-When runtime paths change, update the explicit copy list and package leak assertions together. When user-facing strings change, run `tools/i18n/update`, review every changed translation, then require `tools/i18n/check` to pass. Do not introduce a second localization authority or compatibility entrypoint before launch.
+A successful archive build is package evidence only. Manual WordPress/runtime field validation remains a separate release gate before merge.
