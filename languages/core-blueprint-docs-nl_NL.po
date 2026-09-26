@@ -1080,3 +1080,207 @@ msgid ""
 "Core API %1$s or a newer compatible minor version is required. Available "
 "Core API: %2$s."
 msgstr "Core API %1$s of een nieuwere compatibele minorversie is vereist. Beschikbare Core API: %2$s."
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Form layout"
+msgstr "Formulierindeling"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results layout"
+msgstr "Resultatenindeling"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Result items"
+msgstr "Resultaatitems"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Display"
+msgstr "Weergave"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Flex wrap"
+msgstr "Flex-afbreking"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "No wrap"
+msgstr "Niet afbreken"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Wrap"
+msgstr "Afbreken"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Wrap reverse"
+msgstr "Omgekeerd afbreken"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Direction"
+msgstr "Richting"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Align main axis"
+msgstr "Hoofdas uitlijnen"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Align cross axis"
+msgstr "Dwarsas uitlijnen"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Column gap"
+msgstr "Kolomafstand"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Row gap"
+msgstr "Rijafstand"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Grid columns"
+msgstr "Rasterkolommen"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Input + button"
+msgstr "Invoer + knop"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Stacked"
+msgstr "Gestapeld"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Grid gap"
+msgstr "Rasterafstand"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Minimum height"
+msgstr "Minimale hoogte"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus border"
+msgstr "Rand bij focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus box shadow"
+msgstr "Boxschaduw bij focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Hover text color"
+msgstr "Tekstkleur bij hover"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Hover background color"
+msgstr "Achtergrondkleur bij hover"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Hover border"
+msgstr "Rand bij hover"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus text color"
+msgstr "Tekstkleur bij focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus background color"
+msgstr "Achtergrondkleur bij focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results background"
+msgstr "Resultatenachtergrond"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results border"
+msgstr "Resultatenrand"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results padding"
+msgstr "Resultatenopvulling"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List display"
+msgstr "Lijstweergave"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List marker"
+msgstr "Lijstmarkering"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Browser default"
+msgstr "Browserstandaard"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "None"
+msgstr "Geen"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Disc"
+msgstr "Schijf"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Circle"
+msgstr "Cirkel"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Square"
+msgstr "Vierkant"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Decimal"
+msgstr "Decimaal"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Decimal leading zero"
+msgstr "Decimaal met voorloopnul"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Lower alpha"
+msgstr "Kleine letters"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Upper alpha"
+msgstr "Hoofdletters"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Lower roman"
+msgstr "Kleine Romeinse cijfers"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Upper roman"
+msgstr "Romeinse cijfers in hoofdletters"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List margin"
+msgstr "Lijstmarge"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List padding"
+msgstr "Lijstopvulling"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item background"
+msgstr "Itemachtergrond"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item border"
+msgstr "Itemrand"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item padding"
+msgstr "Itemopvulling"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item box shadow"
+msgstr "Item-boxschaduw"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Selected background color"
+msgstr "Achtergrondkleur geselecteerd"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Title hover color"
+msgstr "Titelkleur bij hover"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Title focus color"
+msgstr "Titelkleur bij focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Title selected color"
+msgstr "Titelkleur geselecteerd"
