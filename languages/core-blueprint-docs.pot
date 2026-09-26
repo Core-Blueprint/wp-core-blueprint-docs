@@ -856,10 +856,6 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: src/Integration/Builders/Bricks/Elements/Search.php:40
-msgid "Results"
-msgstr ""
-
 #: src/Integration/Builders/Bricks/Elements/Search.php:50
 msgid "Live search is powered by the builder-neutral Core Blueprint Docs search service. Bricks only controls presentation."
 msgstr ""
