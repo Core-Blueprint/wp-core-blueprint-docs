@@ -901,10 +901,6 @@ msgstr "Eingabefeld"
 msgid "Button"
 msgstr "Schaltfläche"
 
-#: src/Integration/Builders/Bricks/Elements/Search.php:40
-msgid "Results"
-msgstr "Ergebnisse"
-
 #: src/Integration/Builders/Bricks/Elements/Search.php:50
 msgid ""
 "Live search is powered by the builder-neutral Core Blueprint Docs search "
