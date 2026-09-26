@@ -898,10 +898,6 @@ msgstr "Invoerveld"
 msgid "Button"
 msgstr "Knop"
 
-#: src/Integration/Builders/Bricks/Elements/Search.php:40
-msgid "Results"
-msgstr "Resultaten"
-
 #: src/Integration/Builders/Bricks/Elements/Search.php:50
 msgid ""
 "Live search is powered by the builder-neutral Core Blueprint Docs search "
