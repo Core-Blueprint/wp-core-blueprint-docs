@@ -904,10 +904,6 @@ msgstr "Campo de entrada"
 msgid "Button"
 msgstr "Botón"
 
-#: src/Integration/Builders/Bricks/Elements/Search.php:40
-msgid "Results"
-msgstr "Resultados"
-
 #: src/Integration/Builders/Bricks/Elements/Search.php:50
 msgid ""
 "Live search is powered by the builder-neutral Core Blueprint Docs search "
