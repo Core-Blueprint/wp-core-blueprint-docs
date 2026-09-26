@@ -9,8 +9,35 @@ fail() {
   exit 1
 }
 
-VERSION="$(php -r '$source=file_get_contents($argv[1]); preg_match("/^ \\* Version:\\s+([^\\s]+)$/m", $source, $m); echo $m[1] ?? "";' "$ROOT/core-blueprint-docs.php")"
-CONSTANT_VERSION="$(php -r '$source=file_get_contents($argv[1]); preg_match("/define\\(\\s*'\\''CB_DOCS_VERSION'\\''\\s*,\\s*'\\''([^'\\'']+)'\\''\\s*\\);/", $source, $m); echo $m[1] ?? "";' "$ROOT/core-blueprint-docs.php")"
+header_value() {
+  local file="$1" label="$2"
+  php -r '
+    $lines = @file($argv[1], FILE_IGNORE_NEW_LINES);
+    if (!is_array($lines)) { exit(2); }
+    $label = preg_quote($argv[2], "/");
+    foreach ($lines as $line) {
+      if (preg_match("/^\\s*\\*?\\s*{$label}:\\s*(.*?)\\s*$/", $line, $m)) {
+        echo $m[1];
+        exit(0);
+      }
+    }
+  ' "$file" "$label"
+}
+
+define_value() {
+  local file="$1" name="$2"
+  php -r '
+    $source = @file_get_contents($argv[1]);
+    if (!is_string($source)) { exit(2); }
+    $name = preg_quote($argv[2], "/");
+    if (preg_match("/define\\(\\s*[\\x27\\x22]{$name}[\\x27\\x22]\\s*,\\s*[\\x27\\x22]([^\\x27\\x22]+)[\\x27\\x22]\\s*\\)/", $source, $m)) {
+      echo $m[1];
+    }
+  ' "$file" "$name"
+}
+
+VERSION="$(header_value "$ROOT/core-blueprint-docs.php" 'Version')"
+CONSTANT_VERSION="$(define_value "$ROOT/core-blueprint-docs.php" 'CB_DOCS_VERSION')"
 README_VERSION="$(awk '/^Stable tag:/ {print $3; exit}' "$ROOT/readme.txt")"
 
 [[ -n "$VERSION" ]] || fail "could not resolve plugin version"
