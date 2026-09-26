@@ -1098,3 +1098,207 @@ msgid ""
 "Core API %1$s or a newer compatible minor version is required. Available "
 "Core API: %2$s."
 msgstr "Core API %1$s ou une version mineure compatible plus récente est requise. Core API disponible : %2$s."
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Form layout"
+msgstr "Mise en page du formulaire"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results layout"
+msgstr "Mise en page des résultats"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Result items"
+msgstr "Éléments de résultat"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Display"
+msgstr "Affichage"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Flex wrap"
+msgstr "Retour à la ligne flex"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "No wrap"
+msgstr "Pas de retour à la ligne"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Wrap"
+msgstr "Retour à la ligne"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Wrap reverse"
+msgstr "Retour à la ligne inversé"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Direction"
+msgstr "Direction"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Align main axis"
+msgstr "Aligner l’axe principal"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Align cross axis"
+msgstr "Aligner l’axe transversal"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Column gap"
+msgstr "Espacement des colonnes"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Row gap"
+msgstr "Espacement des lignes"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Grid columns"
+msgstr "Colonnes de grille"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Input + button"
+msgstr "Champ + bouton"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Stacked"
+msgstr "Empilé"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Grid gap"
+msgstr "Espacement de la grille"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Minimum height"
+msgstr "Hauteur minimale"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus border"
+msgstr "Bordure au focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus box shadow"
+msgstr "Ombre de boîte au focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Hover text color"
+msgstr "Couleur du texte au survol"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Hover background color"
+msgstr "Couleur d’arrière-plan au survol"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Hover border"
+msgstr "Bordure au survol"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus text color"
+msgstr "Couleur du texte au focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Focus background color"
+msgstr "Couleur d’arrière-plan au focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results background"
+msgstr "Arrière-plan des résultats"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results border"
+msgstr "Bordure des résultats"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Results padding"
+msgstr "Espacement interne des résultats"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List display"
+msgstr "Affichage de la liste"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List marker"
+msgstr "Marqueur de liste"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Browser default"
+msgstr "Valeur par défaut du navigateur"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "None"
+msgstr "Aucun"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Disc"
+msgstr "Disque"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Circle"
+msgstr "Cercle"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Square"
+msgstr "Carré"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Decimal"
+msgstr "Décimal"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Decimal leading zero"
+msgstr "Décimal avec zéro initial"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Lower alpha"
+msgstr "Lettres minuscules"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Upper alpha"
+msgstr "Lettres majuscules"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Lower roman"
+msgstr "Chiffres romains minuscules"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Upper roman"
+msgstr "Chiffres romains majuscules"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List margin"
+msgstr "Marge de la liste"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "List padding"
+msgstr "Espacement interne de la liste"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item background"
+msgstr "Arrière-plan de l’élément"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item border"
+msgstr "Bordure de l’élément"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item padding"
+msgstr "Espacement interne de l’élément"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Item box shadow"
+msgstr "Ombre de boîte de l’élément"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Selected background color"
+msgstr "Couleur d’arrière-plan sélectionnée"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Title hover color"
+msgstr "Couleur du titre au survol"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Title focus color"
+msgstr "Couleur du titre au focus"
+
+#: src/Integration/Builders/Bricks/Elements/Search.php
+msgid "Title selected color"
+msgstr "Couleur du titre sélectionné"
