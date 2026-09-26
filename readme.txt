@@ -31,6 +31,14 @@ Core Blueprint Base with Core API 1.1 is required.
 4. Open Docs in WordPress admin and start authoring.
 5. Optionally open Core Blueprint > Docs to review Overview, General and Integrations.
 
+== Privacy ==
+
+Core Blueprint Docs stores documentation content, taxonomy structure and plugin settings in the local WordPress database.
+
+Live Docs Search uses a public read-only REST endpoint and returns only the result data needed by the search interface. The plugin does not record search terms, IP addresses, user agents, search histories or analytics events.
+
+Core Blueprint Docs does not include telemetry, tracking or external service requests.
+
 == Shortcodes ==
 
 * `[cb_docs_list]`

@@ -67,6 +67,8 @@ $expected = [
 	'src/Integration/Builders/Bricks/Queries.php',
 	'src/Integration/Builders/Bricks/Conditions.php',
 	'src/Integration/Builders/Bricks/GroupOrder.php',
+	'src/Integration/Builders/Bricks/ElementRegistry.php',
+	'src/Integration/Builders/Bricks/Elements/Search.php',
 	'docs/INTEGRATION-API.md',
 	'docs/PERMALINKS.md',
 	'docs/BRICKS.md',
@@ -400,6 +402,54 @@ $group_order = (string) file_get_contents( $root . '/src/Integration/Builders/Br
 foreach ( [ "GROUP_PREFIX = 'Core Blueprint '", 'PRIORITY     = 9999', 'array_splice' ] as $required ) {
 	if ( ! str_contains( $group_order, $required ) ) {
 		$failures[] = 'Core Blueprint Bricks group-order contract is missing ' . $required . '.';
+	}
+}
+
+$bricks_search_element = (string) file_get_contents( $root . '/src/Integration/Builders/Bricks/Elements/Search.php' );
+foreach ( [
+	'SearchComponent::render( $args )',
+	"'property' => 'list-style-type'",
+	"'formFlexWrap'",
+	"'formDirection'",
+	"'formJustifyContent'",
+	"'formAlignItems'",
+	"'formColumnGap'",
+	"'formRowGap'",
+	"'formGridGap'",
+	"'listFlexWrap'",
+	"'listDirection'",
+	"'listJustifyContent'",
+	"'listAlignItems'",
+	"'listColumnGap'",
+	"'listRowGap'",
+	"'listGridGap'",
+	"'itemSelectedBackground'",
+	"'buttonFocusBackground'",
+] as $required ) {
+	if ( ! str_contains( $bricks_search_element, $required ) ) {
+		$failures[] = 'Docs Search Bricks contract is missing ' . $required . '.';
+	}
+}
+if ( str_contains( $bricks_search_element, "'tab'   => 'style'" ) || str_contains( $bricks_search_element, "'tab'      => 'style'" ) ) {
+	$failures[] = 'Docs Search keeps module-specific controls under the Bricks Style tab instead of Content.';
+}
+if ( preg_match( "/'type'\s*=>\s*'slider'/", $bricks_search_element ) ) {
+	$failures[] = 'Docs Search uses an invalid slider control for a Bricks CSS length.';
+}
+foreach ( [ 'inputMinHeight', 'buttonMinHeight', 'formColumnGap', 'formRowGap', 'formGridGap', 'listColumnGap', 'listRowGap', 'listGridGap' ] as $length_control ) {
+	$marker = "\$this->controls['" . $length_control . "']";
+	$start  = strpos( $bricks_search_element, $marker );
+	if ( false === $start ) {
+		$failures[] = 'Docs Search is missing native length control ' . $length_control . '.';
+		continue;
+	}
+	$next  = strpos( $bricks_search_element, "\n\t\t\$this->controls[", $start + strlen( $marker ) );
+	$block = substr( $bricks_search_element, $start, false === $next ? null : $next - $start );
+	if ( ! str_contains( $block, "'type'  => 'number'" ) && ! str_contains( $block, "'type'     => 'number'" ) ) {
+		$failures[] = 'Docs Search length control ' . $length_control . ' is not a native Bricks number control.';
+	}
+	if ( ! str_contains( $block, "'units' => true" ) && ! str_contains( $block, "'units'    => true" ) ) {
+		$failures[] = 'Docs Search length control ' . $length_control . ' does not expose native Bricks units.';
 	}
 }
 
