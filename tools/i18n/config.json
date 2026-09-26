@@ -3,9 +3,26 @@
   "domain": "core-blueprint-docs",
   "main_file": "core-blueprint-docs.php",
   "version_constant": "CB_DOCS_VERSION",
-  "exclude": [".git", ".github", "docs", "languages", "tests", "tools", "dist", "build"],
+  "exclude": [
+    ".git",
+    ".github",
+    "docs",
+    "languages",
+    "tests",
+    "tools",
+    "dist",
+    "build",
+    ".venv",
+    "vendor",
+    "node_modules"
+  ],
   "skip_js": false,
   "commit_mo": false,
   "commit_l10n_php": false,
-  "source_paths": ["core-blueprint-docs.php", "src", "assets", "uninstall.php"]
+  "source_paths": [
+    "core-blueprint-docs.php",
+    "src",
+    "assets",
+    "uninstall.php"
+  ]
 }
