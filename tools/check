@@ -76,9 +76,20 @@ bash -n "$ROOT/tools/build-release" || fail "release builder shell syntax failed
 "$ROOT/tools/i18n/check"
 php "$ROOT/tools/conformance.php"
 
-for test in "$ROOT"/tests/*.php; do
-  [[ -f "$test" ]] || fail "no Docs tests found"
-  php "$test"
+for test in \
+  adjacent-navigation-regression.php \
+  admin-list-filters-smoke.php \
+  bootstrap-v1-smoke.php \
+  bricks-adapter-smoke.php \
+  bricks-styling-regression.php \
+  content-model-smoke.php \
+  frontend-read-policy-smoke.php \
+  organizer-contract-smoke.php \
+  organizer-order-regression.php \
+  organizer-structure-regression.php \
+  permalink-contract-smoke.php \
+  permalink-route-regression.php; do
+  php "$ROOT/tests/$test"
 done
 
 echo "Core Blueprint Docs checks: PASS"
