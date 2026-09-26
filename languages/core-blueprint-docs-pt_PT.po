@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Generated-By: Core Blueprint i18n tooling 1.1.6\n"
+"Generated-By: Core Blueprint i18n tooling 1.1.1\n"
 
 #. Plugin Name of the plugin
 #: core-blueprint-docs.php src/Integration/Builders/Bricks/Conditions.php:27
