@@ -129,42 +129,6 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 	white-space: nowrap;
 }
 
-.cb-docs-organizer__toggle,
-.cb-docs-organizer__handle {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 28px;
-	height: 28px;
-	text-decoration: none;
-}
-
-.cb-docs-organizer__toggle {
-	color: var(--cb-docs-org-muted);
-}
-
-.cb-docs-organizer__toggle:hover,
-.cb-docs-organizer__toggle:focus {
-	color: var(--cb-docs-org-text-strong);
-}
-
-.cb-docs-organizer__toggle .dashicons {
-	transition: transform 120ms ease;
-}
-
-.cb-docs-organizer__toggle[aria-expanded="true"] .dashicons {
-	transform: rotate(90deg);
-}
-
-.cb-docs-organizer__handle {
-	color: var(--cb-docs-org-accent);
-}
-
-.cb-docs-organizer__handle:hover,
-.cb-docs-organizer__handle:focus {
-	color: var(--cb-docs-org-accent-strong);
-}
-
 .cb-docs-organizer__doc {
 	padding: 10px 12px;
 	border: 1px solid var(--cb-docs-org-border);
@@ -247,12 +211,6 @@ html[data-cb-theme] body.cb-admin-theme .cb-docs-organizer-wrap {
 .cb-docs-organizer.is-reorder-unavailable [data-cb-docs-move-down],
 .cb-docs-organizer.is-reorder-unavailable [data-cb-docs-move-to] {
 	display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.cb-docs-organizer__toggle .dashicons {
-		transition: none;
-	}
 }
 
 @media (max-width: 900px) {

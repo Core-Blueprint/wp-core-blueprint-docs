@@ -304,14 +304,14 @@ final class OrganizerPage {
 				<div class="cb-docs-organizer__term-heading">
 					<button
 						type="button"
-						class="button-link cb-docs-organizer__toggle"
+						class="button-link cb-core-icon-control cb-core-disclosure-toggle cb-docs-organizer__toggle"
 						data-cb-docs-toggle-term
 						aria-expanded="<?php echo $default_expanded ? 'true' : 'false'; ?>"
 						aria-controls="<?php echo esc_attr( $content_id ); ?>"
 						aria-label="<?php echo esc_attr( (string) $term['name'] ); ?>"
 					><span class="dashicons dashicons-arrow-right-alt2" aria-hidden="true"></span></button>
 					<?php if ( $can_manage ) : ?>
-						<button type="button" class="button-link cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), (string) $term['name'] ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
+						<button type="button" class="button-link cb-core-icon-control cb-core-reorder-handle cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), (string) $term['name'] ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
 					<?php endif; ?>
 					<div class="cb-docs-organizer__term-label">
 						<strong><?php echo esc_html( (string) $term['name'] ); ?></strong>
@@ -407,7 +407,7 @@ final class OrganizerPage {
 		>
 			<div class="cb-docs-organizer__doc-main">
 				<?php if ( $can_edit ) : ?>
-					<button type="button" class="button-link cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), $title ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
+					<button type="button" class="button-link cb-core-icon-control cb-core-reorder-handle cb-docs-organizer__handle" data-cb-core-reorder-handle aria-label="<?php echo esc_attr( sprintf( __( 'Reorder %s', 'core-blueprint-docs' ), $title ) ); ?>"><span class="dashicons dashicons-move" aria-hidden="true"></span></button>
 				<?php endif; ?>
 				<span
 					class="cb-docs-organizer__doc-number"
