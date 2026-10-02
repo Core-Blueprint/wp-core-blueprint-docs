@@ -39,18 +39,20 @@ $checks = [
 		&& str_contains( $sources['settings'], "'cb_docs_candidate' => \$after['rewrite_base']" ),
 
 	'Hierarchy activation is readiness-gated before settings persistence' =>
-		str_contains( $sources['settings'], 'URL_STRUCTURE_HIERARCHY' )
+		str_contains( $sources['settings'], "self::URL_STRUCTURE_HIERARCHY === \$after['url_structure']" )
 		&& str_contains( $sources['settings'], "! Readiness::ready( \$after['rewrite_base'] )" )
-		&& str_contains( $sources['settings'], "'cb_docs_updated' => 'blocked'" ),
+		&& str_contains( $sources['settings'], "'cb_docs_updated'" )
+		&& str_contains( $sources['settings'], "=> 'blocked'" ),
 
 	'Only base or URL structure changes mark rewrite rules dirty' =>
 		str_contains( $sources['settings'], '$base_changed' )
 		&& str_contains( $sources['settings'], '$structure_changed' )
 		&& str_contains( $sources['settings'], 'REWRITE_DIRTY_OPTION' ),
 
-	'Hierarchy singles use the reserved document namespace while the archive keeps the Docs base' =>
+	'Hierarchy singles use the reserved document namespace while the archive exposes the Docs base only when runtime namespace is available' =>
 		str_contains( $sources['post_type'], "\$base . '/document'" )
-		&& str_contains( $sources['post_type'], "'has_archive'         => \$base" ),
+		&& str_contains( $sources['post_type'], 'Readiness::runtime_ready( $base )' )
+		&& str_contains( $sources['post_type'], "'has_archive'         => \$routes_ready ? \$base : false" ),
 
 	'Hierarchy categories use the dynamic router and tags use the reserved tag namespace' =>
 		str_contains( $sources['taxonomies'], "'rewrite'           => \$hierarchy ? false" )
