@@ -1337,3 +1337,55 @@ msgstr "Je hebt geen toestemming om de integratie-instellingen van Docs te wijzi
 
 msgid "Your Docs editor and builder adapter preferences are active."
 msgstr "De voorkeuren voor de Docs-editor en builderadapters zijn actief."
+
+msgid "Content settings"
+msgstr "Inhoudsinstellingen"
+
+msgid "Show result category"
+msgstr "Resultaatcategorie tonen"
+
+msgid "Document ID"
+msgstr "Document-ID"
+
+msgid "Leave at 0 to use the current Docs document."
+msgstr "Laat op 0 staan om het huidige Docs-document te gebruiken."
+
+msgctxt "block title"
+msgid "Docs List"
+msgstr "Docs-lijst"
+
+msgctxt "block description"
+msgid "Display a filtered list of published documentation."
+msgstr "Toon een gefilterde lijst met gepubliceerde documentatie."
+
+msgctxt "block title"
+msgid "Docs Navigation"
+msgstr "Docs-navigatie"
+
+msgctxt "block description"
+msgid "Display the hierarchical documentation navigation."
+msgstr "Toon de hiërarchische documentatienavigatie."
+
+msgctxt "block title"
+msgid "Docs Search"
+msgstr "Docs-zoeken"
+
+msgctxt "block description"
+msgid "Display the canonical live documentation search."
+msgstr "Toon de canonieke live zoekfunctie voor documentatie."
+
+msgctxt "block title"
+msgid "Docs Breadcrumbs"
+msgstr "Docs-broodkruimels"
+
+msgctxt "block description"
+msgid "Display breadcrumbs for the current documentation context."
+msgstr "Toon broodkruimels voor de huidige documentatiecontext."
+
+msgctxt "block title"
+msgid "Docs Meta"
+msgstr "Docs-metadata"
+
+msgctxt "block description"
+msgid "Display documentation metadata for the current or selected document."
+msgstr "Toon documentatiemetadata voor het huidige of geselecteerde document."
