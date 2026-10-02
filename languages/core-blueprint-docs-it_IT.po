@@ -1355,3 +1355,55 @@ msgstr "Non hai l’autorizzazione per modificare le impostazioni di integrazion
 
 msgid "Your Docs editor and builder adapter preferences are active."
 msgstr "Le preferenze per l’editor Docs e gli adattatori del builder sono attive."
+
+msgid "Content settings"
+msgstr "Impostazioni contenuto"
+
+msgid "Show result category"
+msgstr "Mostra categoria del risultato"
+
+msgid "Document ID"
+msgstr "ID documento"
+
+msgid "Leave at 0 to use the current Docs document."
+msgstr "Lascia 0 per usare il documento Docs corrente."
+
+msgctxt "block title"
+msgid "Docs List"
+msgstr "Elenco Docs"
+
+msgctxt "block description"
+msgid "Display a filtered list of published documentation."
+msgstr "Mostra un elenco filtrato della documentazione pubblicata."
+
+msgctxt "block title"
+msgid "Docs Navigation"
+msgstr "Navigazione Docs"
+
+msgctxt "block description"
+msgid "Display the hierarchical documentation navigation."
+msgstr "Mostra la navigazione gerarchica della documentazione."
+
+msgctxt "block title"
+msgid "Docs Search"
+msgstr "Ricerca Docs"
+
+msgctxt "block description"
+msgid "Display the canonical live documentation search."
+msgstr "Mostra la ricerca dinamica canonica della documentazione."
+
+msgctxt "block title"
+msgid "Docs Breadcrumbs"
+msgstr "Breadcrumb Docs"
+
+msgctxt "block description"
+msgid "Display breadcrumbs for the current documentation context."
+msgstr "Mostra i breadcrumb per il contesto di documentazione corrente."
+
+msgctxt "block title"
+msgid "Docs Meta"
+msgstr "Metadati Docs"
+
+msgctxt "block description"
+msgid "Display documentation metadata for the current or selected document."
+msgstr "Mostra i metadati della documentazione per il documento corrente o selezionato."
