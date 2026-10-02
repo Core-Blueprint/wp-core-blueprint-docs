@@ -1298,3 +1298,60 @@ msgstr "Couleur du titre au focus"
 #: src/Integration/Builders/Bricks/Elements/Search.php
 msgid "Title selected color"
 msgstr "Couleur du titre sélectionné"
+
+msgid "Adapter preferences"
+msgstr "Préférences des adaptateurs"
+
+msgid "Auto"
+msgstr "Automatique"
+
+msgid "Choose which optional presentation adapters Docs may register. Core Docs content and public contracts remain available regardless of these choices."
+msgstr "Choisissez les adaptateurs de présentation facultatifs que Docs peut enregistrer. Le contenu Core Docs et les contrats publics restent disponibles quels que soient ces choix."
+
+msgid "Disabled"
+msgstr "Désactivé"
+
+msgid "Do not register Docs Bricks elements, queries, dynamic data or conditions."
+msgstr "Ne pas enregistrer les éléments, requêtes, données dynamiques ou conditions Docs pour Bricks."
+
+msgid "Docs blocks are disabled. Native Docs content, shortcodes and public frontend contracts remain available."
+msgstr "Les blocs Docs sont désactivés. Le contenu Docs natif, les shortcodes et les contrats frontend publics restent disponibles."
+
+msgid "Docs blocks are enabled for the native WordPress block editor. Blocks remain thin consumers of the builder-neutral Docs frontend contracts."
+msgstr "Les blocs Docs sont activés pour l’éditeur de blocs natif de WordPress. Les blocs restent une fine couche de présentation au-dessus des contrats frontend Docs indépendants du constructeur."
+
+msgid "Enabled"
+msgstr "Activé"
+
+msgid "Gutenberg blocks"
+msgstr "Blocs Gutenberg"
+
+msgid "Integration settings updated"
+msgstr "Paramètres d’intégration mis à jour"
+
+msgid "Keep the Bricks adapter enabled when Bricks is available."
+msgstr "Maintenir l’adaptateur Bricks activé lorsque Bricks est disponible."
+
+msgid "Make Docs blocks available in the WordPress block editor."
+msgstr "Rendre les blocs Docs disponibles dans l’éditeur de blocs WordPress."
+
+msgid "No integration changes needed"
+msgstr "Aucune modification d’intégration nécessaire"
+
+msgid "Save integrations"
+msgstr "Enregistrer les intégrations"
+
+msgid "The Docs Bricks adapter is disabled by preference. Docs continues to work through native WordPress content, shortcodes and builder-neutral frontend contracts."
+msgstr "L’adaptateur Docs pour Bricks est désactivé dans les préférences. Docs continue de fonctionner avec le contenu WordPress natif, les shortcodes et les contrats frontend indépendants du constructeur."
+
+msgid "The selected integration preferences were already active."
+msgstr "Les préférences d’intégration sélectionnées étaient déjà actives."
+
+msgid "Use the Bricks adapter when Bricks is active."
+msgstr "Utiliser l’adaptateur Bricks lorsque Bricks est actif."
+
+msgid "You do not have permission to change Docs integration settings."
+msgstr "Vous n’avez pas l’autorisation de modifier les paramètres d’intégration de Docs."
+
+msgid "Your Docs editor and builder adapter preferences are active."
+msgstr "Vos préférences pour l’éditeur Docs et les adaptateurs de constructeur sont actives."
