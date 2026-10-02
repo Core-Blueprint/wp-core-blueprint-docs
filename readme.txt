@@ -13,7 +13,7 @@ Lightweight builder-agnostic documentation using native WordPress content, taxon
 
 Core Blueprint Docs provides a ready-made native WordPress documentation model so sites can start authoring immediately without manually configuring a custom post type, taxonomies and common documentation fields.
 
-Docs are normal WordPress content and can be edited in Gutenberg, consumed through builder-neutral frontend contracts and used by optional builder adapters. Bricks is the first supported adapter and is never required for Docs to function.
+Docs are normal WordPress content and can be edited in Gutenberg, consumed through builder-neutral frontend contracts and used by optional presentation adapters. Docs includes native dynamic Gutenberg blocks for List, Navigation, Search, Breadcrumbs and Meta. Bricks remains an optional builder adapter and is never required for Docs to function.
 
 Docs Search provides relevance-ordered live documentation search with keyboard support and a normal GET fallback. The same search component is available through `[cb_docs_search]` and the optional Bricks Docs Search element. Docs does not store search analytics or search histories.
 
@@ -29,7 +29,7 @@ Core Blueprint Base with Core API 1.1 is required.
 2. Upload the canonical `core-blueprint-docs` plugin folder or release ZIP.
 3. Activate Core Blueprint Docs.
 4. Open Docs in WordPress admin and start authoring.
-5. Optionally open Core Blueprint > Docs to review Overview, General and Integrations.
+5. Optionally open Core Blueprint > Docs to review Overview, General and Integrations, including Gutenberg and Bricks adapter preferences.
 
 == Privacy ==
 
@@ -38,6 +38,16 @@ Core Blueprint Docs stores documentation content, taxonomy structure and plugin 
 Live Docs Search uses a public read-only REST endpoint and returns only the result data needed by the search interface. The plugin does not record search terms, IP addresses, user agents, search histories or analytics events.
 
 Core Blueprint Docs does not include telemetry, tracking or external service requests.
+
+== Gutenberg blocks ==
+
+* Docs List
+* Docs Navigation
+* Docs Search
+* Docs Breadcrumbs
+* Docs Meta
+
+The blocks use the same canonical server-rendered Docs components as shortcodes and other adapters. Generic presentation remains controlled by the active theme and native WordPress block styling tools.
 
 == Shortcodes ==
 
@@ -55,6 +65,7 @@ Core Blueprint Docs does not include telemetry, tracking or external service req
 * Added live relevance-ordered Docs search with progressive GET fallback and an optional Bricks Docs Search element.
 * Added Golden Core Admin Overview, General and Integrations information architecture.
 * Added a visual Documentation Organizer using the public Core Blueprint Reorder Foundation.
-* Added builder-neutral data, query and condition contracts with an optional Bricks adapter.
+* Added builder-neutral data, query and condition contracts with optional Gutenberg and Bricks presentation adapters.
+* Added native dynamic Gutenberg blocks for Docs List, Navigation, Search, Breadcrumbs and Meta.
 * Added configurable Docs URL base with Simple and readiness-gated Category hierarchy URL structures, canonical fail-safe document routes and deterministic legacy redirects.
 * Added reproducible conformance, localization and release packaging tooling.
