@@ -16,7 +16,7 @@ foreach ( compact( 'post_type', 'taxonomies', 'meta', 'settings', 'queries' ) as
 }
 
 $checks = [
-	'Docs CPT is public, archived and REST-enabled' => str_contains( (string) $post_type, "public const TYPE = 'cb_doc';" ) && str_contains( (string) $post_type, "'has_archive'         => \$base" ) && str_contains( (string) $post_type, "'show_in_rest'        => true" ),
+	'Docs CPT is public, REST-enabled and conditionally exposes its archive when the namespace is available' => str_contains( (string) $post_type, "public const TYPE = 'cb_doc';" ) && str_contains( (string) $post_type, 'Readiness::runtime_ready( $base )' ) && str_contains( (string) $post_type, "'has_archive'         => \$routes_ready ? \$base : false" ) && str_contains( (string) $post_type, "'show_in_rest'        => true" ),
 	'Doc hierarchy is intentionally category-based rather than parent-child posts' => 1 === preg_match( "/'hierarchical'\\s*=>\\s*false/", (string) $post_type ) && str_contains( (string) $post_type, "'page-attributes'" ),
 	'Doc slug editing uses the native WordPress post_name field' => str_contains( (string) $post_type, "'slug'" ),
 	'Doc Categories and Doc Tags use separate native taxonomies' => str_contains( (string) $taxonomies, "public const CATEGORY = 'cb_doc_category';" ) && str_contains( (string) $taxonomies, "public const TAG      = 'cb_doc_tag';" ) && str_contains( (string) $taxonomies, "'docs-category'" ) && str_contains( (string) $taxonomies, "'docs-tag'" ),
