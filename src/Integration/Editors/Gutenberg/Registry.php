@@ -9,6 +9,7 @@ use CB\Docs\Frontend\Components\DocumentList;
 use CB\Docs\Frontend\Components\DocumentMeta;
 use CB\Docs\Frontend\Components\Navigation;
 use CB\Docs\Frontend\Components\Search;
+use CB\Docs\Integration\Preferences;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,14 +34,22 @@ final class Registry {
 
 		foreach ( self::BLOCKS as $directory => $callback ) {
 			$path = __DIR__ . '/blocks/' . $directory;
-			if ( ! is_readable( $path . '/block.json' ) ) {
+			$metadata_file = $path . '/block.json';
+			if ( ! is_readable( $metadata_file ) ) {
 				continue;
 			}
+
+			$metadata = json_decode( (string) file_get_contents( $metadata_file ), true );
+			$supports = is_array( $metadata ) && isset( $metadata['supports'] ) && is_array( $metadata['supports'] )
+				? $metadata['supports']
+				: [];
+			$supports['inserter'] = Preferences::gutenberg_enabled();
 
 			register_block_type(
 				$path,
 				[
 					'render_callback' => [ self::class, $callback ],
+					'supports'        => $supports,
 				]
 			);
 		}
