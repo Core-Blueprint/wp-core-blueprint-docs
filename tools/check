@@ -83,6 +83,7 @@ for test in \
   bricks-adapter-smoke.php \
   bricks-styling-regression.php \
   content-model-smoke.php \
+  frontend-components-contract.php \
   frontend-read-policy-smoke.php \
   integration-preferences-regression.php \
   organizer-contract-smoke.php \
