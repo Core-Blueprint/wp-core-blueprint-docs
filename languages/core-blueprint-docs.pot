@@ -308,14 +308,6 @@ msgstr ""
 msgid "The Docs permalink settings already had these values, so no rewrite refresh was necessary."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:236
-msgid "Category hierarchy was not enabled."
-msgstr ""
-
-#: src/Admin/SettingsPage.php:237
-msgid "Resolve the blocking URL conflicts shown below and save the permalink settings again."
-msgstr ""
-
 #: src/Admin/SettingsPage.php:242
 msgid "Permalinks"
 msgstr ""
@@ -1336,4 +1328,52 @@ msgstr ""
 
 msgctxt "block description"
 msgid "Display documentation metadata for the current or selected document."
+msgstr ""
+
+msgid "This URL base is reserved by WordPress."
+msgstr ""
+
+msgid "The WordPress page \"%s\" already uses this path."
+msgstr ""
+
+msgid "(Untitled)"
+msgstr ""
+
+msgid "The %s archive already uses this path."
+msgstr ""
+
+msgid "The %s taxonomy already uses this path."
+msgstr ""
+
+msgid "Public Docs URLs are paused because the configured URL base is already in use."
+msgstr ""
+
+msgid "Review permalink settings"
+msgstr ""
+
+msgid "Permalink settings not changed"
+msgstr ""
+
+msgid "Resolve the blocking URL conflicts shown below. The previous Docs settings were kept."
+msgstr ""
+
+msgid "Public Docs URLs are paused"
+msgstr ""
+
+msgid "The configured URL base conflicts with an existing public route or reserved WordPress path. Existing site content keeps priority until you choose an available Docs URL base."
+msgstr ""
+
+msgid "Public namespace readiness"
+msgstr ""
+
+msgid "Available"
+msgstr ""
+
+msgid "No conflicting public namespace was detected."
+msgstr ""
+
+msgid "Conflicts detected"
+msgstr ""
+
+msgid "Open item"
 msgstr ""

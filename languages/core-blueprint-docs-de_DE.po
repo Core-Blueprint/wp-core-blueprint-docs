@@ -325,10 +325,6 @@ msgstr ""
 "Die Docs-Permalink-Einstellungen hatten bereits diese Werte, daher war keine "
 "Aktualisierung der Rewrite-Regeln erforderlich."
 
-#: src/Admin/SettingsPage.php:236
-msgid "Category hierarchy was not enabled."
-msgstr "Die Kategoriehierarchie wurde nicht aktiviert."
-
 #: src/Admin/SettingsPage.php:237
 msgid ""
 "Resolve the blocking URL conflicts shown below and save the permalink "
@@ -1399,3 +1395,51 @@ msgstr "Docs-Metadaten"
 msgctxt "block description"
 msgid "Display documentation metadata for the current or selected document."
 msgstr "Dokumentationsmetadaten für das aktuelle oder ausgewählte Dokument anzeigen."
+
+msgid "This URL base is reserved by WordPress."
+msgstr "Diese URL-Basis ist von WordPress reserviert."
+
+msgid "The WordPress page \"%s\" already uses this path."
+msgstr "Die WordPress-Seite „%s“ verwendet diesen Pfad bereits."
+
+msgid "(Untitled)"
+msgstr "(Ohne Titel)"
+
+msgid "The %s archive already uses this path."
+msgstr "Das Archiv %s verwendet diesen Pfad bereits."
+
+msgid "The %s taxonomy already uses this path."
+msgstr "Die Taxonomie %s verwendet diesen Pfad bereits."
+
+msgid "Public Docs URLs are paused because the configured URL base is already in use."
+msgstr "Öffentliche Docs-URLs sind pausiert, weil die konfigurierte URL-Basis bereits verwendet wird."
+
+msgid "Review permalink settings"
+msgstr "Permalink-Einstellungen prüfen"
+
+msgid "Permalink settings not changed"
+msgstr "Permalink-Einstellungen nicht geändert"
+
+msgid "Resolve the blocking URL conflicts shown below. The previous Docs settings were kept."
+msgstr "Beheben Sie die unten aufgeführten blockierenden URL-Konflikte. Die vorherigen Docs-Einstellungen wurden beibehalten."
+
+msgid "Public Docs URLs are paused"
+msgstr "Öffentliche Docs-URLs sind pausiert"
+
+msgid "The configured URL base conflicts with an existing public route or reserved WordPress path. Existing site content keeps priority until you choose an available Docs URL base."
+msgstr "Die konfigurierte URL-Basis kollidiert mit einer bestehenden öffentlichen Route oder einem reservierten WordPress-Pfad. Bestehende Website-Inhalte behalten Vorrang, bis Sie eine verfügbare Docs-URL-Basis wählen."
+
+msgid "Public namespace readiness"
+msgstr "Bereitschaft des öffentlichen Namensraums"
+
+msgid "Available"
+msgstr "Verfügbar"
+
+msgid "No conflicting public namespace was detected."
+msgstr "Kein kollidierender öffentlicher Namensraum erkannt."
+
+msgid "Conflicts detected"
+msgstr "Konflikte erkannt"
+
+msgid "Open item"
+msgstr "Element öffnen"

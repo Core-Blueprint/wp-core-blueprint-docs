@@ -324,10 +324,6 @@ msgstr ""
 "De Docs permalinkinstellingen hadden deze waarden al, dus vernieuwen van "
 "rewrite-regels was niet nodig."
 
-#: src/Admin/SettingsPage.php:236
-msgid "Category hierarchy was not enabled."
-msgstr "Categoriehiërarchie is niet ingeschakeld."
-
 #: src/Admin/SettingsPage.php:237
 msgid ""
 "Resolve the blocking URL conflicts shown below and save the permalink "
@@ -1389,3 +1385,51 @@ msgstr "Docs-metadata"
 msgctxt "block description"
 msgid "Display documentation metadata for the current or selected document."
 msgstr "Toon documentatiemetadata voor het huidige of geselecteerde document."
+
+msgid "This URL base is reserved by WordPress."
+msgstr "Deze URL-basis is door WordPress gereserveerd."
+
+msgid "The WordPress page \"%s\" already uses this path."
+msgstr "De WordPress-pagina \"%s\" gebruikt dit pad al."
+
+msgid "(Untitled)"
+msgstr "(Naamloos)"
+
+msgid "The %s archive already uses this path."
+msgstr "Het archief %s gebruikt dit pad al."
+
+msgid "The %s taxonomy already uses this path."
+msgstr "De taxonomie %s gebruikt dit pad al."
+
+msgid "Public Docs URLs are paused because the configured URL base is already in use."
+msgstr "Openbare Docs-URL's zijn gepauzeerd omdat de ingestelde URL-basis al in gebruik is."
+
+msgid "Review permalink settings"
+msgstr "Permalink-instellingen bekijken"
+
+msgid "Permalink settings not changed"
+msgstr "Permalink-instellingen niet gewijzigd"
+
+msgid "Resolve the blocking URL conflicts shown below. The previous Docs settings were kept."
+msgstr "Los de blokkerende URL-conflicten hieronder op. De vorige Docs-instellingen zijn behouden."
+
+msgid "Public Docs URLs are paused"
+msgstr "Openbare Docs-URL's zijn gepauzeerd"
+
+msgid "The configured URL base conflicts with an existing public route or reserved WordPress path. Existing site content keeps priority until you choose an available Docs URL base."
+msgstr "De ingestelde URL-basis conflicteert met een bestaande openbare route of een gereserveerd WordPress-pad. Bestaande site-inhoud houdt voorrang totdat je een beschikbare Docs-URL-basis kiest."
+
+msgid "Public namespace readiness"
+msgstr "Gereedheid openbare namespace"
+
+msgid "Available"
+msgstr "Beschikbaar"
+
+msgid "No conflicting public namespace was detected."
+msgstr "Geen conflicterende openbare namespace gedetecteerd."
+
+msgid "Conflicts detected"
+msgstr "Conflicten gedetecteerd"
+
+msgid "Open item"
+msgstr "Item openen"
