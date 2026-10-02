@@ -5,8 +5,12 @@ namespace CB\Docs\Admin;
 
 use CB\Core\Admin\SettingsRegistry;
 use CB\Core\UI\Card;
+use CB\Core\UI\ChoiceGroup;
+use CB\Core\UI\Field;
 use CB\Core\UI\IntegrationGrid;
 use CB\Core\UI\Notice;
+use CB\Core\UI\RadioCard;
+use CB\Core\UI\RadioGroup;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
 use CB\Docs\Governance\Events;
@@ -41,16 +45,20 @@ final class SettingsPage {
 				'renderer'     => [ $page, 'render' ],
 				'requirements' => [
 					'foundations' => [
+						'choice-group',
 						'clipboard',
 					],
 					'components' => [
-						'panels',
-						'notices',
-						'form-controls',
+						'actions',
 						'cards',
+						'fields',
+						'form-controls',
 						'integration-grid',
 						'metric-tiles',
 						'nav-tabs',
+						'notices',
+						'panels',
+						'radio-cards',
 						'status',
 					],
 				],
@@ -335,40 +343,63 @@ final class SettingsPage {
 				<input type="hidden" name="action" value="cb_docs_save_integrations">
 				<?php wp_nonce_field( 'cb_docs_save_integrations', 'cb_docs_integrations_nonce' ); ?>
 
-				<fieldset>
-					<legend><strong><?php esc_html_e( 'Gutenberg blocks', 'core-blueprint-docs' ); ?></strong></legend>
-					<label>
-						<input type="checkbox" name="gutenberg" value="1" <?php checked( true, $preferences['gutenberg'] ); ?>>
-						<?php esc_html_e( 'Make Docs blocks available in the WordPress block editor.', 'core-blueprint-docs' ); ?>
-					</label>
-				</fieldset>
+				<div class="cb-core-form-scope">
+					<?php
+					$gutenberg_control = ChoiceGroup::render( [
+						'type'       => ChoiceGroup::TYPE_CHECKBOX,
+						'aria_label' => __( 'Gutenberg blocks', 'core-blueprint-docs' ),
+						'options'    => [
+							[
+								'name'    => 'gutenberg',
+								'value'   => '1',
+								'label'   => __( 'Make Docs blocks available in the WordPress block editor.', 'core-blueprint-docs' ),
+								'checked' => $preferences['gutenberg'],
+							],
+						],
+					] );
 
-				<fieldset>
-					<legend><strong><?php esc_html_e( 'Bricks Builder', 'core-blueprint-docs' ); ?></strong></legend>
-					<p>
-						<label>
-							<input type="radio" name="bricks" value="<?php echo esc_attr( Preferences::BRICKS_AUTO ); ?>" <?php checked( Preferences::BRICKS_AUTO, $preferences['bricks'] ); ?>>
-							<strong><?php esc_html_e( 'Auto', 'core-blueprint-docs' ); ?></strong>
-							<span class="description"><?php esc_html_e( 'Use the Bricks adapter when Bricks is active.', 'core-blueprint-docs' ); ?></span>
-						</label>
-					</p>
-					<p>
-						<label>
-							<input type="radio" name="bricks" value="<?php echo esc_attr( Preferences::BRICKS_ENABLED ); ?>" <?php checked( Preferences::BRICKS_ENABLED, $preferences['bricks'] ); ?>>
-							<strong><?php esc_html_e( 'Enabled', 'core-blueprint-docs' ); ?></strong>
-							<span class="description"><?php esc_html_e( 'Keep the Bricks adapter enabled when Bricks is available.', 'core-blueprint-docs' ); ?></span>
-						</label>
-					</p>
-					<p>
-						<label>
-							<input type="radio" name="bricks" value="<?php echo esc_attr( Preferences::BRICKS_DISABLED ); ?>" <?php checked( Preferences::BRICKS_DISABLED, $preferences['bricks'] ); ?>>
-							<strong><?php esc_html_e( 'Disabled', 'core-blueprint-docs' ); ?></strong>
-							<span class="description"><?php esc_html_e( 'Do not register Docs Bricks elements, queries, dynamic data or conditions.', 'core-blueprint-docs' ); ?></span>
-						</label>
-					</p>
-				</fieldset>
+					echo Field::render( [
+						'variant' => Field::VARIANT_SEPARATED,
+						'label'   => __( 'Gutenberg blocks', 'core-blueprint-docs' ),
+						'control' => $gutenberg_control,
+					] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base UI primitives own escaping.
 
-				<?php submit_button( __( 'Save integrations', 'core-blueprint-docs' ) ); ?>
+					$bricks_control = RadioGroup::render( [
+						'variant' => RadioCard::VARIANT_COMPACT,
+						'name'    => 'bricks',
+						'value'   => $preferences['bricks'],
+						'layout'  => RadioGroup::LAYOUT_GRID,
+						'columns' => 3,
+						'options' => [
+							[
+								'value' => Preferences::BRICKS_AUTO,
+								'label' => __( 'Auto', 'core-blueprint-docs' ),
+								'desc'  => __( 'Use the Bricks adapter when Bricks is active.', 'core-blueprint-docs' ),
+							],
+							[
+								'value' => Preferences::BRICKS_ENABLED,
+								'label' => __( 'Enabled', 'core-blueprint-docs' ),
+								'desc'  => __( 'Keep the Bricks adapter enabled when Bricks is available.', 'core-blueprint-docs' ),
+							],
+							[
+								'value' => Preferences::BRICKS_DISABLED,
+								'label' => __( 'Disabled', 'core-blueprint-docs' ),
+								'desc'  => __( 'Do not register Docs Bricks elements, queries, dynamic data or conditions.', 'core-blueprint-docs' ),
+							],
+						],
+					] );
+
+					echo Field::render( [
+						'variant' => Field::VARIANT_SEPARATED,
+						'label'   => __( 'Bricks Builder', 'core-blueprint-docs' ),
+						'control' => $bricks_control,
+					] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base UI primitives own escaping.
+					?>
+				</div>
+
+				<div class="cb-core-actions">
+					<?php echo get_submit_button( __( 'Save integrations', 'core-blueprint-docs' ), 'primary', 'submit', false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WordPress owns button escaping. ?>
+				</div>
 			</form>
 		</section>
 		<?php

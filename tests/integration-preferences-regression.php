@@ -6,6 +6,11 @@ $preferences = file_get_contents( $root . '/src/Integration/Preferences.php' );
 $bootstrap   = file_get_contents( $root . '/src/Integration/Builders/Bootstrap.php' );
 $settings    = file_get_contents( $root . '/src/Admin/SettingsPage.php' );
 $readiness   = file_get_contents( $root . '/src/Admin/IntegrationReadiness.php' );
+$integration_start = is_string( $settings ) ? strpos( $settings, 'private static function render_integrations()' ) : false;
+$integration_end   = is_string( $settings ) ? strpos( $settings, 'public static function save_integrations()', false === $integration_start ? 0 : $integration_start ) : false;
+$integration_form  = false !== $integration_start && false !== $integration_end
+	? substr( $settings, $integration_start, $integration_end - $integration_start )
+	: '';
 
 $checks = [
 	'consumer preferences use a dedicated option' =>
@@ -32,6 +37,19 @@ $checks = [
 		&& str_contains( $settings, "current_user_can( 'manage_options' )" )
 		&& str_contains( $settings, "check_admin_referer( 'cb_docs_save_integrations', 'cb_docs_integrations_nonce' )" )
 		&& str_contains( $settings, "Events::record_settings_updated( 'integration_bricks'" ),
+	'admin integration form consumes Base Golden form composition' =>
+		'' !== $integration_form
+		&& str_contains( $settings, "'choice-group'" )
+		&& str_contains( $settings, "'fields'" )
+		&& str_contains( $settings, "'radio-cards'" )
+		&& str_contains( $settings, "'actions'" )
+		&& substr_count( $integration_form, 'Field::VARIANT_SEPARATED' ) >= 2
+		&& str_contains( $integration_form, 'ChoiceGroup::render(' )
+		&& str_contains( $integration_form, 'RadioGroup::render(' )
+		&& str_contains( $integration_form, 'RadioGroup::LAYOUT_GRID' )
+		&& str_contains( $integration_form, 'cb-core-actions' )
+		&& ! str_contains( $integration_form, '<fieldset>' )
+		&& ! str_contains( $integration_form, 'style=' ),
 	'Integration readiness exposes Gutenberg and preference-aware Bricks state' =>
 		is_string( $readiness )
 		&& str_contains( $readiness, 'self::gutenberg_item()' )
