@@ -325,14 +325,6 @@ msgstr ""
 "Die Docs-Permalink-Einstellungen hatten bereits diese Werte, daher war keine "
 "Aktualisierung der Rewrite-Regeln erforderlich."
 
-#: src/Admin/SettingsPage.php:237
-msgid ""
-"Resolve the blocking URL conflicts shown below and save the permalink "
-"settings again."
-msgstr ""
-"Behebe die unten aufgeführten blockierenden URL-Konflikte und speichere die "
-"Permalink-Einstellungen erneut."
-
 #: src/Admin/SettingsPage.php:242
 msgid "Permalinks"
 msgstr "Permalinks"

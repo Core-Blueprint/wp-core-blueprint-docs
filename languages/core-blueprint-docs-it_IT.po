@@ -326,14 +326,6 @@ msgstr ""
 "Le impostazioni dei permalink di Docs avevano già questi valori, quindi non "
 "è stato necessario aggiornare le regole di riscrittura."
 
-#: src/Admin/SettingsPage.php:237
-msgid ""
-"Resolve the blocking URL conflicts shown below and save the permalink "
-"settings again."
-msgstr ""
-"Risolvi i conflitti URL bloccanti mostrati di seguito e salva nuovamente le "
-"impostazioni dei permalink."
-
 #: src/Admin/SettingsPage.php:242
 msgid "Permalinks"
 msgstr "Permalink"

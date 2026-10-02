@@ -325,14 +325,6 @@ msgstr ""
 "Les paramètres de permaliens Docs avaient déjà ces valeurs ; aucune "
 "actualisation des règles de réécriture n’était nécessaire."
 
-#: src/Admin/SettingsPage.php:237
-msgid ""
-"Resolve the blocking URL conflicts shown below and save the permalink "
-"settings again."
-msgstr ""
-"Résolvez les conflits d’URL bloquants ci-dessous et enregistrez à nouveau "
-"les paramètres des permaliens."
-
 #: src/Admin/SettingsPage.php:242
 msgid "Permalinks"
 msgstr "Permaliens"

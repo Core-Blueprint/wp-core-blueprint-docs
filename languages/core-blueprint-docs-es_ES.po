@@ -324,14 +324,6 @@ msgstr ""
 "Los ajustes de enlaces permanentes de Docs ya tenían estos valores, por lo "
 "que no fue necesario actualizar las reglas de reescritura."
 
-#: src/Admin/SettingsPage.php:237
-msgid ""
-"Resolve the blocking URL conflicts shown below and save the permalink "
-"settings again."
-msgstr ""
-"Resuelve los conflictos de URL bloqueantes que se muestran a continuación y "
-"vuelve a guardar los ajustes de enlaces permanentes."
-
 #: src/Admin/SettingsPage.php:242
 msgid "Permalinks"
 msgstr "Enlaces permanentes"
