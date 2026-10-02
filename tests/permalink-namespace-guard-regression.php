@@ -21,19 +21,19 @@ foreach ( compact( 'readiness', 'settings', 'post_type', 'taxonomy', 'router', '
 $checks = [
 	'readiness detects reserved roots and existing Pages' =>
 		str_contains( (string) $readiness, "private const RESERVED_ROOTS" )
-		&& str_contains( (string) $readiness, "get_page_by_path( $base, OBJECT, 'page' )" ),
+		&& str_contains( (string) $readiness, 'get_page_by_path( $base, OBJECT, \'page\' )' ),
 	'full readiness detects evident public archive and taxonomy collisions' =>
 		str_contains( (string) $readiness, "get_post_types( [], 'objects' )" )
 		&& str_contains( (string) $readiness, "get_taxonomies( [], 'objects' )" )
 		&& str_contains( (string) $readiness, 'PostType::TYPE === $post_type->name' )
 		&& str_contains( (string) $readiness, 'Taxonomies::CATEGORY, Taxonomies::TAG' ),
 	'save blocks a colliding base without silently renaming it' =>
-		str_contains( (string) $settings, "! Readiness::namespace_ready( $after['rewrite_base'] )" )
-		&& str_contains( (string) $settings, "'cb_docs_candidate' => $after['rewrite_base']" )
+		str_contains( (string) $settings, '! Readiness::namespace_ready( $after[\'rewrite_base\'] )' )
+		&& str_contains( (string) $settings, '\'cb_docs_candidate\' => $after[\'rewrite_base\']' )
 		&& ! str_contains( (string) $settings, "'docs-2'" ),
 	'runtime registration preserves existing Page priority' =>
 		str_contains( (string) $post_type, 'Readiness::runtime_ready( $base )' )
-		&& str_contains( (string) $post_type, "'has_archive'         => $routes_ready ? $base : false" )
+		&& str_contains( (string) $post_type, '\'has_archive\'         => $routes_ready ? $base : false' )
 		&& str_contains( (string) $post_type, "] : false" ),
 	'hierarchy namespace routing and canonical projections fail closed while paused' =>
 		substr_count( (string) $router, 'Readiness::runtime_ready( Settings::rewrite_base() )' ) >= 6
