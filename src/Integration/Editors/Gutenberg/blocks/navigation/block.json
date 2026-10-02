@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "core-blueprint-docs/navigation",
+  "version": "1.0.0-rc1",
+  "title": "Docs Navigation",
+  "category": "core-blueprint",
+  "icon": "menu-alt3",
+  "description": "Display the hierarchical documentation navigation.",
+  "textdomain": "core-blueprint-docs",
+  "attributes": {
+    "category": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    }
+  },
+  "editorScript": "cb-docs-block-editor"
+}
