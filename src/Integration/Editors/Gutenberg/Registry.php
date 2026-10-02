@@ -39,7 +39,7 @@ final class Registry {
 				continue;
 			}
 
-			$metadata = json_decode( (string) file_get_contents( $metadata_file ), true );
+			$metadata = wp_json_file_decode( $metadata_file, [ 'associative' => true ] );
 			$supports = is_array( $metadata ) && isset( $metadata['supports'] ) && is_array( $metadata['supports'] )
 				? $metadata['supports']
 				: [];
