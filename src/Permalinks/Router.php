@@ -24,7 +24,7 @@ final class Router {
 	}
 
 	public static function register_rules(): void {
-		if ( ! Settings::hierarchy_enabled() ) {
+		if ( ! Settings::hierarchy_enabled() || ! Readiness::runtime_ready( Settings::rewrite_base() ) ) {
 			return;
 		}
 
@@ -106,7 +106,7 @@ final class Router {
 	}
 
 	public static function document_link( string $url, \WP_Post $post ): string {
-		if ( ! Settings::hierarchy_enabled() || PostType::TYPE !== $post->post_type ) {
+		if ( ! Settings::hierarchy_enabled() || ! Readiness::runtime_ready( Settings::rewrite_base() ) || PostType::TYPE !== $post->post_type ) {
 			return $url;
 		}
 
@@ -114,7 +114,7 @@ final class Router {
 	}
 
 	public static function term_link( string $url, \WP_Term $term, string $taxonomy ): string {
-		if ( ! Settings::hierarchy_enabled() ) {
+		if ( ! Settings::hierarchy_enabled() || ! Readiness::runtime_ready( Settings::rewrite_base() ) ) {
 			return $url;
 		}
 
@@ -129,7 +129,7 @@ final class Router {
 	}
 
 	public static function canonical_url( string|false $url, \WP_Post $post ): string|false {
-		if ( ! Settings::hierarchy_enabled() || PostType::TYPE !== $post->post_type ) {
+		if ( ! Settings::hierarchy_enabled() || ! Readiness::runtime_ready( Settings::rewrite_base() ) || PostType::TYPE !== $post->post_type ) {
 			return $url;
 		}
 

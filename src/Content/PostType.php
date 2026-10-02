@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs\Content;
 
+use CB\Docs\Permalinks\Readiness;
 use CB\Docs\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -12,6 +13,7 @@ final class PostType {
 
 	public static function register(): void {
 		$base = Settings::rewrite_base();
+		$routes_ready = Readiness::runtime_ready( $base );
 		$single_base = Settings::hierarchy_enabled() ? $base . '/document' : $base;
 
 		register_post_type(
@@ -57,15 +59,15 @@ final class PostType {
 				'show_in_admin_bar'   => true,
 				'show_in_rest'        => true,
 				'rest_base'           => 'docs',
-				'has_archive'         => $base,
+				'has_archive'         => $routes_ready ? $base : false,
 				'hierarchical'        => false,
 				'exclude_from_search' => false,
 				'menu_position'       => 26.4,
 				'menu_icon'           => 'dashicons-media-document',
-				'rewrite'             => [
+				'rewrite'             => $routes_ready ? [
 					'slug'       => $single_base,
 					'with_front' => false,
-				],
+				] : false,
 				'supports' => [
 					'title',
 					'editor',

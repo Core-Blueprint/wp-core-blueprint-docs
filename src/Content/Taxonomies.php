@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs\Content;
 
+use CB\Docs\Permalinks\Readiness;
 use CB\Docs\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -14,6 +15,7 @@ final class Taxonomies {
 	public static function register(): void {
 		$hierarchy = Settings::hierarchy_enabled();
 		$base = Settings::rewrite_base();
+		$routes_ready = Readiness::runtime_ready( $base );
 
 		register_taxonomy(
 			self::CATEGORY,
@@ -71,7 +73,7 @@ final class Taxonomies {
 				'show_admin_column'  => true,
 				'show_in_rest'       => true,
 				'hierarchical'       => false,
-				'rewrite'            => [
+				'rewrite'            => $hierarchy && ! $routes_ready ? false : [
 					'slug'       => $hierarchy ? $base . '/tag' : 'docs-tag',
 					'with_front' => false,
 				],
