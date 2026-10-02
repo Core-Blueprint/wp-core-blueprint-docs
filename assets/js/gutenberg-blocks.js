@@ -18,16 +18,22 @@
 		el( PanelBody, { title: labels.contentSettings || 'Content settings', initialOpen: true }, ...controls )
 	);
 
-	const preview = ( block, attributes, inspector = null ) => el(
-		Fragment,
-		null,
-		inspector,
-		el(
-			'div',
-			useBlockProps(),
-			el( ServerSideRender, { block, attributes, skipBlockSupportAttributes: true } )
-		)
-	);
+	const Preview = ( { block, attributes, inspector = null } ) => {
+		const blockProps = useBlockProps();
+
+		return el(
+			Fragment,
+			null,
+			inspector,
+			el(
+				'div',
+				blockProps,
+				el( ServerSideRender, { block, attributes, skipBlockSupportAttributes: true } )
+			)
+		);
+	};
+
+	const preview = ( block, attributes, inspector = null ) => el( Preview, { block, attributes, inspector } );
 
 	registerBlockType( 'core-blueprint-docs/document-list', {
 		edit: ( { attributes, setAttributes } ) => preview(
