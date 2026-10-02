@@ -93,7 +93,7 @@ Docs does not record search terms, IP addresses, user agents, search histories o
 
 Docs remains builder-neutral. The canonical frontend contracts live outside editor and builder adapters and own data projection, querying, search, conditions and access-aware document resolution.
 
-The native Gutenberg adapter is optional and enabled by default. It provides **Docs List**, **Docs Navigation**, **Docs Search**, **Docs Breadcrumbs** and **Docs Meta** as dynamic blocks. Their editor previews use the same server-rendered canonical components as the frontend, while native block supports provide generic typography, color, spacing, alignment and border controls. Disabling Gutenberg blocks prevents Docs from registering them and keeps the inserter clean without disabling the Docs content model or shortcodes.
+The native Gutenberg adapter is optional and enabled by default. It provides **Docs List**, **Docs Navigation**, **Docs Search**, **Docs Breadcrumbs** and **Docs Meta** as dynamic blocks. Their editor previews use the same server-rendered canonical components as the frontend, while native block supports provide generic typography, color, spacing, alignment and border controls. Disabling Gutenberg blocks removes them from the block inserter while keeping their runtime registration available for already-published content. The Docs content model and shortcodes remain unaffected.
 
 The Bricks integration is optional and thin. When Bricks is active, Docs exposes:
 
