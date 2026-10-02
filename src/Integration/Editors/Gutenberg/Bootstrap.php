@@ -11,13 +11,16 @@ final class Bootstrap {
 	private static bool $initialized = false;
 
 	public static function init(): void {
-		if ( self::$initialized || ! Preferences::gutenberg_enabled() ) {
+		if ( self::$initialized ) {
 			return;
 		}
 
 		self::$initialized = true;
-		add_filter( 'block_categories_all', [ self::class, 'categories' ] );
 		add_action( 'init', [ Registry::class, 'register' ], 12 );
+
+		if ( Preferences::gutenberg_enabled() ) {
+			add_filter( 'block_categories_all', [ self::class, 'categories' ] );
+		}
 	}
 
 	/**
