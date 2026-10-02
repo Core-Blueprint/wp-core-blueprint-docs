@@ -13,12 +13,14 @@ defined( 'ABSPATH' ) || exit;
 final class Settings {
 	public const OPTION = 'cb_docs_settings';
 	public const REWRITE_DIRTY_OPTION = 'cb_docs_rewrite_dirty';
+	public const NAMESPACE_STATE_OPTION = 'cb_docs_namespace_state';
 	public const DEFAULT_REWRITE_BASE = 'docs';
 	public const URL_STRUCTURE_SIMPLE = 'simple';
 	public const URL_STRUCTURE_HIERARCHY = 'category_hierarchy';
 	public const DEFAULT_URL_STRUCTURE = self::URL_STRUCTURE_SIMPLE;
 
 	public static function init(): void {
+		add_action( 'init', [ __CLASS__, 'maybe_reconcile_namespace' ], 19 );
 		add_action( 'init', [ __CLASS__, 'maybe_flush_rewrite_rules' ], 20 );
 		add_action( 'admin_post_cb_docs_save_settings', [ __CLASS__, 'save' ] );
 	}
@@ -91,13 +93,28 @@ final class Settings {
 			'url_structure' => self::sanitize_url_structure( $raw_structure ),
 		];
 
+		if ( ! Readiness::namespace_ready( $after['rewrite_base'] ) ) {
+			wp_safe_redirect(
+				SettingsRegistry::url(
+					Suite::ID,
+					[
+						'tab'               => 'general',
+						'cb_docs_updated'   => 'blocked',
+						'cb_docs_candidate' => $after['rewrite_base'],
+					]
+				)
+			);
+			exit;
+		}
+
 		if ( self::URL_STRUCTURE_HIERARCHY === $after['url_structure'] && ! Readiness::ready( $after['rewrite_base'] ) ) {
 			wp_safe_redirect(
 				SettingsRegistry::url(
 					Suite::ID,
 					[
-						'tab'             => 'general',
-						'cb_docs_updated' => 'blocked',
+						'tab'               => 'general',
+						'cb_docs_updated'   => 'blocked',
+						'cb_docs_candidate' => $after['rewrite_base'],
 					]
 				)
 			);
@@ -132,6 +149,26 @@ final class Settings {
 		exit;
 	}
 
+	public static function record_namespace_state(): void {
+		update_option(
+			self::NAMESPACE_STATE_OPTION,
+			Readiness::runtime_ready( self::rewrite_base() ) ? 'ready' : 'blocked',
+			false
+		);
+	}
+
+	public static function maybe_reconcile_namespace(): void {
+		$current  = Readiness::runtime_ready( self::rewrite_base() ) ? 'ready' : 'blocked';
+		$previous = (string) get_option( self::NAMESPACE_STATE_OPTION, '' );
+
+		if ( $current === $previous ) {
+			return;
+		}
+
+		update_option( self::NAMESPACE_STATE_OPTION, $current, false );
+		update_option( self::REWRITE_DIRTY_OPTION, '1', false );
+	}
+
 	public static function maybe_flush_rewrite_rules(): void {
 		if ( '1' !== (string) get_option( self::REWRITE_DIRTY_OPTION, '' ) ) {
 			return;
@@ -139,5 +176,10 @@ final class Settings {
 
 		flush_rewrite_rules( false );
 		delete_option( self::REWRITE_DIRTY_OPTION );
+	}
+
+	public static function clear_runtime_state(): void {
+		delete_option( self::REWRITE_DIRTY_OPTION );
+		delete_option( self::NAMESPACE_STATE_OPTION );
 	}
 }

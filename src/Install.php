@@ -16,6 +16,7 @@ final class Install {
 		Meta::register();
 		flush_rewrite_rules();
 		delete_option( Settings::REWRITE_DIRTY_OPTION );
+		Settings::record_namespace_state();
 	}
 
 	public static function deactivate(): void {
@@ -30,5 +31,6 @@ final class Install {
 		}
 
 		flush_rewrite_rules();
+		Settings::clear_runtime_state();
 	}
 }
