@@ -65,6 +65,13 @@ $expected = [
 	'src/Frontend/Conditions/Documents.php',
 	'src/Governance/Events.php',
 	'src/Integration/Suite.php',
+	'src/Integration/Editors/Gutenberg/Bootstrap.php',
+	'src/Integration/Editors/Gutenberg/Registry.php',
+	'src/Integration/Editors/Gutenberg/blocks/document-list/block.json',
+	'src/Integration/Editors/Gutenberg/blocks/navigation/block.json',
+	'src/Integration/Editors/Gutenberg/blocks/search/block.json',
+	'src/Integration/Editors/Gutenberg/blocks/breadcrumbs/block.json',
+	'src/Integration/Editors/Gutenberg/blocks/document-meta/block.json',
 	'src/Integration/Builders/Bootstrap.php',
 	'src/Integration/Builders/Readiness.php',
 	'src/Integration/Builders/Bricks/Bootstrap.php',
@@ -80,6 +87,7 @@ $expected = [
 	'docs/BRICKS.md',
 	'assets/js/admin-shortcodes.js',
 	'assets/js/admin-organizer.js',
+	'assets/js/gutenberg-blocks.js',
 ];
 foreach ( $expected as $path ) {
 	if ( ! is_file( $root . '/' . $path ) ) {
@@ -328,7 +336,7 @@ if ( ! str_contains( $document_meta_component, 'DocumentAccess::can_read( $post_
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
-foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()', 'AdjacentDocuments::init()' ] as $required ) {
+foreach ( [ 'Integration\\Builders\\Bootstrap as BuildersBootstrap', 'Integration\\Editors\\Gutenberg\\Bootstrap as GutenbergBootstrap', 'GutenbergBootstrap::init()', 'BuildersBootstrap::init()', 'SettingsRegistry::url( Suite::ID )', 'OrganizerRest::init()', 'OrganizerPage::init()', 'Catalog::init()', 'ReservedSlugGuard::init()', 'Router::init()', 'AdjacentDocuments::init()' ] as $required ) {
 	if ( ! str_contains( $plugin, $required ) ) {
 		$failures[] = 'Plugin contract is missing ' . $required . '.';
 	}

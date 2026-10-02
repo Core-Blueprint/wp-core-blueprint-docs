@@ -5,19 +5,29 @@ namespace CB\Docs\Frontend\Components;
 
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
+use CB\Docs\Frontend\DocumentAccess;
 use CB\Docs\Structure\StructuralCategory;
 
 defined( 'ABSPATH' ) || exit;
 
 final class Breadcrumbs {
-	public static function render(): string {
+	/** @param array{post_id?:mixed} $args */
+	public static function render( array $args = [] ): string {
+		$args = wp_parse_args( $args, [ 'post_id' => 0 ] );
+		$context_post_id = absint( $args['post_id'] );
 		$items = [];
 		$archive = get_post_type_archive_link( PostType::TYPE );
 		if ( is_string( $archive ) && '' !== $archive ) {
 			$items[] = [ 'label' => __( 'Docs', 'core-blueprint-docs' ), 'url' => $archive ];
 		}
 
-		if ( is_tax( Taxonomies::CATEGORY ) ) {
+		if ( $context_post_id > 0 && PostType::TYPE === get_post_type( $context_post_id ) && DocumentAccess::can_read( $context_post_id ) ) {
+			$term = self::breadcrumb_category( $context_post_id );
+			if ( $term instanceof \WP_Term ) {
+				$items = array_merge( $items, self::term_breadcrumbs( $term ) );
+			}
+			$items[] = [ 'label' => get_the_title( $context_post_id ), 'url' => '' ];
+		} elseif ( is_tax( Taxonomies::CATEGORY ) ) {
 			$term = get_queried_object();
 			if ( $term instanceof \WP_Term ) {
 				$items = array_merge( $items, self::term_breadcrumbs( $term ) );

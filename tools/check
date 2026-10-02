@@ -85,6 +85,7 @@ for test in \
   content-model-smoke.php \
   frontend-components-contract.php \
   frontend-read-policy-smoke.php \
+  gutenberg-adapter-smoke.php \
   integration-preferences-regression.php \
   organizer-contract-smoke.php \
   organizer-order-regression.php \

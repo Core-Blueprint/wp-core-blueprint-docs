@@ -17,6 +17,7 @@ use CB\Docs\Frontend\RestSearch;
 use CB\Docs\Frontend\Shortcodes;
 use CB\Docs\Governance\Events;
 use CB\Docs\Integration\Builders\Bootstrap as BuildersBootstrap;
+use CB\Docs\Integration\Editors\Gutenberg\Bootstrap as GutenbergBootstrap;
 use CB\Docs\Integration\Suite;
 use CB\Docs\Permalinks\Catalog;
 use CB\Docs\Permalinks\ReservedSlugGuard;
@@ -41,6 +42,7 @@ final class Plugin {
 		ReservedSlugGuard::init();
 		Router::init();
 		AdjacentDocuments::init();
+		GutenbergBootstrap::init();
 		BuildersBootstrap::init();
 		RestSearch::init();
 		OrganizerRest::init();
