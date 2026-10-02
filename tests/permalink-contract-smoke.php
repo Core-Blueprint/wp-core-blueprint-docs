@@ -15,6 +15,7 @@ $files = [
 	'guard'      => 'src/Permalinks/ReservedSlugGuard.php',
 	'page'       => 'src/Admin/SettingsPage.php',
 	'shortcodes' => 'src/Frontend/Shortcodes.php',
+	'breadcrumbs'=> 'src/Frontend/Components/Breadcrumbs.php',
 	'plugin'     => 'src/Plugin.php',
 ];
 
@@ -102,7 +103,7 @@ $checks = [
 		&& str_contains( $sources['page'], 'Save permalinks' ),
 
 	'Breadcrumbs consume the canonical structural category resolver' =>
-		str_contains( $sources['shortcodes'], 'StructuralCategory::resolve' ),
+		str_contains( $sources['breadcrumbs'], 'StructuralCategory::resolve' ),
 
 	'Plugin boots Catalog, reserved slug protection and Router' =>
 		str_contains( $sources['plugin'], 'Catalog::init()' )
