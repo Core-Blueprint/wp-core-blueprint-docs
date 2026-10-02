@@ -9,6 +9,8 @@ use CB\Core\UI\IntegrationGrid;
 use CB\Core\UI\Notice;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
+use CB\Docs\Governance\Events;
+use CB\Docs\Integration\Preferences;
 use CB\Docs\Integration\Suite;
 use CB\Docs\Permalinks\Readiness;
 use CB\Docs\Settings;
@@ -23,6 +25,7 @@ final class SettingsPage {
 	public static function init(): void {
 		add_action( 'cb_core_register_settings', [ __CLASS__, 'register' ] );
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_assets' ] );
+		add_action( 'admin_post_cb_docs_save_integrations', [ __CLASS__, 'save_integrations' ] );
 	}
 
 	public static function register(): void {
@@ -303,7 +306,115 @@ final class SettingsPage {
 	}
 
 	private static function render_integrations(): void {
+		$preferences = Preferences::all();
+		$updated = isset( $_GET['cb_docs_integrations_updated'] )
+			? sanitize_key( (string) wp_unslash( $_GET['cb_docs_integrations_updated'] ) )
+			: ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only redirect state.
+
+		if ( 'changed' === $updated ) {
+			echo Notice::render( [
+				'variant' => Notice::SUCCESS,
+				'title'   => __( 'Integration settings updated', 'core-blueprint-docs' ),
+				'message' => __( 'Your Docs editor and builder adapter preferences are active.', 'core-blueprint-docs' ),
+			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
+		} elseif ( 'unchanged' === $updated ) {
+			echo Notice::render( [
+				'variant' => Notice::INFO,
+				'title'   => __( 'No integration changes needed', 'core-blueprint-docs' ),
+				'message' => __( 'The selected integration preferences were already active.', 'core-blueprint-docs' ),
+			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
+		}
+
 		echo IntegrationGrid::render( IntegrationReadiness::items() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base IntegrationGrid owns escaping and presentation.
+		?>
+		<section class="cb-core-panel">
+			<h2><?php esc_html_e( 'Adapter preferences', 'core-blueprint-docs' ); ?></h2>
+			<p><?php esc_html_e( 'Choose which optional presentation adapters Docs may register. Core Docs content and public contracts remain available regardless of these choices.', 'core-blueprint-docs' ); ?></p>
+
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="cb_docs_save_integrations">
+				<?php wp_nonce_field( 'cb_docs_save_integrations', 'cb_docs_integrations_nonce' ); ?>
+
+				<fieldset>
+					<legend><strong><?php esc_html_e( 'Gutenberg blocks', 'core-blueprint-docs' ); ?></strong></legend>
+					<label>
+						<input type="checkbox" name="gutenberg" value="1" <?php checked( true, $preferences['gutenberg'] ); ?>>
+						<?php esc_html_e( 'Make Docs blocks available in the WordPress block editor.', 'core-blueprint-docs' ); ?>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong><?php esc_html_e( 'Bricks Builder', 'core-blueprint-docs' ); ?></strong></legend>
+					<p>
+						<label>
+							<input type="radio" name="bricks" value="<?php echo esc_attr( Preferences::BRICKS_AUTO ); ?>" <?php checked( Preferences::BRICKS_AUTO, $preferences['bricks'] ); ?>>
+							<strong><?php esc_html_e( 'Auto', 'core-blueprint-docs' ); ?></strong>
+							<span class="description"><?php esc_html_e( 'Use the Bricks adapter when Bricks is active.', 'core-blueprint-docs' ); ?></span>
+						</label>
+					</p>
+					<p>
+						<label>
+							<input type="radio" name="bricks" value="<?php echo esc_attr( Preferences::BRICKS_ENABLED ); ?>" <?php checked( Preferences::BRICKS_ENABLED, $preferences['bricks'] ); ?>>
+							<strong><?php esc_html_e( 'Enabled', 'core-blueprint-docs' ); ?></strong>
+							<span class="description"><?php esc_html_e( 'Keep the Bricks adapter enabled when Bricks is available.', 'core-blueprint-docs' ); ?></span>
+						</label>
+					</p>
+					<p>
+						<label>
+							<input type="radio" name="bricks" value="<?php echo esc_attr( Preferences::BRICKS_DISABLED ); ?>" <?php checked( Preferences::BRICKS_DISABLED, $preferences['bricks'] ); ?>>
+							<strong><?php esc_html_e( 'Disabled', 'core-blueprint-docs' ); ?></strong>
+							<span class="description"><?php esc_html_e( 'Do not register Docs Bricks elements, queries, dynamic data or conditions.', 'core-blueprint-docs' ); ?></span>
+						</label>
+					</p>
+				</fieldset>
+
+				<?php submit_button( __( 'Save integrations', 'core-blueprint-docs' ) ); ?>
+			</form>
+		</section>
+		<?php
+	}
+
+	public static function save_integrations(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to change Docs integration settings.', 'core-blueprint-docs' ) );
+		}
+
+		check_admin_referer( 'cb_docs_save_integrations', 'cb_docs_integrations_nonce' );
+
+		$before = Preferences::all();
+		$raw_bricks = isset( $_POST['bricks'] ) && is_string( $_POST['bricks'] )
+			? wp_unslash( $_POST['bricks'] )
+			: Preferences::BRICKS_AUTO;
+		$after = [
+			'gutenberg' => isset( $_POST['gutenberg'] ) && '1' === (string) wp_unslash( $_POST['gutenberg'] ),
+			'bricks'    => Preferences::sanitize_bricks( $raw_bricks ),
+		];
+
+		Preferences::update( $after );
+		$stored  = Preferences::all();
+		$changed = $stored !== $before;
+
+		if ( $before['gutenberg'] !== $stored['gutenberg'] ) {
+			Events::record_settings_updated(
+				'integration_gutenberg',
+				$before['gutenberg'] ? 'enabled' : 'disabled',
+				$stored['gutenberg'] ? 'enabled' : 'disabled'
+			);
+		}
+		if ( $before['bricks'] !== $stored['bricks'] ) {
+			Events::record_settings_updated( 'integration_bricks', $before['bricks'], $stored['bricks'] );
+		}
+
+		wp_safe_redirect(
+			SettingsRegistry::url(
+				Suite::ID,
+				[
+					'tab'                          => self::TAB_INTEGRATIONS,
+					'cb_docs_integrations_updated' => $changed ? 'changed' : 'unchanged',
+				]
+			)
+		);
+		exit;
 	}
 
 	private static function render_shortcodes_card(): string {

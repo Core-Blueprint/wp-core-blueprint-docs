@@ -4,6 +4,8 @@ declare(strict_types=1);
 $root        = dirname( __DIR__ );
 $preferences = file_get_contents( $root . '/src/Integration/Preferences.php' );
 $bootstrap   = file_get_contents( $root . '/src/Integration/Builders/Bootstrap.php' );
+$settings    = file_get_contents( $root . '/src/Admin/SettingsPage.php' );
+$readiness   = file_get_contents( $root . '/src/Admin/IntegrationReadiness.php' );
 
 $checks = [
 	'consumer preferences use a dedicated option' =>
@@ -24,6 +26,16 @@ $checks = [
 		is_string( $bootstrap )
 		&& substr_count( $bootstrap, 'Preferences::bricks_enabled()' ) >= 2
 		&& str_contains( $bootstrap, "add_action( 'init', [ \\CB\\Docs\\Integration\\Builders\\Bricks\\ElementRegistry::class, 'register' ], 11 )" ),
+	'admin integration preferences use capability nonce and audit boundaries' =>
+		is_string( $settings )
+		&& str_contains( $settings, "admin_post_cb_docs_save_integrations" )
+		&& str_contains( $settings, "current_user_can( 'manage_options' )" )
+		&& str_contains( $settings, "check_admin_referer( 'cb_docs_save_integrations', 'cb_docs_integrations_nonce' )" )
+		&& str_contains( $settings, "Events::record_settings_updated( 'integration_bricks'" ),
+	'Integration readiness exposes Gutenberg and preference-aware Bricks state' =>
+		is_string( $readiness )
+		&& str_contains( $readiness, 'self::gutenberg_item()' )
+		&& str_contains( $readiness, 'Preferences::BRICKS_DISABLED === $mode' ),
 ];
 
 $failed = array_keys( array_filter( $checks, static fn( bool $passed ): bool => ! $passed ) );
