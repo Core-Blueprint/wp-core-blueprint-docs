@@ -84,6 +84,7 @@ for test in \
   bricks-styling-regression.php \
   content-model-smoke.php \
   frontend-read-policy-smoke.php \
+  integration-preferences-regression.php \
   organizer-contract-smoke.php \
   organizer-order-regression.php \
   organizer-structure-regression.php \

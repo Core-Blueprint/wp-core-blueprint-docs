@@ -88,3 +88,5 @@ Docs has no direct dependency on Core Blueprint Access. Access may attach its ta
 WordPress data and the builder-neutral Docs frontend contracts are the primary interface. Shortcodes are a minimal fallback/presentation API and intentionally produce small semantic markup with `cb-docs-*` classes. Docs does not take over theme templates.
 
 Docs ships an optional Bricks adapter under `src/Integration/Builders/`. The adapter exposes Docs data, queries and conditions to Bricks, but delegates storage, access-aware reads, query policy and condition semantics to the builder-neutral Docs frontend layer. Bricks is never required for Docs to function and future builder adapters must be addable without redesigning the Docs domain.
+
+Optional consumer/adapter activation is governed separately from Docs product settings through `CB\\Docs\\Integration\\Preferences`. Gutenberg is enabled by default. Bricks defaults to `auto`, may be explicitly enabled, or may be disabled. A disabled adapter must not register its hooks or elements; adapter preferences never move domain logic into the consumer layer.
