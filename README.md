@@ -23,6 +23,7 @@ It provides a native WordPress documentation content model that can be edited wi
 - Builder-neutral frontend data, query, search and condition contracts.
 - Relevance-ordered live Docs search with a read-only REST endpoint and normal GET fallback.
 - Builder-agnostic shortcodes.
+- Native Gutenberg blocks for Docs List, Navigation, Search, Breadcrumbs and Meta, backed by the same canonical frontend components as other consumers.
 - Native previous/next document navigation follows canonical Organizer order for themes and builders that use WordPress adjacent-post APIs.
 - Optional Bricks adapter for Dynamic Data, custom Queries, Conditions and a dedicated Docs Search element.
 - Hard dependency on the Core Blueprint Base public API `1.1` and the public Base contracts Docs consumes.
@@ -40,7 +41,7 @@ Under **Core Blueprint → Docs**:
 
 - **Overview** shows Docs, draft, category and tag metrics plus the shortcode reference.
 - **General** owns site-wide Docs configuration such as the public URL base.
-- **Integrations** reports optional integration readiness through the Base `IntegrationGrid` contract.
+- **Integrations** reports optional integration readiness and lets administrators enable or disable presentation adapters. Gutenberg blocks are enabled by default; Bricks supports Auto, Enabled and Disabled modes.
 
 Actual Docs, Categories and Tags remain on their normal WordPress content screens. **Docs → Organizer** adds a focused structure view for ordering documentation sets, sections and articles without replacing normal WordPress editing.
 
@@ -88,9 +89,11 @@ The frontend search component is progressive enhancement:
 
 Docs does not record search terms, IP addresses, user agents, search histories or analytics events.
 
-## Builder architecture
+## Editor and builder architecture
 
-Docs remains builder-neutral. The canonical frontend contracts live outside any builder adapter and own data projection, querying, search, conditions and access-aware document resolution.
+Docs remains builder-neutral. The canonical frontend contracts live outside editor and builder adapters and own data projection, querying, search, conditions and access-aware document resolution.
+
+The native Gutenberg adapter is optional and enabled by default. It provides **Docs List**, **Docs Navigation**, **Docs Search**, **Docs Breadcrumbs** and **Docs Meta** as dynamic blocks. Their editor previews use the same server-rendered canonical components as the frontend, while native block supports provide generic typography, color, spacing, alignment and border controls. Disabling Gutenberg blocks prevents Docs from registering them and keeps the inserter clean without disabling the Docs content model or shortcodes.
 
 The Bricks integration is optional and thin. When Bricks is active, Docs exposes:
 
