@@ -1285,3 +1285,55 @@ msgstr ""
 
 msgid "Your Docs editor and builder adapter preferences are active."
 msgstr ""
+
+msgid "Content settings"
+msgstr ""
+
+msgid "Show result category"
+msgstr ""
+
+msgid "Document ID"
+msgstr ""
+
+msgid "Leave at 0 to use the current Docs document."
+msgstr ""
+
+msgctxt "block title"
+msgid "Docs List"
+msgstr ""
+
+msgctxt "block description"
+msgid "Display a filtered list of published documentation."
+msgstr ""
+
+msgctxt "block title"
+msgid "Docs Navigation"
+msgstr ""
+
+msgctxt "block description"
+msgid "Display the hierarchical documentation navigation."
+msgstr ""
+
+msgctxt "block title"
+msgid "Docs Search"
+msgstr ""
+
+msgctxt "block description"
+msgid "Display the canonical live documentation search."
+msgstr ""
+
+msgctxt "block title"
+msgid "Docs Breadcrumbs"
+msgstr ""
+
+msgctxt "block description"
+msgid "Display breadcrumbs for the current documentation context."
+msgstr ""
+
+msgctxt "block title"
+msgid "Docs Meta"
+msgstr ""
+
+msgctxt "block description"
+msgid "Display documentation metadata for the current or selected document."
+msgstr ""
