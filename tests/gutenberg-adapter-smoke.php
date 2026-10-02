@@ -41,7 +41,7 @@ $checks = [
 		str_contains( (string) $bootstrap, "add_action( 'init', [ Registry::class, 'register' ], 12 )" )
 		&& ! str_contains( (string) $bootstrap, "self::\$initialized || ! Preferences::gutenberg_enabled()" ),
 	'Gutenberg preference controls inserter availability instead of runtime rendering' =>
-		str_contains( (string) $registry, "\$supports['inserter'] = Preferences::gutenberg_enabled()" )
+		str_contains( (string) $registry, "\$supports['inserter'] = Preferences::gutenberg_enabled()" ),
 	'Gutenberg category registration is idempotent' =>
 		str_contains( (string) $bootstrap, "'core-blueprint' ===" )
 		&& str_contains( (string) $bootstrap, "'title' => __( 'Core Blueprint'" ),
