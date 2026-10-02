@@ -74,7 +74,7 @@ final class Router {
 
 	/** @param array<string,mixed> $vars @return array<string,mixed> */
 	public static function resolve_request( array $vars ): array {
-		if ( ! Settings::hierarchy_enabled() ) {
+		if ( ! Settings::hierarchy_enabled() || ! Readiness::runtime_ready( Settings::rewrite_base() ) ) {
 			return $vars;
 		}
 
@@ -137,7 +137,7 @@ final class Router {
 	}
 
 	public static function redirect_legacy(): void {
-		if ( ! Settings::hierarchy_enabled() ) {
+		if ( ! Settings::hierarchy_enabled() || ! Readiness::runtime_ready( Settings::rewrite_base() ) ) {
 			return;
 		}
 

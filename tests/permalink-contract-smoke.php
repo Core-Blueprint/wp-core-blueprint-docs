@@ -34,6 +34,10 @@ $checks = [
 		str_contains( $sources['settings'], "URL_STRUCTURE_SIMPLE = 'simple'" )
 		&& str_contains( $sources['settings'], 'DEFAULT_URL_STRUCTURE = self::URL_STRUCTURE_SIMPLE' ),
 
+	'Public namespace conflicts are gated in every URL mode before settings persistence' =>
+		str_contains( $sources['settings'], "! Readiness::namespace_ready( \$after['rewrite_base'] )" )
+		&& str_contains( $sources['settings'], "'cb_docs_candidate' => \$after['rewrite_base']" ),
+
 	'Hierarchy activation is readiness-gated before settings persistence' =>
 		str_contains( $sources['settings'], 'URL_STRUCTURE_HIERARCHY' )
 		&& str_contains( $sources['settings'], "! Readiness::ready( \$after['rewrite_base'] )" )
@@ -71,6 +75,12 @@ $checks = [
 		&& str_contains( $sources['canonical'], "'tag/'" )
 		&& str_contains( $sources['canonical'], 'Settings::rewrite_base()' ),
 
+	'Runtime routes pause when the configured namespace collides with an existing Page' =>
+		str_contains( $sources['post_type'], 'Readiness::runtime_ready( $base )' )
+		&& str_contains( $sources['post_type'], "'has_archive'         => \$routes_ready ? \$base : false" )
+		&& str_contains( $sources['post_type'], "'rewrite'             => \$routes_ready ? [" )
+		&& substr_count( $sources['router'], 'Readiness::runtime_ready( Settings::rewrite_base() )' ) >= 6,
+
 	'Router registers before the deferred rewrite flush' =>
 		str_contains( $sources['router'], "add_action( 'init', [ __CLASS__, 'register_rules' ], 15 )" )
 		&& str_contains( $sources['settings'], "add_action( 'init', [ __CLASS__, 'maybe_flush_rewrite_rules' ], 20 )" ),
@@ -97,8 +107,10 @@ $checks = [
 		&& str_contains( $sources['guard'], "'wp_update_term_data'" )
 		&& str_contains( $sources['guard'], 'RouteIndex::RESERVED_ROOTS' ),
 
-	'Settings UI exposes structure mode examples and readiness' =>
-		str_contains( $sources['page'], 'Document URL structure' )
+	'Settings UI exposes namespace and structure readiness' =>
+		str_contains( $sources['page'], 'Public namespace readiness' )
+		&& str_contains( $sources['page'], 'Public Docs URLs are paused' )
+		&& str_contains( $sources['page'], 'Document URL structure' )
 		&& str_contains( $sources['page'], 'Category hierarchy readiness' )
 		&& str_contains( $sources['page'], 'Save permalinks' ),
 
