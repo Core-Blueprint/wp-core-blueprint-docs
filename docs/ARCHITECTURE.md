@@ -59,7 +59,11 @@ The permalink domain is split into four responsibilities:
 
 The hierarchy router reserves `tag` and `document` as first path segments. Unsafe or unresolved document hierarchy routes use the deterministic `/{base}/document/{slug}/` fail-safe. Category hierarchy activation is blocked when the route index reports an unresolvable namespace conflict.
 
-The stored Docs base is normalized as one or more safe WordPress slug segments. Changing the base or URL structure marks rewrite rules dirty. On the next `init`, the post type/taxonomies and hierarchy router register the new route contract first; the deferred flush then refreshes rewrite rules once and removes the marker.
+The stored Docs base is normalized as one or more safe WordPress slug segments. The namespace readiness boundary rejects WordPress-reserved roots, existing Pages at the same path, evident public post-type archive collisions and public taxonomy rewrite collisions. A conflicting candidate is never silently renamed. Existing site routes keep priority.
+
+At runtime, an existing WordPress Page or reserved WordPress root pauses Docs archive/single pretty-route registration for the configured base. Hierarchy router rules, canonical projections and legacy redirects fail closed at the same boundary. Namespace state changes mark rewrite rules dirty so a newly created or removed conflict is reconciled through one controlled refresh.
+
+Changing the base or URL structure also marks rewrite rules dirty. On the next `init`, the post type/taxonomies and hierarchy router register the new route contract first; the deferred flush then refreshes rewrite rules once and removes the marker.
 
 Category slug, parent and document-assignment changes do not flush rewrite rules. The route catalog resolves current taxonomy state dynamically and invalidates its in-request cache on relevant content/taxonomy mutations.
 

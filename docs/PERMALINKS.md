@@ -55,6 +55,25 @@ path can be proven. This includes:
 The fail-safe is deterministic and never relies on alphabetical or database
 return order.
 
+## Public namespace ownership
+
+The configured Docs base never overrides an existing site namespace.
+
+Before a permalink base is saved, Docs rejects:
+
+- WordPress-reserved roots such as `wp-admin`, `wp-json`, `wp-content` and `wp-includes`;
+- an existing WordPress Page at the same path;
+- an evident public post-type archive using the same base;
+- an evident public taxonomy rewrite using the same base.
+
+The previous Docs setting is retained when a candidate conflicts. Docs never
+chooses `docs-2` or another automatic replacement slug.
+
+At runtime, an existing WordPress Page or reserved WordPress root has priority.
+Docs pauses archive/single pretty routes under the configured base, and hierarchy
+routing/canonical redirects fail closed until the namespace becomes available.
+The content model and wp-admin remain available.
+
 ## Route collisions
 
 Hierarchy activation is blocked when the route index contains a conflict that
@@ -103,8 +122,9 @@ No heuristic redirect is emitted for an ambiguous legacy request.
 
 Rewrite rules are flushed only when:
 
-- Docs URL base changes; or
-- Document URL structure changes.
+- Docs URL base changes;
+- Document URL structure changes; or
+- the runtime namespace state changes between available and blocked.
 
 Category slug, hierarchy or assignment changes are resolved dynamically and do
 not trigger rewrite flushing.
