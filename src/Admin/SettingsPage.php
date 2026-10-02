@@ -278,7 +278,7 @@ final class SettingsPage {
 			echo Notice::render( [
 				'variant' => Notice::WARNING,
 				'title'   => __( 'Public Docs URLs are paused', 'core-blueprint-docs' ),
-				'message' => __( 'The configured URL base conflicts with an existing WordPress Page. Existing site content keeps priority until you choose an available Docs URL base.', 'core-blueprint-docs' ),
+				'message' => __( 'The configured URL base conflicts with an existing public route or reserved WordPress path. Existing site content keeps priority until you choose an available Docs URL base.', 'core-blueprint-docs' ),
 			] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Base renderer returns escaped component HTML.
 			?>
 		<?php endif; ?>
