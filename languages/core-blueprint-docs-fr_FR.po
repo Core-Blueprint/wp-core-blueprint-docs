@@ -1355,3 +1355,55 @@ msgstr "Vous n’avez pas l’autorisation de modifier les paramètres d’inté
 
 msgid "Your Docs editor and builder adapter preferences are active."
 msgstr "Vos préférences pour l’éditeur Docs et les adaptateurs de constructeur sont actives."
+
+msgid "Content settings"
+msgstr "Réglages du contenu"
+
+msgid "Show result category"
+msgstr "Afficher la catégorie du résultat"
+
+msgid "Document ID"
+msgstr "ID du document"
+
+msgid "Leave at 0 to use the current Docs document."
+msgstr "Laissez 0 pour utiliser le document Docs actuel."
+
+msgctxt "block title"
+msgid "Docs List"
+msgstr "Liste Docs"
+
+msgctxt "block description"
+msgid "Display a filtered list of published documentation."
+msgstr "Afficher une liste filtrée de documentation publiée."
+
+msgctxt "block title"
+msgid "Docs Navigation"
+msgstr "Navigation Docs"
+
+msgctxt "block description"
+msgid "Display the hierarchical documentation navigation."
+msgstr "Afficher la navigation hiérarchique de la documentation."
+
+msgctxt "block title"
+msgid "Docs Search"
+msgstr "Recherche Docs"
+
+msgctxt "block description"
+msgid "Display the canonical live documentation search."
+msgstr "Afficher la recherche dynamique canonique de la documentation."
+
+msgctxt "block title"
+msgid "Docs Breadcrumbs"
+msgstr "Fil d’Ariane Docs"
+
+msgctxt "block description"
+msgid "Display breadcrumbs for the current documentation context."
+msgstr "Afficher le fil d’Ariane pour le contexte de documentation actuel."
+
+msgctxt "block title"
+msgid "Docs Meta"
+msgstr "Métadonnées Docs"
+
+msgctxt "block description"
+msgid "Display documentation metadata for the current or selected document."
+msgstr "Afficher les métadonnées de documentation du document actuel ou sélectionné."
