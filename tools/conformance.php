@@ -52,6 +52,12 @@ $expected = [
 	'src/Frontend/Queries.php',
 	'src/Frontend/Navigation/AdjacentDocuments.php',
 	'src/Frontend/Shortcodes.php',
+	'src/Frontend/Components/State.php',
+	'src/Frontend/Components/DocumentList.php',
+	'src/Frontend/Components/Navigation.php',
+	'src/Frontend/Components/Search.php',
+	'src/Frontend/Components/Breadcrumbs.php',
+	'src/Frontend/Components/DocumentMeta.php',
 	'src/Frontend/DocumentAccess.php',
 	'src/Frontend/Data/Document.php',
 	'src/Frontend/Queries/Documents.php',
@@ -294,10 +300,31 @@ if ( str_contains( $adjacent_navigation, 'Bricks' ) || str_contains( $adjacent_n
 }
 
 $shortcodes = (string) file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
-foreach ( [ "'cb_docs_meta'", 'DocumentAccess::can_read( $post_id )' ] as $required ) {
+foreach ( [
+	"'cb_docs_list'",
+	"'cb_docs_navigation'",
+	"'cb_docs_search'",
+	"'cb_docs_breadcrumbs'",
+	"'cb_docs_meta'",
+	'Components\\DocumentList::render(',
+	'Components\\Navigation::render(',
+	'Components\\Search::render(',
+	'Components\\Breadcrumbs::render()',
+	'Components\\DocumentMeta::render(',
+] as $required ) {
 	if ( ! str_contains( $shortcodes, $required ) ) {
-		$failures[] = 'Docs shortcode read-boundary contract is missing ' . $required . '.';
+		$failures[] = 'Docs shortcode adapter contract is missing ' . $required . '.';
 	}
+}
+foreach ( [ 'Queries::docs(', 'DocumentAccess::' ] as $forbidden_shortcode_logic ) {
+	if ( str_contains( $shortcodes, $forbidden_shortcode_logic ) ) {
+		$failures[] = 'Docs shortcode adapter contains canonical frontend logic: ' . $forbidden_shortcode_logic . '.';
+	}
+}
+
+$document_meta_component = (string) file_get_contents( $root . '/src/Frontend/Components/DocumentMeta.php' );
+if ( ! str_contains( $document_meta_component, 'DocumentAccess::can_read( $post_id )' ) ) {
+	$failures[] = 'Docs DocumentMeta canonical read-boundary contract is missing exact read authorization.';
 }
 
 $plugin = (string) file_get_contents( $root . '/src/Plugin.php' );
