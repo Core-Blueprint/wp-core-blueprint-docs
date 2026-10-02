@@ -6,10 +6,11 @@ $plugin = file_get_contents( $root . '/src/Plugin.php' );
 $release_builder = file_get_contents( $root . '/tools/build-release' );
 $taxonomies = file_get_contents( $root . '/src/Content/Taxonomies.php' );
 $shortcodes = file_get_contents( $root . '/src/Frontend/Shortcodes.php' );
+$navigation = file_get_contents( $root . '/src/Frontend/Components/Navigation.php' );
 $events = file_get_contents( $root . '/src/Governance/Events.php' );
 $revision = file_get_contents( $root . '/src/Structure/Revision.php' );
 
-foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'events', 'revision', 'release_builder' ) as $name => $source ) {
+foreach ( compact( 'plugin', 'taxonomies', 'shortcodes', 'navigation', 'events', 'revision', 'release_builder' ) as $name => $source ) {
 	if ( false === $source ) {
 		fwrite( STDERR, "FAIL: could not read {$name}.\n" );
 		exit( 1 );
@@ -95,7 +96,7 @@ $checks = [
 		&& $action_move < $action_edit
 		&& $action_edit < $action_view,
 	'cross-category drag respects taxonomy assignment authority' => str_contains( (string) $runtime, "dataset?.canAssign === '1'" ),
-	'frontend navigation delegates category ordering' => str_contains( (string) $shortcodes, 'CategoryOrder::sort_terms' ),
+	'frontend navigation delegates category ordering' => str_contains( (string) $navigation, 'CategoryOrder::sort_terms' ),
 	'semantic structure audit exists' => str_contains( (string) $events, 'docs.structure.updated' ),
 	'plugin boots Organizer structure and mutation surfaces' => str_contains( (string) $plugin, 'OrganizerRest::init' ) && str_contains( (string) $plugin, 'OrganizerPage::init' ),
 	'Docs release builder requires Core API 1.1' => str_contains( (string) $release_builder, 'CB_DOCS_REQUIRED_API must remain 1.1' ),
