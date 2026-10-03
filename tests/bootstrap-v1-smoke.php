@@ -40,7 +40,7 @@ $checks = [
 	'API compatibility uses same-major sufficient-minor semantics' => $compatible,
 	'PHP floor gate runs before the product autoloader' => false !== $php_gate && false !== $autoload && $php_gate < $autoload,
 	'pre-v1 readiness alias is absent' => ! str_contains( (string) $entry, 'function cb_docs_base_ready' ),
-	'Base product contracts are checked explicitly' => str_contains( (string) $entry, 'function cb_docs_base_contracts_ready(): bool' ) && str_contains( (string) $entry, "method_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )" ) && str_contains( (string) $entry, 'Governance' ) && str_contains( (string) $entry, 'Audit' ),
+	'Base product contracts are checked explicitly' => str_contains( (string) $entry, 'function cb_docs_base_contracts_ready(): bool' ) && str_contains( (string) $entry, "method_exists( '\\\\CoreBlueprint\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )" ) && str_contains( (string) $entry, 'Governance' ) && str_contains( (string) $entry, 'Audit' ),
 	'activation registers content before rewrite flush' => str_contains( (string) $install, 'PostType::register();' ) && str_contains( (string) $install, 'Taxonomies::register();' ) && str_contains( (string) $install, 'flush_rewrite_rules();' ),
 	'plugin boot preserves builder-neutral ordering' => str_contains( (string) $plugin, 'BuildersBootstrap::init();' ) && str_contains( (string) $plugin, 'RestSearch::init();' ),
 	'bootstrap smoke is wired into tools/check' => str_contains( (string) $tools, 'bootstrap-v1-smoke.php' ),
