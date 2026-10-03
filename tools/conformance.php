@@ -99,6 +99,7 @@ $php_files = array_merge( [ $root . '/core-blueprint-docs.php' ], cb_docs_files_
 $forbidden = [
 	'cb-core-css-'                         => 'private Base CSS handles are not public API',
 	'cb_core_event_labels'                 => 'legacy event-label mutation is not the Governance contract',
+	'CB\\Core\\'                          => 'legacy Base namespace is forbidden; use CoreBlueprint\\Core',
 	'CoreBlueprint\\Core\\Log\\AuditLog'            => 'extensions must write through Governance\\Audit',
 	'CoreBlueprint\\Core\\Admin\\AdminAssetCatalog' => 'the Base asset catalog is private',
 	'CoreBlueprint\\Core\\Admin\\PageBase'          => 'PageBase is internal and must not be consumed by extensions',
