@@ -94,15 +94,15 @@ function cb_docs_api_compatible( string $available, string $required ): bool {
 
 /** Product-specific public Base services consumed by Docs. */
 function cb_docs_base_contracts_ready(): bool {
-	return class_exists( '\\CB\\Core\\ExtensionRegistry' )
-		&& class_exists( '\\CB\\Core\\Admin\\SettingsRegistry' )
-		&& class_exists( '\\CB\\Core\\UI\\Assets' )
-		&& method_exists( '\\CB\\Core\\UI\\Assets', 'enqueue_reorder' )
-		&& class_exists( '\\CB\\Core\\UI\\Card' )
-		&& class_exists( '\\CB\\Core\\UI\\Notice' )
-		&& class_exists( '\\CB\\Core\\UI\\IntegrationGrid' )
-		&& class_exists( '\\CB\\Core\\Governance\\EventRegistry' )
-		&& class_exists( '\\CB\\Core\\Governance\\Audit' );
+	return class_exists( '\\CoreBlueprint\\Core\\ExtensionRegistry' )
+		&& class_exists( '\\CoreBlueprint\\Core\\Admin\\SettingsRegistry' )
+		&& class_exists( '\\CoreBlueprint\\Core\\UI\\Assets' )
+		&& method_exists( '\\CoreBlueprint\\Core\\UI\\Assets', 'enqueue_reorder' )
+		&& class_exists( '\\CoreBlueprint\\Core\\UI\\Card' )
+		&& class_exists( '\\CoreBlueprint\\Core\\UI\\Notice' )
+		&& class_exists( '\\CoreBlueprint\\Core\\UI\\IntegrationGrid' )
+		&& class_exists( '\\CoreBlueprint\\Core\\Governance\\EventRegistry' )
+		&& class_exists( '\\CoreBlueprint\\Core\\Governance\\Audit' );
 }
 
 function cb_docs_dependency_message(): string {

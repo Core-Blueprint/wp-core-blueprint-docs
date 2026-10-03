@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs\Admin;
 
-use CB\Core\UI\Assets;
+use CoreBlueprint\Core\UI\Assets;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
 use CB\Docs\Structure\Snapshot;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs\Integration;
 
-use CB\Core\ExtensionRegistry;
+use CoreBlueprint\Core\ExtensionRegistry;
 use CB\Docs\Content\PostType;
 
 defined( 'ABSPATH' ) || exit;

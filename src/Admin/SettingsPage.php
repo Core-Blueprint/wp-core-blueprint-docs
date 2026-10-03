@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace CB\Docs\Admin;
 
-use CB\Core\Admin\SettingsRegistry;
-use CB\Core\UI\Card;
-use CB\Core\UI\ChoiceGroup;
-use CB\Core\UI\Field;
-use CB\Core\UI\IntegrationGrid;
-use CB\Core\UI\Notice;
-use CB\Core\UI\RadioCard;
-use CB\Core\UI\RadioGroup;
+use CoreBlueprint\Core\Admin\SettingsRegistry;
+use CoreBlueprint\Core\UI\Card;
+use CoreBlueprint\Core\UI\ChoiceGroup;
+use CoreBlueprint\Core\UI\Field;
+use CoreBlueprint\Core\UI\IntegrationGrid;
+use CoreBlueprint\Core\UI\Notice;
+use CoreBlueprint\Core\UI\RadioCard;
+use CoreBlueprint\Core\UI\RadioGroup;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;
 use CB\Docs\Governance\Events;

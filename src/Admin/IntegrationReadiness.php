@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs\Admin;
 
-use CB\Core\UI\IntegrationGrid;
+use CoreBlueprint\Core\UI\IntegrationGrid;
 use CB\Docs\Integration\Builders\Readiness as BuilderReadiness;
 use CB\Docs\Integration\Preferences;
 

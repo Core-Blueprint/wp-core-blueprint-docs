@@ -99,9 +99,9 @@ $php_files = array_merge( [ $root . '/core-blueprint-docs.php' ], cb_docs_files_
 $forbidden = [
 	'cb-core-css-'                         => 'private Base CSS handles are not public API',
 	'cb_core_event_labels'                 => 'legacy event-label mutation is not the Governance contract',
-	'CB\\Core\\Log\\AuditLog'            => 'extensions must write through Governance\\Audit',
-	'CB\\Core\\Admin\\AdminAssetCatalog' => 'the Base asset catalog is private',
-	'CB\\Core\\Admin\\PageBase'          => 'PageBase is internal and must not be consumed by extensions',
+	'CoreBlueprint\\Core\\Log\\AuditLog'            => 'extensions must write through Governance\\Audit',
+	'CoreBlueprint\\Core\\Admin\\AdminAssetCatalog' => 'the Base asset catalog is private',
+	'CoreBlueprint\\Core\\Admin\\PageBase'          => 'PageBase is internal and must not be consumed by extensions',
 	'jquery'                               => 'Docs has no jQuery runtime',
 ];
 foreach ( $php_files as $file ) {
@@ -127,15 +127,15 @@ if ( str_contains( $bootstrap, 'function cb_docs_base_ready' ) ) {
 	$failures[] = 'Bootstrap retains the obsolete pre-v1 readiness compatibility helper.';
 }
 foreach ( [
-	"class_exists( '\\\\CB\\\\Core\\\\ExtensionRegistry' )",
-	"class_exists( '\\\\CB\\\\Core\\\\Admin\\\\SettingsRegistry' )",
-	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets' )",
-	"method_exists( '\\\\CB\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )",
-	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Card' )",
-	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\Notice' )",
-	"class_exists( '\\\\CB\\\\Core\\\\UI\\\\IntegrationGrid' )",
-	"class_exists( '\\\\CB\\\\Core\\\\Governance\\\\EventRegistry' )",
-	"class_exists( '\\\\CB\\\\Core\\\\Governance\\\\Audit' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\ExtensionRegistry' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\Admin\\\\SettingsRegistry' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\UI\\\\Assets' )",
+	"method_exists( '\\\\CoreBlueprint\\\\Core\\\\UI\\\\Assets', 'enqueue_reorder' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\UI\\\\Card' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\UI\\\\Notice' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\UI\\\\IntegrationGrid' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\Governance\\\\EventRegistry' )",
+	"class_exists( '\\\\CoreBlueprint\\\\Core\\\\Governance\\\\Audit' )",
 	'\\CB\\Docs\\Support\\Requirements::runtime_ready()',
 	'cb_docs_base_contracts_ready()',
 ] as $required ) {
@@ -143,7 +143,7 @@ foreach ( [
 		$failures[] = 'Base dependency contract is missing ' . $required . '.';
 	}
 }
-if ( str_contains( $bootstrap, 'CB\\Core\\Admin\\PageRegistry' ) || str_contains( $bootstrap, "interface_exists( '\\\\CB\\\\Core\\\\Admin\\\\Page' )" ) ) {
+if ( str_contains( $bootstrap, 'CoreBlueprint\\Core\\Admin\\PageRegistry' ) || str_contains( $bootstrap, "interface_exists( '\\\\CoreBlueprint\\\\Core\\\\Admin\\\\Page' )" ) ) {
 	$failures[] = 'Bootstrap retains the retired PageRegistry/Page settings routing contract.';
 }
 

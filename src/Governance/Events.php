@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace CB\Docs\Governance;
 
-use CB\Core\Governance\Audit;
-use CB\Core\Governance\EventRegistry;
+use CoreBlueprint\Core\Governance\Audit;
+use CoreBlueprint\Core\Governance\EventRegistry;
 use CB\Docs\Content\Meta;
 use CB\Docs\Content\PostType;
 use CB\Docs\Content\Taxonomies;

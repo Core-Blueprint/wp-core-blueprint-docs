@@ -11,16 +11,16 @@ It owns one WordPress post type, two WordPress taxonomies and five registered po
 Docs requires Core Blueprint Base and consumes only public Base contracts:
 
 - `CB_CORE_API_VERSION`
-- `CB\Core\ExtensionRegistry`
-- `CB\Core\Admin\SettingsRegistry`
-- `CB\Core\UI\Assets`
-- `CB\Core\UI\Card`
-- `CB\Core\UI\Notice`
-- `CB\Core\UI\IntegrationGrid`
-- `CB\Core\Governance\EventRegistry`
-- `CB\Core\Governance\Audit`
+- `CoreBlueprint\Core\ExtensionRegistry`
+- `CoreBlueprint\Core\Admin\SettingsRegistry`
+- `CoreBlueprint\Core\UI\Assets`
+- `CoreBlueprint\Core\UI\Card`
+- `CoreBlueprint\Core\UI\Notice`
+- `CoreBlueprint\Core\UI\IntegrationGrid`
+- `CoreBlueprint\Core\Governance\EventRegistry`
+- `CoreBlueprint\Core\Governance\Audit`
 
-Docs requires Core API `1.1+` because the Documentation Organizer consumes the public Reorder Foundation. Docs configuration is contributed to the Core Blueprint Settings Hub through `SettingsRegistry`. The operational Documentation Organizer remains under the native Docs content menu and opts into the public Base Reorder Foundation through `CB\Core\UI\Assets::enqueue_reorder()` and the `@cb-core/reorder` module contract.
+Docs requires Core API `1.1+` because the Documentation Organizer consumes the public Reorder Foundation. Docs configuration is contributed to the Core Blueprint Settings Hub through `SettingsRegistry`. The operational Documentation Organizer remains under the native Docs content menu and opts into the public Base Reorder Foundation through `CoreBlueprint\Core\UI\Assets::enqueue_reorder()` and the `@cb-core/reorder` module contract.
 
 Base owns generic reorder interaction, focus, accessibility, pending state and rollback presentation. Docs owns documentation structure, authorization, WordPress persistence, stale-state protection and semantic audit events.
 

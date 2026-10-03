@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs;
 
-use CB\Core\Admin\SettingsRegistry;
+use CoreBlueprint\Core\Admin\SettingsRegistry;
 use CB\Docs\Governance\Events;
 use CB\Docs\Integration\Suite;
 use CB\Docs\Permalinks\Readiness;
