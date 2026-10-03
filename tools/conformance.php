@@ -177,9 +177,16 @@ if ( str_contains( $settings, 'SettingsPage::SLUG' ) || str_contains( $settings,
 	$failures[] = 'Settings save redirect retains the retired flat Docs settings route.';
 }
 
+$suite = (string) file_get_contents( $root . '/src/Integration/Suite.php' );
+foreach ( [ 'core_blueprint_register_extensions', 'core_blueprint_module_status_definitions', 'ExtensionRegistry::register' ] as $required ) {
+	if ( ! str_contains( $suite, $required ) ) {
+		$failures[] = 'Canonical Base v1 extension contract is missing ' . $required . '.';
+	}
+}
+
 $settings_page = (string) file_get_contents( $root . '/src/Admin/SettingsPage.php' );
 foreach ( [
-	"add_action( 'cb_core_register_settings'",
+	"add_action( 'core_blueprint_register_settings'",
 	'SettingsRegistry::register',
 	'SettingsRegistry::GROUP_CONTENT_PUBLISHING',
 	"SettingsRegistry::url( Suite::ID",
