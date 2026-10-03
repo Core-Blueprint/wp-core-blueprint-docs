@@ -27,7 +27,7 @@ final class SettingsPage {
 	private const TAB_INTEGRATIONS = 'integrations';
 
 	public static function init(): void {
-		add_action( 'cb_core_register_settings', [ __CLASS__, 'register' ] );
+		add_action( 'core_blueprint_register_settings', [ __CLASS__, 'register' ] );
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ __CLASS__, 'namespace_notice' ] );
 		add_action( 'admin_post_cb_docs_save_integrations', [ __CLASS__, 'save_integrations' ] );
