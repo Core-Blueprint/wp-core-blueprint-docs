@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CB\Docs;
 
-use CB\Core\Admin\SettingsRegistry;
+use CoreBlueprint\Core\Admin\SettingsRegistry;
 use CB\Docs\Admin\DocDetails;
 use CB\Docs\Admin\ListFilters;
 use CB\Docs\Admin\OrganizerPage;
