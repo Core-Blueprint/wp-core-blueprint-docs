@@ -48,7 +48,8 @@ $checks = [
 		&& str_contains( $integration_form, 'ChoiceGroup::render(' )
 		&& str_contains( $integration_form, 'RadioGroup::render(' )
 		&& str_contains( $integration_form, 'RadioGroup::LAYOUT_GRID' )
-		&& str_contains( $integration_form, 'cb-core-actions' )
+		&& str_contains( $integration_form, '<p class="submit">' )
+		&& ! str_contains( $integration_form, 'cb-core-actions' )
 		&& ! str_contains( $integration_form, '<fieldset>' )
 		&& ! str_contains( $integration_form, 'style=' ),
 	'Integration readiness exposes Gutenberg and preference-aware Bricks state' =>
