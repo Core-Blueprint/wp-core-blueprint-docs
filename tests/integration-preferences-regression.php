@@ -42,12 +42,14 @@ $checks = [
 		&& str_contains( $settings, "'choice-group'" )
 		&& str_contains( $settings, "'fields'" )
 		&& str_contains( $settings, "'radio-cards'" )
-		&& str_contains( $settings, "'actions'" )
+		&& str_contains( $settings, "'buttons'" )
+		&& ! str_contains( $settings, "'actions'" )
 		&& substr_count( $integration_form, 'Field::VARIANT_SEPARATED' ) >= 2
 		&& str_contains( $integration_form, 'ChoiceGroup::render(' )
 		&& str_contains( $integration_form, 'RadioGroup::render(' )
 		&& str_contains( $integration_form, 'RadioGroup::LAYOUT_GRID' )
-		&& str_contains( $integration_form, 'cb-core-actions' )
+		&& str_contains( $integration_form, '<p class="submit">' )
+		&& ! str_contains( $integration_form, 'cb-core-actions' )
 		&& ! str_contains( $integration_form, '<fieldset>' )
 		&& ! str_contains( $integration_form, 'style=' ),
 	'Integration readiness exposes Gutenberg and preference-aware Bricks state' =>
