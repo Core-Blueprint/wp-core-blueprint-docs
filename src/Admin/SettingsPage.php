@@ -50,7 +50,7 @@ final class SettingsPage {
 						'clipboard',
 					],
 					'components' => [
-						'actions',
+						'buttons',
 						'cards',
 						'fields',
 						'form-controls',
@@ -450,9 +450,9 @@ final class SettingsPage {
 					?>
 				</div>
 
-				<div class="cb-core-actions">
+				<p class="submit">
 					<?php echo get_submit_button( __( 'Save integrations', 'core-blueprint-docs' ), 'primary', 'submit', false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WordPress owns button escaping. ?>
-				</div>
+				</p>
 			</form>
 		</section>
 		<?php
